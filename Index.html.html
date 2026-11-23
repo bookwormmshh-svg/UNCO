@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="vitals">
+  <title>آزمون و تمرین تعاملی زبان تخصصی دو — درس اول</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Vitals + SBMU Burgundy / Crimson Palette) */
+      --background: #ffffff;
+      --page-canvas: #faf4f6;
+      --surface-container-low: #fbf3f5;
+      --surface-container: #f4e2e7;
+      --surface-container-high: #ebd0d8;
+
+      /* Text */
+      --on-surface: #2d141c;
+      --on-surface-variant: #664550;
+
+      /* Rules & borders */
+      --outline: #a37886;
+      --outline-variant: #e6d1d8;
+
+      /* Accents — Clinical Burgundy */
+      --primary: #7d1935;
+      --primary-hover: #621128;
+      --primary-deep: #4e0c1f;
+      --on-primary: #ffffff;
+      --primary-container: #fae8ed;
+      --on-primary-container: #5c1026;
+      --header-subtitle-ink: #ffd9e3;
+      --header-timer-bg: #4e0c1f;
+      --header-timer-border: #b84a69;
+
+      /* Semantic */
+      --secondary: #155734;
+      --tertiary: #1e7e48;
+      --positive: #1e7e48;
+      --positive-bg: #eaf7ef;
+      --positive-border: #a6dfc0;
+      --warning: #b36b00;
+      --warning-bg: #fef7e6;
+      --warning-border: #f3d189;
+      --error: #c62828;
+      --on-error: #ffffff;
+      --error-bg: #fdeeee;
+      --error-border: #f5bcbc;
+      --star-active: #d98200;
+      --star-active-bg: #fff5df;
+
+      /* Difficulty & Category Chips */
+      --chip-easy-bg: #e8f6ee;
+      --chip-easy-ink: #166037;
+      --chip-med-bg: #e7f1fb;
+      --chip-med-ink: #064d86;
+      --chip-hard-bg: #f6ebf8;
+      --chip-hard-ink: #6a217a;
+      --chip-read-bg: #fff3e4;
+      --chip-read-ink: #8c4d00;
+
+      /* Fonts */
+      --font-headline: 'Vazirmatn', sans-serif;
+      --font-body: 'Vazirmatn', sans-serif;
+      --font-label: 'Vazirmatn', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+
+      /* Type scale */
+      --display-size: clamp(1.125rem, 0.95rem + 0.8vw, 1.5rem);
+      --headline-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem);
+      --subhead-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.0625rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.8125rem;
+
+      /* Shape & elevation */
+      --rounded: 0.75rem;
+      --rounded-lg: 1rem;
+      --rounded-full: 9999px;
+      --card-border: 1px solid var(--outline-variant);
+      --card-lift: 0 2px 6px rgba(65, 14, 30, 0.05), 0 10px 24px rgba(65, 14, 30, 0.07);
+      --header-shadow: 0 4px 16px rgba(60, 10, 25, 0.18);
+
+      /* Focus ring */
+      --focus: #7d1935;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.25rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 140ms;
+      --dur-short: 240ms;
+      --dur-long: 380ms;
+
+      --sticky-offset: 132px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: clip;
+      background-color: var(--page-canvas);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.7;
+      letter-spacing: 0;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      letter-spacing: 0;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Sticky Top Shell: Medical Blue Header + Quick Access Bar */
+    .sticky-shell {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      box-shadow: var(--header-shadow);
+    }
+
+    .app-header {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--primary-deep);
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .header-titles {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      min-width: 0;
+    }
+
+    .header-titles h1 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--on-primary);
+    }
+
+    .header-subtitle {
+      margin: 0;
+      display: inline-flex;
+      align-self: flex-start;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--header-subtitle-ink);
+      background-color: var(--primary-deep);
+      padding: 0.15rem 0.7rem;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--header-timer-border);
+    }
+
+    .digital-timer {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: clamp(1.125rem, 1rem + 0.5vw, 1.45rem);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--on-primary);
+      background-color: var(--header-timer-bg);
+      border: 1.5px solid var(--header-timer-border);
+      border-radius: var(--rounded);
+      padding: 0.45rem 0.9rem;
+      min-width: 5.5rem;
+      text-align: center;
+      line-height: 1.2;
+      transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+
+    .digital-timer.timer-warning {
+      background-color: var(--error);
+      border-color: var(--on-primary);
+    }
+
+    /* Sticky Quick Access Accordion */
+    .quick-access-bar {
+      background-color: var(--background);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .qa-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-xs) var(--space-lg);
+    }
+
+    .qa-toggle-btn {
+      width: 100%;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      background: transparent;
+      border: 0;
+      color: var(--primary);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      padding: var(--space-xs) var(--space-xs);
+      cursor: pointer;
+      border-radius: var(--rounded);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-toggle-btn:hover {
+      background-color: var(--surface-container-low);
+    }
+
+    .qa-toggle-btn svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform var(--dur-short) var(--ease-in-out);
+    }
+
+    .qa-toggle-btn[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+
+    .qa-panel {
+      display: none;
+      padding-top: var(--space-sm);
+      padding-bottom: var(--space-md);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    .qa-panel.is-open {
+      display: block;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    @keyframes panelFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .qa-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .qa-filter-tab {
+      min-height: 38px;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-filter-tab:hover {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    .qa-filter-tab.is-active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .qa-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      max-height: 150px;
+      overflow-y: auto;
+      padding: 2px;
+    }
+
+    .qa-num-btn {
+      position: relative;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 0.5rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--label-size);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-num-btn:hover {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .qa-num-btn:active {
+      transform: scale(0.96);
+    }
+
+    .qa-num-btn.status-selected {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+    }
+
+    .qa-num-btn.status-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive);
+    }
+
+    .qa-num-btn.status-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .qa-num-btn.is-starred::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 7px;
+      height: 7px;
+      border-radius: var(--rounded-full);
+      background-color: var(--star-active);
+    }
+
+    .qa-empty-note {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      padding: var(--space-sm) 0;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .main-container * {
+      min-width: 0;
+    }
+
+    /* Top Control & Report Dashboard Grid */
+    .top-panels {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: stretch;
+    }
+
+    .panel-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: var(--headline-size);
+      font-weight: 800;
+      color: var(--on-surface);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--surface-container);
+    }
+
+    /* Assessment Mode Selector */
+    .mode-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+
+    .mode-btn {
+      text-align: right;
+      min-height: 44px;
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1.5px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .mode-btn:hover {
+      background-color: var(--surface-container);
+      transform: translateY(-1px);
+    }
+
+    .mode-btn:active {
+      transform: scale(0.99);
+    }
+
+    .mode-btn.is-active {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .mode-btn-title {
+      font-size: var(--subhead-size);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .mode-btn-desc {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: auto;
+    }
+
+    .btn-primary {
+      flex: 1 1 180px;
+      min-height: 46px;
+      padding: 0.65rem 1.2rem;
+      border: 0;
+      border-radius: var(--rounded);
+      background-color: var(--primary);
+      color: var(--on-primary);
+      font-size: var(--body-size);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      flex: 1 1 150px;
+      min-height: 46px;
+      padding: 0.65rem 1.1rem;
+      border: 1.5px solid var(--outline);
+      border-radius: var(--rounded);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+    }
+
+    .btn-secondary.is-armed {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .inline-notice {
+      display: none;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .inline-notice.is-visible {
+      display: block;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    .inline-notice[data-tone="info"] {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      border-right: 4px solid var(--primary);
+    }
+
+    .inline-notice[data-tone="success"] {
+      background-color: var(--positive-bg);
+      color: var(--positive);
+      border-right: 4px solid var(--positive);
+    }
+
+    .inline-notice[data-tone="warn"] {
+      background-color: var(--warning-bg);
+      color: var(--warning);
+      border-right: 4px solid var(--warning);
+    }
+
+    /* Report Card (کارنامه) */
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    .stat-tile {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .stat-tile.stat-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive-border);
+      border-right-color: var(--positive);
+    }
+
+    .stat-tile.stat-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error-border);
+      border-right-color: var(--error);
+    }
+
+    .stat-tile.stat-unanswered {
+      background-color: var(--warning-bg);
+      border-color: var(--warning-border);
+      border-right-color: var(--warning);
+    }
+
+    .stat-tile.stat-score {
+      background-color: var(--primary-container);
+      border-color: var(--surface-container-high);
+      border-right-color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+
+    .stat-value {
+      font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.55rem);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.25;
+      color: var(--on-surface);
+    }
+
+    .stat-correct .stat-value { color: var(--positive); }
+    .stat-wrong .stat-value { color: var(--error); }
+    .stat-unanswered .stat-value { color: var(--warning); }
+    .stat-score .stat-value { color: var(--primary); }
+
+    .report-progress-wrap {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .report-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 600;
+    }
+
+    .progress-track {
+      height: 10px;
+      border-radius: var(--rounded-full);
+      background-color: var(--surface-container);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .progress-seg-correct {
+      background-color: var(--positive);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .progress-seg-wrong {
+      background-color: var(--error);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .progress-seg-answered {
+      background-color: var(--primary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* Section Headings */
+    .section-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .section-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--background);
+      border: var(--card-border);
+      border-right: 5px solid var(--primary);
+      border-radius: var(--rounded);
+    }
+
+    .section-banner h2 {
+      margin: 0;
+      font-size: var(--headline-size);
+      font-weight: 800;
+      color: var(--on-surface);
+    }
+
+    .section-count {
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--on-primary-container);
+      background-color: var(--primary-container);
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--rounded-full);
+    }
+
+    /* Reading Passage Box */
+    .passage-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+    }
+
+    .passage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .passage-title {
+      margin: 0;
+      font-size: var(--subhead-size);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .passage-tag {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--chip-read-ink);
+      background-color: var(--chip-read-bg);
+      padding: 0.15rem 0.7rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .passage-text {
+      direction: ltr;
+      text-align: left;
+      margin: 0;
+      color: var(--on-surface);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      background-color: var(--surface-container-low);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+    }
+
+    /* Question Card */
+    .question-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+      scroll-margin-top: var(--sticky-offset);
+      transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .question-card:hover {
+      border-color: var(--outline);
+    }
+
+    .question-card.is-highlighted {
+      box-shadow: 0 0 0 3px var(--primary);
+    }
+
+    .q-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .q-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .q-number-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 800;
+      color: var(--on-primary);
+      background-color: var(--primary);
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .q-level-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 700;
+      padding: 0.2rem 0.7rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .q-level-badge[data-cat="easy"] { background-color: var(--chip-easy-bg); color: var(--chip-easy-ink); }
+    .q-level-badge[data-cat="medium"] { background-color: var(--chip-med-bg); color: var(--chip-med-ink); }
+    .q-level-badge[data-cat="hard"] { background-color: var(--chip-hard-bg); color: var(--chip-hard-ink); }
+    .q-level-badge[data-cat="reading"] { background-color: var(--chip-read-bg); color: var(--chip-read-ink); }
+
+    /* Star Bookmark Button — strictly icon only, zero text */
+    .star-btn {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--outline);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .star-btn:hover {
+      background-color: var(--star-active-bg);
+      border-color: var(--star-active);
+      color: var(--star-active);
+      transform: scale(1.06);
+    }
+
+    .star-btn:active {
+      transform: scale(0.94);
+    }
+
+    .star-btn.is-starred {
+      background-color: var(--star-active-bg);
+      border-color: var(--star-active);
+      color: var(--star-active);
+    }
+
+    .star-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .q-prompt {
+      margin: 0;
+      font-size: clamp(1rem, 0.95rem + 0.2vw, 1.08rem);
+      font-weight: 700;
+      color: var(--on-surface);
+      line-height: 1.75;
+    }
+
+    .q-prompt.is-ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .q-context-quote {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      background-color: var(--surface-container-low);
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--rounded);
+      border-right: 3px solid var(--outline);
+      margin: 0;
+    }
+
+    .options-list {
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .option-btn {
+      width: 100%;
+      min-height: 48px;
+      padding: 0.7rem 1rem;
+      border-radius: var(--rounded);
+      border: 1.5px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      font-weight: 500;
+      text-align: right;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .option-btn.is-ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .option-btn:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .option-key {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--rounded-full);
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-size: var(--label-size);
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .option-text {
+      flex: 1 1 auto;
+      line-height: 1.55;
+    }
+
+    .option-btn.is-selected {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+      font-weight: 700;
+    }
+
+    .option-btn.is-selected .option-key {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .option-btn.is-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive);
+      font-weight: 700;
+    }
+
+    .option-btn.is-correct .option-key {
+      background-color: var(--positive);
+      color: var(--on-primary);
+    }
+
+    .option-btn.is-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+      font-weight: 700;
+    }
+
+    .option-btn.is-wrong .option-key {
+      background-color: var(--error);
+      color: var(--on-error);
+    }
+
+    /* Explanation Box */
+    .explanation-box {
+      display: none;
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    .explanation-box.is-visible {
+      display: block;
+    }
+
+    .explanation-box.tone-correct {
+      background-color: var(--positive-bg);
+      border: 1px solid var(--positive-border);
+      border-right: 4px solid var(--positive);
+      color: var(--on-surface);
+    }
+
+    .explanation-box.tone-wrong {
+      background-color: var(--error-bg);
+      border: 1px solid var(--error-border);
+      border-right: 4px solid var(--error);
+      color: var(--on-surface);
+    }
+
+    .explanation-box.tone-neutral {
+      background-color: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      border-right: 4px solid var(--warning);
+      color: var(--on-surface);
+    }
+
+    .explanation-status {
+      display: block;
+      font-weight: 800;
+      margin-bottom: var(--space-xs);
+    }
+
+    .explanation-box.tone-correct .explanation-status { color: var(--positive); }
+    .explanation-box.tone-wrong .explanation-status { color: var(--error); }
+    .explanation-box.tone-neutral .explanation-status { color: var(--warning); }
+
+    .source-footer {
+      text-align: center;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      padding: var(--space-md) 0 var(--space-xl);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 760px) {
+      .top-panels {
+        grid-template-columns: 1fr;
+      }
+      .app-header {
+        padding: var(--space-sm) var(--space-md);
+      }
+      .qa-inner {
+        padding: var(--space-xs) var(--space-md);
+      }
+      .main-container {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .mode-options {
+        grid-template-columns: 1fr;
+      }
+      .question-card, .panel-card, .passage-card {
+        padding: var(--space-md);
+      }
+      .header-inner {
+        gap: var(--space-sm);
+      }
+      .digital-timer {
+        padding: 0.35rem 0.65rem;
+        min-width: 4.75rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky Top Shell: Medical Blue Header + Quick Access Bar -->
+  <div class="sticky-shell" id="sticky-shell">
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="header-titles">
+          <h1>آزمون و تمرین تعاملی واژگان و درک مطلب زبان تخصصی دو</h1>
+          <p class="header-subtitle">ورودی مهر 1404</p>
+        </div>
+        <div id="live-timer" class="digital-timer" dir="ltr" aria-live="off">00:00</div>
+      </div>
+    </header>
+
+    <div class="quick-access-bar">
+      <div class="qa-inner">
+        <button type="button" id="qa-toggle-btn" class="qa-toggle-btn" aria-expanded="false" aria-controls="qa-panel" onclick="toggleQuickAccess()">
+          <span>دسترسی سریع به سوالات</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div id="qa-panel" class="qa-panel" role="region" aria-label="پنل دسترسی سریع به سوالات">
+          <div class="qa-filters" role="tablist" aria-label="فیلتر دسته‌بندی سوالات">
+            <button type="button" class="qa-filter-tab is-active" data-filter="all" onclick="setQuickFilter('all')">همه</button>
+            <button type="button" class="qa-filter-tab" data-filter="easy" onclick="setQuickFilter('easy')">ساده</button>
+            <button type="button" class="qa-filter-tab" data-filter="medium" onclick="setQuickFilter('medium')">متوسط</button>
+            <button type="button" class="qa-filter-tab" data-filter="hard" onclick="setQuickFilter('hard')">دشوار</button>
+            <button type="button" class="qa-filter-tab" data-filter="reading" onclick="setQuickFilter('reading')">درک مطلب</button>
+            <button type="button" class="qa-filter-tab" data-filter="starred" onclick="setQuickFilter('starred')">نشان‌دارها</button>
+          </div>
+          <div id="qa-grid" class="qa-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-container">
+    <!-- Top Dashboard: نوع ارزیابی + کارنامه -->
+    <div class="top-panels">
+      <section class="panel-card" aria-labelledby="mode-heading">
+        <h2 id="mode-heading" class="panel-title">نوع ارزیابی</h2>
+        <div class="mode-options" role="radiogroup" aria-labelledby="mode-heading">
+          <button type="button" id="btn-mode-practice" class="mode-btn is-active" role="radio" aria-checked="true" onclick="setMode('practice')">
+            <span class="mode-btn-title">حالت تمرین</span>
+            <span class="mode-btn-desc">بازخورد آنی و پاسخ تشریحی فوری</span>
+          </button>
+          <button type="button" id="btn-mode-exam" class="mode-btn" role="radio" aria-checked="false" onclick="setMode('exam')">
+            <span class="mode-btn-title">حالت آزمون</span>
+            <span class="mode-btn-desc">تصحیح نهایی پس از پایان آزمون</span>
+          </button>
+        </div>
+        <div class="action-row">
+          <button type="button" id="btn-submit-exam" class="btn-primary" onclick="submitAssessment()">ثبت و تصحیح آزمون</button>
+          <button type="button" id="btn-reset-all" class="btn-secondary" onclick="handleResetClick(this)">بازنشانی پاسخ‌ها</button>
+        </div>
+        <div id="inline-notice" class="inline-notice" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="panel-card" id="report-section" aria-labelledby="report-heading">
+        <h2 id="report-heading" class="panel-title">کارنامه</h2>
+        <div class="report-grid">
+          <div class="stat-tile stat-correct">
+            <span class="stat-label">درست</span>
+            <span class="stat-value" id="stat-correct">0</span>
+          </div>
+          <div class="stat-tile stat-wrong">
+            <span class="stat-label">نادرست</span>
+            <span class="stat-value" id="stat-wrong">0</span>
+          </div>
+          <div class="stat-tile stat-unanswered">
+            <span class="stat-label">پاسخ‌نداده / نزده</span>
+            <span class="stat-value" id="stat-unanswered">51</span>
+          </div>
+          <div class="stat-tile stat-score">
+            <span class="stat-label">نمره از ۲۰</span>
+            <span class="stat-value" id="stat-score"><bdi dir="ltr">0.00 / 20</bdi></span>
+          </div>
+        </div>
+        <div class="report-progress-wrap">
+          <div class="report-progress-meta">
+            <span id="progress-label">پاسخ‌داده‌شده: ۰ از ۵۱</span>
+            <span id="progress-pct"><bdi dir="ltr">0%</bdi></span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="prog-correct" class="progress-seg-correct" style="width: 0%;"></div>
+            <div id="prog-wrong" class="progress-seg-wrong" style="width: 0%;"></div>
+            <div id="prog-answered" class="progress-seg-answered" style="width: 0%;"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-root"></div>
+
+    <footer class="source-footer">
+      مبتنی بر درس اول جزوه زبان تخصصی دو (Unit 1: Infectious Diseases) — دانشکده پزشکی دانشگاه علوم پزشکی شهید بهشتی
+    </footer>
+  </main>
+
+  <api-shim></api-shim>
+  <script>
+    const PASSAGES = {
+      r1: {
+        title: `متن اول (Passage 1): Ignaz Semmelweis & Puerperal Fever`,
+        tag: `سوالات ۴۳ تا ۴۵`,
+        text: `In 1846, Ignaz Semmelweis noted that mortality from puerperal ('childbed') fever was much higher in the teaching ward (1:11), where medical students performed deliveries after conducting autopsies, than in the midwives' ward (1:29). Women who delivered prior to hospital arrival had negligible mortality. Following the death of a colleague from wound infection after an autopsy scratch, Semmelweis hypothesized that putrid material was being transmitted via examining fingers. He instituted mandatory hand rinsing in chlorine water, which reduced mortality to 1.5%. Despite this success, his ideas were rejected, and a despondent Semmelweis died in 1865.`
+      },
+      r2: {
+        title: `متن دوم (Passage 2): Germ Theory, Antisepsis, and Koch's Postulates`,
+        tag: `سوالات ۴۶ تا ۴۸`,
+        text: `Louis Pasteur established the germ theory, proving contagious diseases are caused by foreign micro-organisms. Joseph Lister applied this theory to surgery by saturating compound fracture dressings with carbolic acid, reducing post-amputation mortality. Robert Koch isolated Bacillus anthracis and developed four postulates to prove organism-disease causation: (1) presence in all disease cases and absence in healthy hosts, (2) isolation in pure culture, (3) disease induction in healthy hosts by pure culture, and (4) re-isolation of the same organism. Koch applied these postulates to anthrax, cholera, and tuberculosis.`
+      },
+      r3: {
+        title: `متن سوم (Passage 3): Polymicrobial Synergy, Source Control, and Cytokines`,
+        tag: `سوالات ۴۹ تا ۵۱`,
+        text: `Surgeons like Meleney and Altemeier demonstrated that surgical infections are often polymicrobial, involving synergistic interactions between aerobes and anaerobes. Normal autochthonous commensals become pathogenic when entering sterile cavities during perforation or surgery. Optimal therapy requires both antimicrobial drugs and 'source control' (surgical intervention to eliminate infection source). William Osler noted that patients often die from the host inflammatory response rather than the pathogen itself. Overproduction of cytokines can trigger hyper-inflammation, leading to end-organ dysfunction and multiple organ failure.`
+      }
+    };
+
+    const QUESTIONS = [
+      {
+        id: 1, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `________ to performing surgical procedures, all members of the operating team must scrub their hands thoroughly with antiseptics.`,
+        options: [`Concurrent`, `Putrid`, `Prior`, `Latter`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">prior</bdi> به معنای «پیشین / قبل از» است.`
+      },
+      {
+        id: 2, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Influenza is a highly ________ respiratory virus that rapidly spreads through droplets in crowded areas.`,
+        options: [`contagious`, `autochthonous`, `despondent`, `gangrenous`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">contagious</bdi> به معنای «واگیردار و مسری» است.`
+      },
+      {
+        id: 3, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Anaphylactic shock is a potentially ________ allergic reaction that requires immediate administration of epinephrine.`,
+        options: [`fatal`, `resident`, `initial`, `negligible`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">fatal</bdi> به معنای «کشنده و مرگبار» است.`
+      },
+      {
+        id: 4, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Mycobacterium ________ is an acid-fast bacillus that primarily causes chronic pulmonary infection.`,
+        options: [`puerperal`, `tuberculosis`, `anthrax`, `cholera`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">tuberculosis</bdi> به معنای «بیماری سل» است.`
+      },
+      {
+        id: 5, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Severe fluid loss resulting from profuse watery diarrhea is the hallmark of infection caused by Vibrio ________.`,
+        options: [`commensal`, `tuberculosis`, `cholerae`, `anaerobe`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">cholera</bdi> به معنای «بیماری وبا» است.`
+      },
+      {
+        id: 6, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Surgeons must ________ their gloved hands with sterile saline solution to remove excess powder before touching tissue.`,
+        options: [`rinse`, `synergize`, `encompass`, `elucidate`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">rinse</bdi> به معنای «آبکشی کردن و شستن» است.`
+      },
+      {
+        id: 7, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `In many rural delivery centers, experienced ________ manage uncomplicated childbirth and newborn care.`,
+        options: [`anaerobes`, `commensals`, `investigators`, `midwives`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">midwives</bdi> به معنای «ماماها» است.`
+      },
+      {
+        id: 8, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `The patient’s ________ laboratory results showed leukocytosis, prompting further diagnostic workup.`,
+        options: [`gangrenous`, `fatal`, `putrid`, `initial`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">initial</bdi> به معنای «اولیه و نخستین» است.`
+      },
+      {
+        id: 9, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Hospital epidemiological reports revealed ________ cases of methicillin-resistant Staphylococcus aureus in the ICU.`,
+        options: [`numerous`, `autochthonous`, `despondent`, `negligible`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">numerous</bdi> به معنای «فراوان و متعدد» است.`
+      },
+      {
+        id: 10, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Surgical antimicrobial prophylaxis aims to achieve ________ tissue drug concentration at the time of skin incision.`,
+        options: [`puerperal`, `optimal`, `despondent`, `putrid`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">optimal</bdi> به معنای «بهینه و مطلوب‌ترین» است.`
+      },
+      {
+        id: 11, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Bacterial ________ of the bloodstream can lead to systemic inflammatory response syndrome and severe shock.`,
+        options: [`invasion`, `treatise`, `zeal`, `oenology`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">invasion</bdi> به معنای «تهاجم و نفوذ به بافت/خون» است.`
+      },
+      {
+        id: 12, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Prompt intravenous ________ of broad-spectrum antibiotics is mandatory upon recognizing intra-abdominal sepsis.`,
+        options: [`repertoire`, `Ward`, `implication`, `administration`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">administration</bdi> به معنای «تجویز و اعطای دارو» است.`
+      },
+      {
+        id: 13, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Maintaining strict aseptic technique is an ________ component of modern surgical practice to prevent postoperative wound infections.`,
+        options: [`despondent`, `putrid`, `integral`, `gangrenous`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">integral</bdi> به معنای «بخش جدایی‌ناپذیر و ضروری» است.`
+      },
+      {
+        id: 14, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `The introduction of antiseptic handwashing proved to be a ________ moment in reducing hospital-acquired puerperal mortality.`,
+        options: [`autochthonous`, `pivotal`, `resident`, `negligible`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">pivotal</bdi> به معنای «محوری و کلیدی» است.`
+      },
+      {
+        id: 15, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Advances in pharmacological research expanded the therapeutic ________ available to treat multidrug-resistant pathogens.`,
+        options: [`silkworm`, `childbed`, `treatise`, `repertoire`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">repertoire</bdi> به معنای «مجموعه توانمندی‌ها و ابزارها» است.`
+      },
+      {
+        id: 16, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `The comprehensive textbook aims to ________ all major aspects of clinical microbiology and surgical immunology.`,
+        options: [`encompass`, `adopt`, `rinse`, `synergize`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">encompass</bdi> به معنای «شامل شدن و در بر گرفتن» است.`
+      },
+      {
+        id: 17, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Clinical ________ conducted randomized controlled trials to evaluate the efficacy of new cephalosporin antibiotics.`,
+        options: [`anaerobes`, `investigators`, `midwives`, `commensals`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">investigators</bdi> به معنای «پژوهشگران و محققان بالینی» است.`
+      },
+      {
+        id: 18, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `After implementing proper hand hygiene, the risk of cross-contamination became practically ________ in the maternity unit.`,
+        options: [`pivotal`, `fatal`, `negligible`, `initial`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">negligible</bdi> به معنای «ناچیز و قابل چشم‌پوشی» است.`
+      },
+      {
+        id: 19, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Early epidemiologists ________ that disease transmission occurred via invisible organic particles carried on unwashed hands.`,
+        options: [`adopted`, `surpassed`, `hypothesized`, `rinsed`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">hypothesized</bdi> به معنای «فرضیه‌سازی کرد / نهایتاً فرضیه داد» است.`
+      },
+      {
+        id: 20, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `The wound drainage had a foul, ________ odor indicative of a severe anaerobic tissue infection.`,
+        options: [`initial`, `putrid`, `prior`, `optimal`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">putrid</bdi> به معنای «فاسد، گندیده و متعفن» است.`
+      },
+      {
+        id: 21, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `The efficacy of modern synthetic antiseptics far ________ that of early crude chemical solutions used in the 19th century.`,
+        options: [`hypothesized`, `rinsed`, `surpassed`, `encompassed`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">surpassed</bdi> به معنای «فراتر رفتن از / برتری یافتن بر» است.`
+      },
+      {
+        id: 22, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Molecular assays are used to ________ the exact genetic mechanisms underlying bacterial beta-lactam resistance.`,
+        options: [`adopt`, `rinse`, `elucidate`, `synergize`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">elucidate</bdi> به معنای «روشن ساختن و توضیح دادن» است.`
+      },
+      {
+        id: 23, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Hospitals worldwide quickly ________ antiseptic surgical protocols once clinical trials demonstrated a drastic reduction in infection rates.`,
+        options: [`adopted`, `surpassed`, `hypothesized`, `rinsed`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">adopted</bdi> به معنای «پذیرفته شد / به کار گرفته شد» است.`
+      },
+      {
+        id: 24, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Robert Koch formulated four famous ________ that established the definitive link between a specific microbe and a disease.`,
+        options: [`anaerobes`, `cytokines`, `postulates`, `commensals`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">postulates</bdi> به معنای «اصول چهارگانه اثبات / قانون‌ها» است.`
+      },
+      {
+        id: 25, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Joseph Lister ________ the application of carbolic acid dressings to prevent sepsis in open compound fractures.`,
+        options: [`pioneered`, `rinsed`, `hypothesized`, `encompassed`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">pioneered</bdi> به معنای «پیشگام شد» است.`
+      },
+      {
+        id: 26, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `The discovery of penicillin added a revolutionary antimicrobial agent to the clinician's therapeutic ________.`,
+        options: [`oenology`, `armamentarium`, `treatise`, `childbed`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">armamentarium</bdi> به معنای «مجموعه ابزارها و تجهیزات درمانی» است.`
+      },
+      {
+        id: 27, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Administering preoperative antibiotic ________ significantly lowers the risk of surgical site infections in colorectal surgery.`,
+        options: [`oenology`, `invasion`, `prophylaxis`, `treatise`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">prophylaxis</bdi> به معنای «پیشگیری دارویی» است.`
+      },
+      {
+        id: 28, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Normal intestinal microflora act as harmless ________ under intact physiological mucosal barriers.`,
+        options: [`investigators`, `commensals`, `postulates`, `treatises`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">commensals</bdi> به معنای «میکروب‌های هم‌سفره و بی‌خطر فلور طبیعی» است.`
+      },
+      {
+        id: 29, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Laboratory studies revealed that facultative aerobes and obligate anaerobes can ________ to cause fulminant tissue damage.`,
+        options: [`synergize`, `surpass`, `elucidate`, `rinse`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">synergize</bdi> به معنای «هم‌افزایی داشتن / همیاری کشنده داشتن» است.`
+      },
+      {
+        id: 30, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Modern surgical infection management is built upon core scientific ________ established by 19th-century microbiologists.`,
+        options: [`midwives`, `anaerobes`, `tenets`, `cytokines`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">tenets</bdi> به معنای «اصول و باورهای بنیادی علمی» است.`
+      },
+      {
+        id: 31, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `In the pre-antiseptic era, postoperative purulent wound infection ________ during major limb amputations.`,
+        options: [`was a negligible occurrence`, `was the rule rather than the exception`, `was suppressed by commensals`, `was intentionally eliminated`],
+        correct: 1,
+        explanation: `عبارت <bdi dir="ltr">was the rule rather than the exception</bdi> به معنای «یک قاعده عمومی بود تا یک استثنا» است.`
+      },
+      {
+        id: 32, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Systematic handwashing dramatically lowered the mortality rate from ________ sepsis in the obstetrical teaching ward.`,
+        options: [`puerperal`, `serendipitous`, `oenological`, `autochthonous`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">puerperal</bdi> به معنای «نفاسی / مربوط به تب زایمان (<bdi dir="ltr">childbed fever</bdi>)» است.`
+      },
+      {
+        id: 33, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Semmelweis observed two clinical wards: the former managed by medical students and the ________ managed by trained midwives.`,
+        options: [`prior`, `putrid`, `initial`, `latter`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">latter</bdi> به معنای «دومی / اخیری» است.`
+      },
+      {
+        id: 34, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Overwhelmed by academic rejection, the clinician became deeply ________ and died following a fatal infected cut.`,
+        options: [`pivotal`, `despondent`, `integral`, `optimal`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">despondent</bdi> به معنای «ناامید، افسرده و دلسرد» است.`
+      },
+      {
+        id: 35, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Louis Pasteur’s pioneering research on fermentation provided the essential scientific ________ of modern germ theory.`,
+        options: [`commensals`, `underpinnings`, `treatises`, `cytokines`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">underpinnings</bdi> به معنای «شالوده‌ها و زیربناهای علمی» است.`
+      },
+      {
+        id: 36, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Lister experimented with dressings ________ in carbolic acid, a compound previously used to treat municipal sewage.`,
+        options: [`rinsed`, `eliminated`, `diminished`, `saturated`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">saturated</bdi> به معنای «اشباع‌شده / کاملاً آغشته‌شده» است.`
+      },
+      {
+        id: 37, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Fleming ________ noticed a clearing zone around a mold contamination, which ________ led to penicillin isolation.`,
+        options: [`serendipitously / subsequently`, `intentionally / priorly`, `despondently / invariably`, `gangrenously / predominantly`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">serendipitously</bdi> به معنای «از روی خوش‌شانسی تصادفی» و <bdi dir="ltr">subsequently</bdi> به معنای «متعاقباً» است.`
+      },
+      {
+        id: 38, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Deep intra-abdominal abscesses contain complex mixtures of obligate ________ derived from the gut's ________ microflora.`,
+        options: [`midwives / putrid`, `commensals / fatal`, `treatises / initial`, `anaerobes / autochthonous`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">anaerobes</bdi> به معنای «بی‌هوازی‌ها» و <bdi dir="ltr">autochthonous</bdi> به معنای «بومی / فلور اصیل بدن» است.`
+      },
+      {
+        id: 39, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Clinical studies provided ________ evidence that polymicrobial peritonitis requires dual aerobic and anaerobic coverage.`,
+        options: [`puerperal`, `invariable`, `putrid`, `despondent`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">invariable</bdi> به معنای «همیشگی، ثابت و تغییرناپذیر» است.`
+      },
+      {
+        id: 40, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Emergency laparotomy for a ________ appendicitis or ________ secondary to ulcer perforation requires rapid source control.`,
+        options: [`commensal / treatise`, `despondent / oenology`, `putrid / childbed ward`, `gangrenous / perforated viscus`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">gangrenous</bdi> به معنای «سیاه‌شده/گانگرنه» و <bdi dir="ltr">perforated viscus</bdi> به معنای «سوراخ‌شدگی احشاء» است.`
+      },
+      {
+        id: 41, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `William Osler published a famous medical ________ emphasizing that host response often drives tissue destruction during infection.`,
+        options: [`silkworm`, `midwife`, `scratch`, `treatise`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">treatise</bdi> به معنای «رساله/کتاب جامع علمی» است.`
+      },
+      {
+        id: 42, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Uncontrolled systemic release of inflammatory ________ leads to capillary leak, hypotension, and severe ________.`,
+        options: [`postulates / scratch`, `commensals / childbed fever`, `cytokines / end-organ dysfunction`, `anaerobes / oenology`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">cytokines</bdi> به معنای «سیتوکین‌ها» و <bdi dir="ltr">end-organ dysfunction</bdi> به معنای «نقص عملکرد ارگان نهایی/اصلی» است.`
+      },
+      {
+        id: 43, category: `reading`, catLabel: `درک مطلب — متن ۱ (ساده)`, isReading: true, passageId: `r1`,
+        prompt: `Why was the mortality rate from puerperal fever significantly lower in the midwives' ward?`,
+        options: [`Midwives used advanced surgical instruments.`, `Midwives administered oral penicillin to all patients.`, `Midwives did not participate in cadaver autopsies before attending deliveries.`, `The midwives' ward had better heating systems.`],
+        correct: 2,
+        explanation: `بر اساس متن، ماماها بر خلاف دانشجویان پزشکی در کالبدشکافی اجساد شرکت نمی‌کردند.`
+      },
+      {
+        id: 44, category: `reading`, catLabel: `درک مطلب — متن ۱ (متوسط)`, isReading: true, passageId: `r1`,
+        prompt: `What critical observation led Semmelweis to realize that childbed fever was transmitted from autopsies?`,
+        options: [`Discovering bacteria under a high-power electron microscope`, `Analyzing blood pressure charts of pregnant women`, `Testing chlorine water on silkworm larvae`, `Noticing that his colleague’s fatal post-scratch pathology matched women dying of childbed fever`],
+        correct: 3,
+        explanation: `مشاهده آسیب‌شناسی یکسان در همکارش که پس از خراش چاقوی کالبدشکافی فوت کرده بود.`
+      },
+      {
+        id: 45, category: `reading`, catLabel: `درک مطلب — متن ۱ (دشوار)`, isReading: true, passageId: `r1`,
+        prompt: `What was the immediate clinical impact of mandating chlorine hand rinsing before entering the delivery ward?`,
+        options: [`It eliminated all viral infections in Vienna.`, `It drastically reduced puerperal fever mortality to 1.5%, surpassing the midwives' safety record.`, `It increased postpartum hemorrhage rates.`, `It was immediately rewarded by university authorities.`],
+        correct: 1,
+        explanation: `اجباری کردن شستشوی دست‌ها با آب کلردار، مرگ‌ومیر را به ۱.۵٪ کاهش داد.`
+      },
+      {
+        id: 46, category: `reading`, catLabel: `درک مطلب — متن ۲ (ساده)`, isReading: true, passageId: `r2`,
+        prompt: `Which chemical agent did Joseph Lister use to pioneer antiseptic surgery in compound fracture dressings?`,
+        options: [`Hydrogen peroxide`, `Chlorine water`, `Penicillin mold`, `Carbolic acid (phenol)`],
+        correct: 3,
+        explanation: `جوزف لیستر از محلول اسید کربولیک (<bdi dir="ltr">carbolic acid</bdi>) برای پانسمان‌ها استفاده کرد.`
+      },
+      {
+        id: 47, category: `reading`, catLabel: `درک مطلب — متن ۲ (متوسط)`, isReading: true, passageId: `r2`,
+        prompt: `According to Koch's postulates, what must occur after inoculating a pure bacterial culture into a healthy host?`,
+        options: [`The host must produce immediate antibody resistance.`, `The organism must mutate into a commensal form.`, `The organism must cause the specific disease in the healthy animal and be re-isolated.`, `The host must become immune without symptoms.`],
+        correct: 2,
+        explanation: `بر اساس اصل سوم و چهارم کخ، میکروب خالص باید ایجاد بیماری کرده و مجدداً جداسازی شود.`
+      },
+      {
+        id: 48, category: `reading`, catLabel: `درک مطلب — متن ۲ (دشوار)`, isReading: true, passageId: `r2`,
+        prompt: `How did Pasteur and Lister's combined discoveries transform 19th-century surgical practice?`,
+        options: [`By replacing surgical procedures with oral antibiotic pills`, `By proving the microbial etiology of infection and establishing antiseptics, allowing complex surgery with reduced mortality.`, `By proving that diseases arose spontaneously from body humors`, `By demonstrating that surgical infections were unavoidable`],
+        correct: 1,
+        explanation: `اثبات منشاء میکروبی عفونت و ایجاد روش‌های ضدعفونی، امکان انجام جراحی‌های پیچیده با مرگ‌ومیر پایین را فراهم ساخت.`
+      },
+      {
+        id: 49, category: `reading`, catLabel: `درک مطلب — متن ۳ (ساده)`, isReading: true, passageId: `r3`,
+        prompt: `What does the surgical concept of "source control" refer to?`,
+        options: [`Isolating infected patients in private hospital rooms`, `Taking daily oral probiotic supplements`, `Administering massive intravenous fluid boluses`, `Surgical intervention to physically eliminate or drain the source of infection`],
+        correct: 3,
+        explanation: `مفهوم کنترل منشاء (<bdi dir="ltr">source control</bdi>) به مداخله جراحی برای حذف یا درین منشاء عفونت اشاره دارد.`
+      },
+      {
+        id: 50, category: `reading`, catLabel: `درک مطلب — متن ۳ (متوسط)`, isReading: true, passageId: `r3`,
+        prompt: `When do resident commensal microorganisms typically become pathogenic in surgical patients?`,
+        options: [`When they breach mucosal barriers and enter a sterile body cavity during surgery or perforation`, `When exposed to sunlight`, `After ingestion of boiled food`, `During periods of strenuous exercise`],
+        correct: 0,
+        explanation: `میکروب‌های هم‌سفره فلور طبیعی هنگامی که وارد یک حفره استریل بدن مانند صفاق می‌شوند، بیماری‌زا می‌گردند.`
+      },
+      {
+        id: 51, category: `reading`, catLabel: `درک مطلب — متن ۳ (دشوار)`, isReading: true, passageId: `r3`,
+        prompt: `According to William Osler and modern cytokine research, what is the primary driver of end-organ dysfunction in severe sepsis?`,
+        options: [`The host's excessive systemic inflammatory response (cytokine cascade) to the infection`, `Direct physical consumption of organs by bacteria`, `Lack of dietary nutrient absorption`, `Complete absence of B-lymphocytes`],
+        correct: 0,
+        explanation: `بر اساس نظر اوسلر و تحقیقات سیتوکین‌ها، پاسخ التهابی بیش از حد خود میزبان به عفونت موجب نقص عملکرد ارگان نهایی می‌شود.`
+      }
+    ];
+
+    const TOTAL_QUESTIONS = 51;
+    const EXAM_DURATION_SEC = 51 * 60;
+    const PERSIAN_LETTERS = [`الف`, `ب`, `ج`, `د`];
+    const ENGLISH_LETTERS = [`A`, `B`, `C`, `D`];
+
+    const state = {
+      mode: `practice`,         // 'practice' | 'exam'
+      answers: {},              // { [id]: optionIndex }
+      starred: {},              // { [id]: true }
+      submitted: false,
+      quickOpen: false,
+      quickFilter: `all`,       // 'all' | 'easy' | 'medium' | 'hard' | 'reading' | 'starred'
+      timerStarted: false,
+      timerRunning: false,
+      elapsedSec: 0,            // used in practice mode
+      remainingSec: EXAM_DURATION_SEC
+    };
+
+    let timerInterval = null;
+    let resetConfirmTimer = null;
+
+    function formatTime(totalSec) {
+      const safe = Math.max(0, Math.floor(totalSec));
+      const mins = Math.floor(safe / 60);
+      const secs = safe % 60;
+      return `${String(mins).padStart(2, `0`)}:${String(secs).padStart(2, `0`)}`;
+    }
+
+    function toPersianDigits(val) {
+      const map = [`۰`, `۱`, `۲`, `۳`, `۴`, `۵`, `۶`, `۷`, `۸`, `۹`];
+      return String(val).replace(/\d/g, d => map[Number(d)]);
+    }
+
+    function updateStickyOffset() {
+      const shell = document.getElementById(`sticky-shell`);
+      if (!shell) return;
+      const h = shell.getBoundingClientRect().height;
+      document.documentElement.style.setProperty(`--sticky-offset`, `${Math.ceil(h + 14)}px`);
+    }
+
+    function updateTimerDisplay() {
+      const el = document.getElementById(`live-timer`);
+      if (!el) return;
+      if (state.mode === `practice`) {
+        el.textContent = formatTime(state.elapsedSec);
+        el.classList.remove(`timer-warning`);
+      } else {
+        el.textContent = formatTime(state.remainingSec);
+        if (state.remainingSec <= 300 && state.timerStarted && !state.submitted) {
+          el.classList.add(`timer-warning`);
+        } else {
+          el.classList.remove(`timer-warning`);
+        }
+      }
+    }
+
+    function stopTimer() {
+      if (timerInterval !== null) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      state.timerRunning = false;
+    }
+
+    function startTimerIfNeeded() {
+      if (state.submitted || state.timerRunning) return;
+      state.timerStarted = true;
+      state.timerRunning = true;
+      if (timerInterval !== null) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (state.submitted) {
+          stopTimer();
+          return;
+        }
+        if (state.mode === `practice`) {
+          state.elapsedSec += 1;
+          updateTimerDisplay();
+          if (state.elapsedSec % 5 === 0) persistState();
+        } else {
+          if (state.remainingSec > 0) {
+            state.remainingSec -= 1;
+            updateTimerDisplay();
+            if (state.remainingSec % 5 === 0) persistState();
+          }
+          if (state.remainingSec <= 0) {
+            stopTimer();
+            submitAssessment(true);
+          }
+        }
+      }, 1000);
+    }
+
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState({
+            mode: state.mode,
+            answers: state.answers,
+            starred: state.starred,
+            submitted: state.submitted,
+            quickOpen: state.quickOpen,
+            quickFilter: state.quickFilter,
+            timerStarted: state.timerStarted,
+            elapsedSec: state.elapsedSec,
+            remainingSec: state.remainingSec
+          });
+        } catch (err) {
+          // Non-fatal persistence error
+        }
+      }
+    }
+
+    function showNotice(text, tone) {
+      const box = document.getElementById(`inline-notice`);
+      if (!box) return;
+      if (!text) {
+        box.className = `inline-notice`;
+        box.textContent = ``;
+        return;
+      }
+      box.className = `inline-notice is-visible`;
+      box.setAttribute(`data-tone`, tone || `info`);
+      box.textContent = text;
+    }
+
+    function renderAllQuestions() {
+      const root = document.getElementById(`questions-root`);
+      if (!root) return;
+
+      const sections = [
+        { title: `بخش اول: واژگان — سطح ساده`, count: `۱۲ سوال (۱ تا ۱۲)`, items: QUESTIONS.filter(q => q.category === `easy`) },
+        { title: `بخش دوم: واژگان — سطح متوسط`, count: `۱۸ سوال (۱۳ تا ۳۰)`, items: QUESTIONS.filter(q => q.category === `medium`) },
+        { title: `بخش سوم: واژگان — سطح دشوار`, count: `۱۲ سوال (۳۱ تا ۴۲)`, items: QUESTIONS.filter(q => q.category === `hard`) },
+        { title: `بخش چهارم: درک مطلب متون درس اول`, count: `۹ سوال (۴۳ تا ۵۱)`, items: QUESTIONS.filter(q => q.category === `reading`), isReadingSection: true }
+      ];
+
+      let html = ``;
+      for (const sec of sections) {
+        html += `<section class="section-group">`;
+        html += `<div class="section-banner"><h2>${sec.title}</h2><span class="section-count">${sec.count}</span></div>`;
+
+        if (!sec.isReadingSection) {
+          for (const q of sec.items) {
+            html += buildQuestionCardHTML(q);
+          }
+        } else {
+          const passageGroups = [`r1`, `r2`, `r3`];
+          for (const pid of passageGroups) {
+            const p = PASSAGES[pid];
+            html += `
+              <article class="passage-card">
+                <div class="passage-header">
+                  <h3 class="passage-title">${p.title}</h3>
+                  <span class="passage-tag">${p.tag}</span>
+                </div>
+                <p class="passage-text">${p.text}</p>
+              </article>
+            `;
+            const groupQs = sec.items.filter(q => q.passageId === pid);
+            for (const q of groupQs) {
+              html += buildQuestionCardHTML(q);
+            }
+          }
+        }
+        html += `</section>`;
+      }
+
+      root.innerHTML = html;
+      refreshAllQuestionCards();
+    }
+
+    function buildQuestionCardHTML(q) {
+      const letters = ENGLISH_LETTERS;
+      const optionsHTML = q.options.map((opt, idx) => `
+        <button type="button" class="option-btn is-ltr" id="q-${q.id}-opt-${idx}" onclick="selectOption(${q.id}, ${idx})">
+          <span class="option-key">${letters[idx]}</span>
+          <span class="option-text">${opt}</span>
+        </button>
+      `).join(``);
+
+      return `
+        <article class="question-card" id="q-card-${q.id}">
+          <div class="q-top-row">
+            <div class="q-meta">
+              <span class="q-number-badge">سوال ${toPersianDigits(q.id)}</span>
+              <span class="q-level-badge" data-cat="${q.category}">${q.catLabel}</span>
+            </div>
+            <button type="button" class="star-btn" id="star-btn-${q.id}" aria-label="نشان‌دار کردن سوال ${q.id}" aria-pressed="false" onclick="toggleStar(${q.id})">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </button>
+          </div>
+          <p class="q-prompt is-ltr">${q.prompt}</p>
+          ${q.context ? `<p class="q-context-quote">شاهد متنی: <bdi dir="ltr">${q.context}</bdi></p>` : ``}
+          <div class="options-list" role="group" aria-label="گزینه‌های سوال ${q.id}">
+            ${optionsHTML}
+          </div>
+          <div class="explanation-box" id="exp-box-${q.id}"></div>
+        </article>
+      `;
+    }
+
+    function refreshQuestionCard(q) {
+      const chosen = state.answers[q.id];
+      const hasAnswer = chosen !== undefined;
+      const revealFeedback = (state.mode === `practice` && hasAnswer) || state.submitted;
+
+      for (let i = 0; i < q.options.length; i++) {
+        const btn = document.getElementById(`q-${q.id}-opt-${i}`);
+        if (!btn) continue;
+        btn.classList.remove(`is-selected`, `is-correct`, `is-wrong`);
+        btn.disabled = state.submitted || (state.mode === `practice` && hasAnswer);
+
+        if (revealFeedback) {
+          if (i === q.correct) {
+            btn.classList.add(`is-correct`);
+          } else if (hasAnswer && i === chosen && chosen !== q.correct) {
+            btn.classList.add(`is-wrong`);
+          }
+        } else if (hasAnswer && i === chosen) {
+          btn.classList.add(`is-selected`);
+        }
+      }
+
+      const expBox = document.getElementById(`exp-box-${q.id}`);
+      if (expBox) {
+        if (revealFeedback) {
+          let tone = `tone-neutral`;
+          let statusLabel = `پاسخ‌نداده (نزده)`;
+          if (hasAnswer) {
+            if (chosen === q.correct) {
+              tone = `tone-correct`;
+              statusLabel = `پاسخ صحیح`;
+            } else {
+              tone = `tone-wrong`;
+              statusLabel = `پاسخ نادرست`;
+            }
+          }
+          const letters = ENGLISH_LETTERS;
+          expBox.className = `explanation-box is-visible ${tone}`;
+          expBox.innerHTML = `
+            <span class="explanation-status">${statusLabel} — گزینه درست: ${letters[q.correct]}</span>
+            <div>${q.explanation}</div>
+          `;
+        } else {
+          expBox.className = `explanation-box`;
+          expBox.innerHTML = ``;
+        }
+      }
+
+      const starBtn = document.getElementById(`star-btn-${q.id}`);
+      if (starBtn) {
+        const isStarred = Boolean(state.starred[q.id]);
+        starBtn.classList.toggle(`is-starred`, isStarred);
+        starBtn.setAttribute(`aria-pressed`, isStarred ? `true` : `false`);
+        const poly = starBtn.querySelector(`polygon`);
+        if (poly) {
+          poly.setAttribute(`fill`, isStarred ? `currentColor` : `none`);
+        }
+      }
+    }
+
+    function refreshAllQuestionCards() {
+      for (const q of QUESTIONS) {
+        refreshQuestionCard(q);
+      }
+    }
+
+    function updateReportCard() {
+      let answeredCount = 0;
+      let correctCount = 0;
+      let wrongCount = 0;
+
+      for (const q of QUESTIONS) {
+        const chosen = state.answers[q.id];
+        if (chosen !== undefined) {
+          answeredCount += 1;
+          if (chosen === q.correct) {
+            correctCount += 1;
+          } else {
+            wrongCount += 1;
+          }
+        }
+      }
+
+      const unansweredCount = TOTAL_QUESTIONS - answeredCount;
+      const showGraded = state.mode === `practice` || state.submitted;
+
+      const elCorrect = document.getElementById(`stat-correct`);
+      const elWrong = document.getElementById(`stat-wrong`);
+      const elUnanswered = document.getElementById(`stat-unanswered`);
+      const elScore = document.getElementById(`stat-score`);
+      const elProgLabel = document.getElementById(`progress-label`);
+      const elProgPct = document.getElementById(`progress-pct`);
+      const segCorrect = document.getElementById(`prog-correct`);
+      const segWrong = document.getElementById(`prog-wrong`);
+      const segAnswered = document.getElementById(`prog-answered`);
+
+      if (elUnanswered) elUnanswered.textContent = toPersianDigits(unansweredCount);
+
+      if (showGraded) {
+        const scoreOutOf20 = ((correctCount / TOTAL_QUESTIONS) * 20).toFixed(2);
+        if (elCorrect) elCorrect.textContent = toPersianDigits(correctCount);
+        if (elWrong) elWrong.textContent = toPersianDigits(wrongCount);
+        if (elScore) elScore.innerHTML = `<bdi dir="ltr">${scoreOutOf20} / 20</bdi>`;
+        if (segCorrect) segCorrect.style.width = `${(correctCount / TOTAL_QUESTIONS) * 100}%`;
+        if (segWrong) segWrong.style.width = `${(wrongCount / TOTAL_QUESTIONS) * 100}%`;
+        if (segAnswered) segAnswered.style.width = `0%`;
+      } else {
+        if (elCorrect) elCorrect.textContent = `—`;
+        if (elWrong) elWrong.textContent = `—`;
+        if (elScore) elScore.textContent = `در انتظار ثبت`;
+        if (segCorrect) segCorrect.style.width = `0%`;
+        if (segWrong) segWrong.style.width = `0%`;
+        if (segAnswered) segAnswered.style.width = `${(answeredCount / TOTAL_QUESTIONS) * 100}%`;
+      }
+
+      const pct = Math.round((answeredCount / TOTAL_QUESTIONS) * 100);
+      if (elProgLabel) elProgLabel.textContent = `پاسخ‌داده‌شده: ${toPersianDigits(answeredCount)} از ${toPersianDigits(TOTAL_QUESTIONS)}`;
+      if (elProgPct) elProgPct.innerHTML = `<bdi dir="ltr">${pct}%</bdi>`;
+    }
+
+    function renderQuickAccessGrid() {
+      const grid = document.getElementById(`qa-grid`);
+      if (!grid) return;
+
+      const tabs = document.querySelectorAll(`.qa-filter-tab`);
+      tabs.forEach(tab => {
+        tab.classList.toggle(`is-active`, tab.dataset.filter === state.quickFilter);
+      });
+
+      const filtered = QUESTIONS.filter(q => {
+        if (state.quickFilter === `all`) return true;
+        if (state.quickFilter === `starred`) return Boolean(state.starred[q.id]);
+        return q.category === state.quickFilter;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<p class="qa-empty-note">هیچ سوالی در این دسته وجود ندارد. برای افزودن به نشان‌دارها، روی آیکون ستاره کنار سوال کلیک کنید.</p>`;
+        updateStickyOffset();
+        return;
+      }
+
+      const showGraded = state.mode === `practice` || state.submitted;
+      grid.innerHTML = filtered.map(q => {
+        const chosen = state.answers[q.id];
+        const hasAns = chosen !== undefined;
+        let statusCls = ``;
+        if (hasAns) {
+          if (showGraded) {
+            statusCls = chosen === q.correct ? `status-correct` : `status-wrong`;
+          } else {
+            statusCls = `status-selected`;
+          }
+        }
+        const starCls = state.starred[q.id] ? `is-starred` : ``;
+        return `<button type="button" class="qa-num-btn ${statusCls} ${starCls}" onclick="jumpToQuestion(${q.id})">${toPersianDigits(q.id)}</button>`;
+      }).join(``);
+
+      updateStickyOffset();
+    }
+
+    function toggleQuickAccess() {
+      state.quickOpen = !state.quickOpen;
+      applyQuickAccessVisibility();
+      persistState();
+    }
+
+    function applyQuickAccessVisibility() {
+      const btn = document.getElementById(`qa-toggle-btn`);
+      const panel = document.getElementById(`qa-panel`);
+      if (btn) btn.setAttribute(`aria-expanded`, state.quickOpen ? `true` : `false`);
+      if (panel) panel.classList.toggle(`is-open`, state.quickOpen);
+      updateStickyOffset();
+    }
+
+    function setQuickFilter(filterKey) {
+      state.quickFilter = filterKey;
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function jumpToQuestion(qId) {
+      updateStickyOffset();
+      const card = document.getElementById(`q-card-${qId}`);
+      if (!card) return;
+      card.scrollIntoView({ behavior: `smooth`, block: `start` });
+      card.classList.add(`is-highlighted`);
+      setTimeout(() => {
+        card.classList.remove(`is-highlighted`);
+      }, 1100);
+    }
+
+    function selectOption(qId, optIdx) {
+      if (state.submitted) return;
+      const q = QUESTIONS.find(item => item.id === qId);
+      if (!q) return;
+
+      if (state.mode === `practice` && state.answers[qId] !== undefined) return;
+
+      if (!state.timerStarted) {
+        startTimerIfNeeded();
+      }
+
+      state.answers[qId] = optIdx;
+      refreshQuestionCard(q);
+      updateReportCard();
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function toggleStar(qId) {
+      if (state.starred[qId]) {
+        delete state.starred[qId];
+      } else {
+        state.starred[qId] = true;
+      }
+      const q = QUESTIONS.find(item => item.id === qId);
+      if (q) refreshQuestionCard(q);
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function applyModeUI() {
+      const pBtn = document.getElementById(`btn-mode-practice`);
+      const eBtn = document.getElementById(`btn-mode-exam`);
+      const isPractice = state.mode === `practice`;
+      if (pBtn) {
+        pBtn.classList.toggle(`is-active`, isPractice);
+        pBtn.setAttribute(`aria-checked`, isPractice ? `true` : `false`);
+      }
+      if (eBtn) {
+        eBtn.classList.toggle(`is-active`, !isPractice);
+        eBtn.setAttribute(`aria-checked`, !isPractice ? `true` : `false`);
+      }
+    }
+
+    function setMode(newMode) {
+      if (state.mode === newMode) return;
+      state.mode = newMode;
+      stopTimer();
+      state.submitted = false;
+      state.timerStarted = false;
+      state.elapsedSec = 0;
+      state.remainingSec = EXAM_DURATION_SEC;
+
+      applyModeUI();
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+
+      if (newMode === `practice`) {
+        showNotice(`حالت تمرین فعال شد. با انتخاب هر گزینه، کرنومتر آغاز و پاسخ تشریحی بلافاصله نمایش داده می‌شود.`, `info`);
+      } else {
+        showNotice(`حالت آزمون فعال شد. با پاسخ به اولین سوال، تایمر معکوس ۵۱ دقیقه‌ای آغاز می‌شود و تصحیح در پایان انجام خواهد شد.`, `info`);
+      }
+
+      const hasAnyAnswers = Object.keys(state.answers).length > 0;
+      if (hasAnyAnswers && !state.submitted) {
+        startTimerIfNeeded();
+      }
+      persistState();
+    }
+
+    function submitAssessment(fromTimeout) {
+      state.submitted = true;
+      stopTimer();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+      updateTimerDisplay();
+
+      if (fromTimeout) {
+        showNotice(`زمان ۵۱ دقیقه‌ای آزمون به پایان رسید و کارنامه نهایی محاسبه شد.`, `warn`);
+      } else {
+        showNotice(`آزمون با موفقیت ثبت و تصحیح شد. نتیجه کامل در بخش کارنامه و پاسخ تشریحی زیر هر سوال قابل مشاهده است.`, `success`);
+      }
+
+      const reportEl = document.getElementById(`report-section`);
+      if (reportEl) {
+        reportEl.scrollIntoView({ behavior: `smooth`, block: `nearest` });
+      }
+      persistState();
+    }
+
+    function handleResetClick(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.classList.add(`is-armed`);
+        btn.textContent = `تأیید بازنشانی؟ دوباره کلیک کنید`;
+        if (resetConfirmTimer !== null) clearTimeout(resetConfirmTimer);
+        resetConfirmTimer = setTimeout(() => {
+          btn.dataset.armed = `false`;
+          btn.classList.remove(`is-armed`);
+          btn.textContent = `بازنشانی پاسخ‌ها`;
+        }, 4000);
+        return;
+      }
+
+      if (resetConfirmTimer !== null) {
+        clearTimeout(resetConfirmTimer);
+        resetConfirmTimer = null;
+      }
+      btn.dataset.armed = `false`;
+      btn.classList.remove(`is-armed`);
+      btn.textContent = `بازنشانی پاسخ‌ها`;
+
+      stopTimer();
+      state.answers = {};
+      state.submitted = false;
+      state.timerStarted = false;
+      state.elapsedSec = 0;
+      state.remainingSec = EXAM_DURATION_SEC;
+
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+      showNotice(`تمامی پاسخ‌ها و زمان‌سنج بازنشانی شدند.`, `info`);
+      persistState();
+    }
+
+    async function initApp() {
+      renderAllQuestions();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (saved.mode === `practice` || saved.mode === `exam`) state.mode = saved.mode;
+            if (saved.answers && typeof saved.answers === `object`) state.answers = saved.answers;
+            if (saved.starred && typeof saved.starred === `object`) state.starred = saved.starred;
+            if (typeof saved.submitted === `boolean`) state.submitted = saved.submitted;
+            if (typeof saved.quickOpen === `boolean`) state.quickOpen = saved.quickOpen;
+            if (typeof saved.quickFilter === `string`) state.quickFilter = saved.quickFilter;
+            if (typeof saved.timerStarted === `boolean`) state.timerStarted = saved.timerStarted;
+            if (typeof saved.elapsedSec === `number`) state.elapsedSec = saved.elapsedSec;
+            if (typeof saved.remainingSec === `number`) state.remainingSec = saved.remainingSec;
+          }
+        } catch (err) {
+          // Proceed with fresh state
+        }
+      }
+
+      applyModeUI();
+      applyQuickAccessVisibility();
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+
+      if (state.timerStarted && !state.submitted) {
+        if (state.mode === `exam` && state.remainingSec <= 0) {
+          submitAssessment(true);
+        } else {
+          startTimerIfNeeded();
+        }
+      }
+
+      window.addEventListener(`resize`, updateStickyOffset);
+      updateStickyOffset();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
