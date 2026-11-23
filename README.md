@@ -1,2 +1,0 @@
-# UNCO
-Medical English
