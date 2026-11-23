@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="vitals">
+  <title>آزمون و تمرین تعاملی زبان تخصصی دو — درس پنجم</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Vitals + SBMU Burgundy / Crimson Palette) */
+      --background: #ffffff;
+      --page-canvas: #faf4f6;
+      --surface-container-low: #fbf3f5;
+      --surface-container: #f4e2e7;
+      --surface-container-high: #ebd0d8;
+
+      /* Text */
+      --on-surface: #2d141c;
+      --on-surface-variant: #664550;
+
+      /* Rules & borders */
+      --outline: #a37886;
+      --outline-variant: #e6d1d8;
+
+      /* Accents — Clinical Burgundy */
+      --primary: #7d1935;
+      --primary-hover: #621128;
+      --primary-deep: #4e0c1f;
+      --on-primary: #ffffff;
+      --primary-container: #fae8ed;
+      --on-primary-container: #5c1026;
+      --header-subtitle-ink: #ffd9e3;
+      --header-timer-bg: #4e0c1f;
+      --header-timer-border: #b84a69;
+
+      /* Semantic */
+      --secondary: #155734;
+      --tertiary: #1e7e48;
+      --positive: #1e7e48;
+      --positive-bg: #eaf7ef;
+      --positive-border: #a6dfc0;
+      --warning: #b36b00;
+      --warning-bg: #fef7e6;
+      --warning-border: #f3d189;
+      --error: #c62828;
+      --on-error: #ffffff;
+      --error-bg: #fdeeee;
+      --error-border: #f5bcbc;
+      --star-active: #d98200;
+      --star-active-bg: #fff5df;
+
+      /* Difficulty & Category Chips */
+      --chip-easy-bg: #e8f6ee;
+      --chip-easy-ink: #166037;
+      --chip-med-bg: #e7f1fb;
+      --chip-med-ink: #064d86;
+      --chip-hard-bg: #f6ebf8;
+      --chip-hard-ink: #6a217a;
+      --chip-read-bg: #fff3e4;
+      --chip-read-ink: #8c4d00;
+
+      /* Fonts */
+      --font-headline: 'Vazirmatn', sans-serif;
+      --font-body: 'Vazirmatn', sans-serif;
+      --font-label: 'Vazirmatn', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+
+      /* Type scale */
+      --display-size: clamp(1.125rem, 0.95rem + 0.8vw, 1.5rem);
+      --headline-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem);
+      --subhead-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.0625rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.8125rem;
+
+      /* Shape & elevation */
+      --rounded: 0.75rem;
+      --rounded-lg: 1rem;
+      --rounded-full: 9999px;
+      --card-border: 1px solid var(--outline-variant);
+      --card-lift: 0 2px 6px rgba(65, 14, 30, 0.05), 0 10px 24px rgba(65, 14, 30, 0.07);
+      --header-shadow: 0 4px 16px rgba(60, 10, 25, 0.18);
+
+      /* Focus ring */
+      --focus: #7d1935;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.25rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 140ms;
+      --dur-short: 240ms;
+      --dur-long: 380ms;
+
+      --sticky-offset: 132px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: clip;
+      background-color: var(--page-canvas);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.7;
+      letter-spacing: 0;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      letter-spacing: 0;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Sticky Top Shell: Medical Blue Header + Quick Access Bar */
+    .sticky-shell {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      box-shadow: var(--header-shadow);
+    }
+
+    .app-header {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--primary-deep);
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .header-titles {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      min-width: 0;
+    }
+
+    .header-titles h1 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--on-primary);
+    }
+
+    .header-subtitle {
+      margin: 0;
+      display: inline-flex;
+      align-self: flex-start;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--header-subtitle-ink);
+      background-color: var(--primary-deep);
+      padding: 0.15rem 0.7rem;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--header-timer-border);
+    }
+
+    .digital-timer {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: clamp(1.125rem, 1rem + 0.5vw, 1.45rem);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--on-primary);
+      background-color: var(--header-timer-bg);
+      border: 1.5px solid var(--header-timer-border);
+      border-radius: var(--rounded);
+      padding: 0.45rem 0.9rem;
+      min-width: 5.5rem;
+      text-align: center;
+      line-height: 1.2;
+      transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+
+    .digital-timer.timer-warning {
+      background-color: var(--error);
+      border-color: var(--on-primary);
+    }
+
+    /* Sticky Quick Access Accordion */
+    .quick-access-bar {
+      background-color: var(--background);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .qa-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-xs) var(--space-lg);
+    }
+
+    .qa-toggle-btn {
+      width: 100%;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      background: transparent;
+      border: 0;
+      color: var(--primary);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      padding: var(--space-xs) var(--space-xs);
+      cursor: pointer;
+      border-radius: var(--rounded);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-toggle-btn:hover {
+      background-color: var(--surface-container-low);
+    }
+
+    .qa-toggle-btn svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform var(--dur-short) var(--ease-in-out);
+    }
+
+    .qa-toggle-btn[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+
+    .qa-panel {
+      display: none;
+      padding-top: var(--space-sm);
+      padding-bottom: var(--space-md);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    .qa-panel.is-open {
+      display: block;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    @keyframes panelFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .qa-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .qa-filter-tab {
+      min-height: 38px;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-filter-tab:hover {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    .qa-filter-tab.is-active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .qa-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      max-height: 150px;
+      overflow-y: auto;
+      padding: 2px;
+    }
+
+    .qa-num-btn {
+      position: relative;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 0.5rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--label-size);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-num-btn:hover {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .qa-num-btn:active {
+      transform: scale(0.96);
+    }
+
+    .qa-num-btn.status-selected {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+    }
+
+    .qa-num-btn.status-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive);
+    }
+
+    .qa-num-btn.status-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .qa-num-btn.is-starred::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 7px;
+      height: 7px;
+      border-radius: var(--rounded-full);
+      background-color: var(--star-active);
+    }
+
+    .qa-empty-note {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      padding: var(--space-sm) 0;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .main-container * {
+      min-width: 0;
+    }
+
+    /* Top Control & Report Dashboard Grid */
+    .top-panels {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: stretch;
+    }
+
+    .panel-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: var(--headline-size);
+      font-weight: 800;
+      color: var(--on-surface);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--surface-container);
+    }
+
+    /* Assessment Mode Selector */
+    .mode-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+
+    .mode-btn {
+      text-align: right;
+      min-height: 44px;
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1.5px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .mode-btn:hover {
+      background-color: var(--surface-container);
+      transform: translateY(-1px);
+    }
+
+    .mode-btn:active {
+      transform: scale(0.99);
+    }
+
+    .mode-btn.is-active {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .mode-btn-title {
+      font-size: var(--subhead-size);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .mode-btn-desc {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: auto;
+    }
+
+    .btn-primary {
+      flex: 1 1 180px;
+      min-height: 46px;
+      padding: 0.65rem 1.2rem;
+      border: 0;
+      border-radius: var(--rounded);
+      background-color: var(--primary);
+      color: var(--on-primary);
+      font-size: var(--body-size);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      flex: 1 1 150px;
+      min-height: 46px;
+      padding: 0.65rem 1.1rem;
+      border: 1.5px solid var(--outline);
+      border-radius: var(--rounded);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+    }
+
+    .btn-secondary.is-armed {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .inline-notice {
+      display: none;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .inline-notice.is-visible {
+      display: block;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    .inline-notice[data-tone="info"] {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      border-right: 4px solid var(--primary);
+    }
+
+    .inline-notice[data-tone="success"] {
+      background-color: var(--positive-bg);
+      color: var(--positive);
+      border-right: 4px solid var(--positive);
+    }
+
+    .inline-notice[data-tone="warn"] {
+      background-color: var(--warning-bg);
+      color: var(--warning);
+      border-right: 4px solid var(--warning);
+    }
+
+    /* Report Card (کارنامه) */
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    .stat-tile {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .stat-tile.stat-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive-border);
+      border-right-color: var(--positive);
+    }
+
+    .stat-tile.stat-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error-border);
+      border-right-color: var(--error);
+    }
+
+    .stat-tile.stat-unanswered {
+      background-color: var(--warning-bg);
+      border-color: var(--warning-border);
+      border-right-color: var(--warning);
+    }
+
+    .stat-tile.stat-score {
+      background-color: var(--primary-container);
+      border-color: var(--surface-container-high);
+      border-right-color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+
+    .stat-value {
+      font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.55rem);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.25;
+      color: var(--on-surface);
+    }
+
+    .stat-correct .stat-value { color: var(--positive); }
+    .stat-wrong .stat-value { color: var(--error); }
+    .stat-unanswered .stat-value { color: var(--warning); }
+    .stat-score .stat-value { color: var(--primary); }
+
+    .report-progress-wrap {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .report-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 600;
+    }
+
+    .progress-track {
+      height: 10px;
+      border-radius: var(--rounded-full);
+      background-color: var(--surface-container);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .progress-seg-correct {
+      background-color: var(--positive);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .progress-seg-wrong {
+      background-color: var(--error);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .progress-seg-answered {
+      background-color: var(--primary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* Section Headings */
+    .section-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .section-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--background);
+      border: var(--card-border);
+      border-right: 5px solid var(--primary);
+      border-radius: var(--rounded);
+    }
+
+    .section-banner h2 {
+      margin: 0;
+      font-size: var(--headline-size);
+      font-weight: 800;
+      color: var(--on-surface);
+    }
+
+    .section-count {
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--on-primary-container);
+      background-color: var(--primary-container);
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--rounded-full);
+    }
+
+    /* Reading Passage Box */
+    .passage-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+    }
+
+    .passage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .passage-title {
+      margin: 0;
+      font-size: var(--subhead-size);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .passage-tag {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--chip-read-ink);
+      background-color: var(--chip-read-bg);
+      padding: 0.15rem 0.7rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .passage-text {
+      direction: ltr;
+      text-align: left;
+      margin: 0;
+      color: var(--on-surface);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      background-color: var(--surface-container-low);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+    }
+
+    /* Question Card */
+    .question-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+      scroll-margin-top: var(--sticky-offset);
+      transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .question-card:hover {
+      border-color: var(--outline);
+    }
+
+    .question-card.is-highlighted {
+      box-shadow: 0 0 0 3px var(--primary);
+    }
+
+    .q-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .q-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .q-number-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 800;
+      color: var(--on-primary);
+      background-color: var(--primary);
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .q-level-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 700;
+      padding: 0.2rem 0.7rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .q-level-badge[data-cat="easy"] { background-color: var(--chip-easy-bg); color: var(--chip-easy-ink); }
+    .q-level-badge[data-cat="medium"] { background-color: var(--chip-med-bg); color: var(--chip-med-ink); }
+    .q-level-badge[data-cat="hard"] { background-color: var(--chip-hard-bg); color: var(--chip-hard-ink); }
+    .q-level-badge[data-cat="reading"] { background-color: var(--chip-read-bg); color: var(--chip-read-ink); }
+
+    /* Star Bookmark Button — strictly icon only, zero text */
+    .star-btn {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--outline);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .star-btn:hover {
+      background-color: var(--star-active-bg);
+      border-color: var(--star-active);
+      color: var(--star-active);
+      transform: scale(1.06);
+    }
+
+    .star-btn:active {
+      transform: scale(0.94);
+    }
+
+    .star-btn.is-starred {
+      background-color: var(--star-active-bg);
+      border-color: var(--star-active);
+      color: var(--star-active);
+    }
+
+    .star-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .q-prompt {
+      margin: 0;
+      font-size: clamp(1rem, 0.95rem + 0.2vw, 1.08rem);
+      font-weight: 700;
+      color: var(--on-surface);
+      line-height: 1.75;
+    }
+
+    .q-prompt.is-ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .q-context-quote {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      background-color: var(--surface-container-low);
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--rounded);
+      border-right: 3px solid var(--outline);
+      margin: 0;
+    }
+
+    .options-list {
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .option-btn {
+      width: 100%;
+      min-height: 48px;
+      padding: 0.7rem 1rem;
+      border-radius: var(--rounded);
+      border: 1.5px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      font-weight: 500;
+      text-align: right;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .option-btn.is-ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .option-btn:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .option-key {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--rounded-full);
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-size: var(--label-size);
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .option-text {
+      flex: 1 1 auto;
+      line-height: 1.55;
+    }
+
+    .option-btn.is-selected {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+      font-weight: 700;
+    }
+
+    .option-btn.is-selected .option-key {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .option-btn.is-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive);
+      font-weight: 700;
+    }
+
+    .option-btn.is-correct .option-key {
+      background-color: var(--positive);
+      color: var(--on-primary);
+    }
+
+    .option-btn.is-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+      font-weight: 700;
+    }
+
+    .option-btn.is-wrong .option-key {
+      background-color: var(--error);
+      color: var(--on-error);
+    }
+
+    /* Explanation Box */
+    .explanation-box {
+      display: none;
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    .explanation-box.is-visible {
+      display: block;
+    }
+
+    .explanation-box.tone-correct {
+      background-color: var(--positive-bg);
+      border: 1px solid var(--positive-border);
+      border-right: 4px solid var(--positive);
+      color: var(--on-surface);
+    }
+
+    .explanation-box.tone-wrong {
+      background-color: var(--error-bg);
+      border: 1px solid var(--error-border);
+      border-right: 4px solid var(--error);
+      color: var(--on-surface);
+    }
+
+    .explanation-box.tone-neutral {
+      background-color: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      border-right: 4px solid var(--warning);
+      color: var(--on-surface);
+    }
+
+    .explanation-status {
+      display: block;
+      font-weight: 800;
+      margin-bottom: var(--space-xs);
+    }
+
+    .explanation-box.tone-correct .explanation-status { color: var(--positive); }
+    .explanation-box.tone-wrong .explanation-status { color: var(--error); }
+    .explanation-box.tone-neutral .explanation-status { color: var(--warning); }
+
+    .source-footer {
+      text-align: center;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      padding: var(--space-md) 0 var(--space-xl);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 760px) {
+      .top-panels {
+        grid-template-columns: 1fr;
+      }
+      .app-header {
+        padding: var(--space-sm) var(--space-md);
+      }
+      .qa-inner {
+        padding: var(--space-xs) var(--space-md);
+      }
+      .main-container {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .mode-options {
+        grid-template-columns: 1fr;
+      }
+      .question-card, .panel-card, .passage-card {
+        padding: var(--space-md);
+      }
+      .header-inner {
+        gap: var(--space-sm);
+      }
+      .digital-timer {
+        padding: 0.35rem 0.65rem;
+        min-width: 4.75rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky Top Shell: Medical Blue Header + Quick Access Bar -->
+  <div class="sticky-shell" id="sticky-shell">
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="header-titles">
+          <h1>آزمون و تمرین تعاملی واژگان و درک مطلب زبان تخصصی دو</h1>
+          <p class="header-subtitle">ورودی مهر 1404</p>
+        </div>
+        <div id="live-timer" class="digital-timer" dir="ltr" aria-live="off">00:00</div>
+      </div>
+    </header>
+
+    <div class="quick-access-bar">
+      <div class="qa-inner">
+        <button type="button" id="qa-toggle-btn" class="qa-toggle-btn" aria-expanded="false" aria-controls="qa-panel" onclick="toggleQuickAccess()">
+          <span>دسترسی سریع به سوالات</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div id="qa-panel" class="qa-panel" role="region" aria-label="پنل دسترسی سریع به سوالات">
+          <div class="qa-filters" role="tablist" aria-label="فیلتر دسته‌بندی سوالات">
+            <button type="button" class="qa-filter-tab is-active" data-filter="all" onclick="setQuickFilter('all')">همه</button>
+            <button type="button" class="qa-filter-tab" data-filter="easy" onclick="setQuickFilter('easy')">ساده</button>
+            <button type="button" class="qa-filter-tab" data-filter="medium" onclick="setQuickFilter('medium')">متوسط</button>
+            <button type="button" class="qa-filter-tab" data-filter="hard" onclick="setQuickFilter('hard')">دشوار</button>
+            <button type="button" class="qa-filter-tab" data-filter="reading" onclick="setQuickFilter('reading')">درک مطلب</button>
+            <button type="button" class="qa-filter-tab" data-filter="starred" onclick="setQuickFilter('starred')">نشان‌دارها</button>
+          </div>
+          <div id="qa-grid" class="qa-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-container">
+    <!-- Top Dashboard: نوع ارزیابی + کارنامه -->
+    <div class="top-panels">
+      <section class="panel-card" aria-labelledby="mode-heading">
+        <h2 id="mode-heading" class="panel-title">نوع ارزیابی</h2>
+        <div class="mode-options" role="radiogroup" aria-labelledby="mode-heading">
+          <button type="button" id="btn-mode-practice" class="mode-btn is-active" role="radio" aria-checked="true" onclick="setMode('practice')">
+            <span class="mode-btn-title">حالت تمرین</span>
+            <span class="mode-btn-desc">بازخورد آنی و پاسخ تشریحی فوری</span>
+          </button>
+          <button type="button" id="btn-mode-exam" class="mode-btn" role="radio" aria-checked="false" onclick="setMode('exam')">
+            <span class="mode-btn-title">حالت آزمون</span>
+            <span class="mode-btn-desc">تصحیح نهایی پس از پایان آزمون</span>
+          </button>
+        </div>
+        <div class="action-row">
+          <button type="button" id="btn-submit-exam" class="btn-primary" onclick="submitAssessment()">ثبت و تصحیح آزمون</button>
+          <button type="button" id="btn-reset-all" class="btn-secondary" onclick="handleResetClick(this)">بازنشانی پاسخ‌ها</button>
+        </div>
+        <div id="inline-notice" class="inline-notice" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="panel-card" id="report-section" aria-labelledby="report-heading">
+        <h2 id="report-heading" class="panel-title">کارنامه</h2>
+        <div class="report-grid">
+          <div class="stat-tile stat-correct">
+            <span class="stat-label">درست</span>
+            <span class="stat-value" id="stat-correct">0</span>
+          </div>
+          <div class="stat-tile stat-wrong">
+            <span class="stat-label">نادرست</span>
+            <span class="stat-value" id="stat-wrong">0</span>
+          </div>
+          <div class="stat-tile stat-unanswered">
+            <span class="stat-label">پاسخ‌نداده / نزده</span>
+            <span class="stat-value" id="stat-unanswered">51</span>
+          </div>
+          <div class="stat-tile stat-score">
+            <span class="stat-label">نمره از ۲۰</span>
+            <span class="stat-value" id="stat-score"><bdi dir="ltr">0.00 / 20</bdi></span>
+          </div>
+        </div>
+        <div class="report-progress-wrap">
+          <div class="report-progress-meta">
+            <span id="progress-label">پاسخ‌داده‌شده: ۰ از ۵۱</span>
+            <span id="progress-pct"><bdi dir="ltr">0%</bdi></span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="prog-correct" class="progress-seg-correct" style="width: 0%;"></div>
+            <div id="prog-wrong" class="progress-seg-wrong" style="width: 0%;"></div>
+            <div id="prog-answered" class="progress-seg-answered" style="width: 0%;"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-root"></div>
+
+    <footer class="source-footer">
+      مبتنی بر درس پنجم جزوه زبان تخصصی دو (Unit 5: Integumentary System, Wound Management & Tissue Trauma) — دانشکده پزشکی دانشگاه علوم پزشکی شهید بهشتی
+    </footer>
+  </main>
+
+  <api-shim></api-shim>
+  <script>
+    const PASSAGES = {
+      r1: {
+        title: `متن اول (Passage 1): Physiological Functions and Regional Variation of Skin`,
+        tag: `سوالات ۴۳ تا ۴۵`,
+        text: `The integumentary system is an intricate organ that serves as a protective buffer between the internal homeostatic environment and external noxious agents. Skin durability and impermeability conserve water and body temperature while supporting active cutaneous immunosurveillance. Teleologically, marked regional variation develops across different body anatomical sites: areas subjected to high friction (such as the soles) feature thickened stratum corneum layers, whereas areas requiring mobility possess high dermal elastic fiber density. Furthermore, skin collagen fibers are oriented in specific axes, forming tension lines that dictate how wound edges gape when cutaneous continuity is violated.`
+      },
+      r2: {
+        title: `متن دوم (Passage 2): Traumatic Wound Management & Surgical Closure Principles`,
+        tag: `سوالات ۴۶ تا ۴۸`,
+        text: `Managing traumatic skin wounds requires systematic evaluation of tissue integrity. High-risk injuries—such as canine bites or 'clenched fist' punch wounds over metacarpophalangeal joints—inoculate oral bacteria deep into fascia and tendons. Initial management mandates copious saline irrigation and surgical débridement of devitalized tissue debris. Heavily contaminated wounds should not undergo immediate primary closure; instead, clinicians utilize delayed primary closure or allow wounds to heal by secondary intention. When large soft tissue defects remain, split-thickness skin grafts or reconstructive surgery are employed to re-establish tissue continuity.`
+      },
+      r3: {
+        title: `متن سوم (Passage 3): Pathophysiology of Chemical Burns and Extravasation Injuries`,
+        tag: `سوالات ۴۹ تا ۵۱`,
+        text: `Chemical burns and IV extravasation injuries represent severe forms of tissue destruction. Alkaline chemical exposures cause liquefactive necrosis, saponifying tissue fats and allowing rapid, deep agent penetrability. Conversely, acid exposures cause coagulation necrosis, forming a protective eschar that limits tissue penetration. In pediatric neonates, small vascular caliber and cutaneous fragility heightened the severity of extravasation injuries when hypertonic fluids leak into interstitial spaces. Immediate management includes stopping the infusion, irrigating the site, and creating small percutaneous puncture incisions to encourage fluid egress and prevent tissue induration.`
+      }
+    };
+
+    const QUESTIONS = [
+      {
+        id: 1, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Thick epidermal layers on the ________ of the feet provide mechanical protection against repetitive pressure during walking.`,
+        options: [`soles`, `extremities`, `incisions`, `neonates`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">soles</bdi> به معنای «کف پاها» است.`
+      },
+      {
+        id: 2, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Human skin is ________ two main layers: the superficial avascular epidermis and the deeper vascular dermis.`,
+        options: [`taken into account`, `healed by secondary intention`, `composed of`, `oriented perpendicularly`],
+        correct: 2,
+        explanation: `عبارت <bdi dir="ltr">composed of</bdi> به معنای «تشکیل‌شده از» است.`
+      },
+      {
+        id: 3, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `________ exposure to caustic household chemicals can cause severe full-thickness dermal burns.`,
+        options: [`Innocuous`, `Fuming`, `Prolonged`, `Adjacent`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">prolonged</bdi> به معنای «طولانی‌مدت» است.`
+      },
+      {
+        id: 4, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Initial wound management begins with thorough skin ________ using sterile isotonic saline to remove loose surface dirt.`,
+        options: [`cleansing`, `extravasation`, `saponification`, `induration`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">cleansing</bdi> به معنای «شستشو و پاکسازی» است.`
+      },
+      {
+        id: 5, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `High-voltage electrical trauma to a lower ________ often results in extensive deep muscle and neurovascular necrosis.`,
+        options: [`incision`, `extremity`, `debris`, `sole`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">extremity</bdi> به معنای «اندام (دست یا پا)» است.`
+      },
+      {
+        id: 6, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Superficial abrasion injuries appearing relatively ________ can still harbor pathogenic clostridial spores if contaminated with soil.`,
+        options: [`devitalized`, `caustic`, `fuming`, `innocuous`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">innocuous</bdi> به معنای «بی‌خطر و بی‌ضرر» است.`
+      },
+      {
+        id: 7, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Premature ________ exhibit heightened epidermal permeability, putting them at elevated risk for systemic toxic chemical absorption.`,
+        options: [`stab wounds`, `neonates`, `extremities`, `grafts`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">neonates</bdi> به معنای «نوزادان تازه متولدشده» است.`
+      },
+      {
+        id: 8, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Tissue damage following acid chemical burns directly correlates with the overall chemical ________ of the offending agent.`,
+        options: [`induration`, `continuity`, `concentration`, `debris`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">concentration</bdi> به معنای «غلظت» است.`
+      },
+      {
+        id: 9, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Extreme capillary ________ in premature infants predisposes them to intravenous line extravasation injuries.`,
+        options: [`impermeability`, `induration`, `fragility`, `durability`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">fragility</bdi> به معنای «شکنندگی و آسیب‌پذیری» است.`
+      },
+      {
+        id: 10, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Deep penetrating abdominal ________ require urgent surgical exploration to rule out visceral perforation.`,
+        options: [`stab wounds`, `soles`, `split-thickness grafts`, `dressings`],
+        correct: 0,
+        explanation: `عبارت <bdi dir="ltr">stab wounds</bdi> به معنای «زخم‌های ناشی از چاقو یا اجسام تیز» است.`
+      },
+      {
+        id: 11, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Inflammatory edema can rapidly spread to involve ________ subcutaneous tissue structures surrounding a burn wound.`,
+        options: [`fuming`, `adjacent`, `percutaneous`, `innocuous`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">adjacent</bdi> به معنای «مجاور و همسایه» است.`
+      },
+      {
+        id: 12, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Making a clean surgical ________ along Langer’s skin tension lines optimizes cosmetic wound healing.`,
+        options: [`debility`, `saponification`, `extravasation`, `incision`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">incision</bdi> به معنای «برش جراحی» است.`
+      },
+      {
+        id: 13, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `The human ________ system serves as a dynamic physical barrier regulating water loss and body temperature.`,
+        options: [`liquefactive`, `iatrogenic`, `percutaneous`, `integumentary`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">integumentary</bdi> (<bdi dir="ltr">integument</bdi>) به معنای «دستگاه پوششی / پوست» است.`
+      },
+      {
+        id: 14, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Deep burn injuries can severely damage ________ dermal vessels and cutaneous nerve plexuses.`,
+        options: [`underlying`, `innocuous`, `adjacent`, `fuming`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">underlying</bdi> به معنای «زیرین و زمینه‌ای» است.`
+      },
+      {
+        id: 15, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Stratum corneum lipid layers confer relative ________ against water loss and external water-soluble chemical penetration.`,
+        options: [`morbidity`, `induration`, `continuity`, `impermeability`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">impermeability</bdi> به معنای «نفوذناپذیری» است.`
+      },
+      {
+        id: 16, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Epidermal keratinization provides mechanical ________, protecting underlying tissues against shear force damage.`,
+        options: [`durability`, `penetrability`, `fragility`, `saponification`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">durability</bdi> به معنای «دوام، استحکام و مقاومت» است.`
+      },
+      {
+        id: 17, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Specialized sensory nerve ________ in fingertips allows precise touch discrimination.`,
+        options: [`induration`, `extravasation`, `innervation`, `saponification`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">innervation</bdi> به معنای «عصب‌دهی بافتی» است.`
+      },
+      {
+        id: 18, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Full-thickness skin lacerations disrupt tissue ________, requiring suture re-approximation.`,
+        options: [`saponification`, `continuity`, `induration`, `extravasation`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">continuity</bdi> به معنای «پیوستگی و یکپارچگی بافتی» است.`
+      },
+      {
+        id: 19, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Accidental exposure to concentrated ________ alkaline solutions causes deep tissue injury through membrane lipid disruption.`,
+        options: [`percutaneous`, `caustic`, `adjacent`, `innocuous`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">caustic</bdi> به معنای «سوزاننده و خورنده شیمیایی» است.`
+      },
+      {
+        id: 20, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Traumatic limb compression during industrial machinery accidents can cause severe ________ soft tissue injuries.`,
+        options: [`percutaneous`, `baseline`, `innocuous`, `degloving`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">degloving</bdi> به معنای «کنده‌شدن پوست و بافت‌های نرم (دگلاوینگ)» است.`
+      },
+      {
+        id: 21, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Surgical ________ is mandatory to remove contaminated tissue ________ and infected cellular elements from open wounds.`,
+        options: [`incision / soles`, `extravasation / graft`, `débridement / debris`, `saponification / extremity`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">débridement</bdi> به معنای «دبریدمان (پیرایش بافت مرده)» و <bdi dir="ltr">debris</bdi> به معنای «آوار و نخاله‌های بافتی» است.`
+      },
+      {
+        id: 22, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Emergency management of chemical ocular burns mandates ________ intraocular ________ with sterile saline for at least 30 minutes.`,
+        options: [`copious / irrigation`, `percutaneous / incision`, `liquefactive / induration`, `delayed / closure`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">copious</bdi> به معنای «فراوان» و <bdi dir="ltr">irrigation</bdi> به معنای «شستشو و شستشوی چشمی/زخمی» است.`
+      },
+      {
+        id: 23, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Excision of ________, necrotic muscle tissue reduces the risk of gas gangrene infection in open fractures.`,
+        options: [`innocuous`, `devitalized`, `fuming`, `adjacent`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">devitalized</bdi> به معنای «غیرزنده و مرده» است.`
+      },
+      {
+        id: 24, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Alkaline chemical burns cause ________ necrosis by inducing tissue lipid ________ and protein denaturation.`,
+        options: [`secondary / debility`, `percutaneous / continuity`, `liquefactive / saponification`, `fuming / induration`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">liquefactive</bdi> به معنای «نکروزان مایع‌شونده» و <bdi dir="ltr">saponification</bdi> به معنای «صابونی شدن چربی بافت» است.`
+      },
+      {
+        id: 25, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Severe facial burn scars often require complex ________ to restore function and anatomical contour.`,
+        options: [`reconstructive surgery`, `delayed primary closure`, `split-thickness graft`, `expectant approach`],
+        correct: 0,
+        explanation: `عبارت <bdi dir="ltr">reconstructive surgery</bdi> به معنای «جراحی ترمیمی و بازسازی» است.`
+      },
+      {
+        id: 26, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Prompt fluid administration ________ toxic extravasated drug agents when hypertonic fluid ________ into subcutaneous tissue.`,
+        options: [`inoculates / irrigates`, `dilutes / extravasates`, `violates / heals`, `saponifies / debrides`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">dilutes</bdi> به معنای «رقیق می‌کند» و <bdi dir="ltr">extravasates</bdi> به معنای «نشت می‌کند / از عروق به بافت بیرون می‌زند» است.`
+      },
+      {
+        id: 27, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Physical examination revealed marked cutaneous ________ and erythema around the peripheral intravenous site.`,
+        options: [`extremity`, `continuity`, `saponification`, `induration`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">induration</bdi> به معنای «سفت‌شدگی بافت / ایندوراسیون» است.`
+      },
+      {
+        id: 28, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Central venous catheter placement via ________ subclavian vein cannulation carries a risk of accidental pneumothorax.`,
+        options: [`liquefactive`, `fuming`, `caustic`, `percutaneous`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">percutaneous</bdi> به معنای «از طریق پوست / پوستی» است.`
+      },
+      {
+        id: 29, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Temporary split-skin grafting combined with strict joint ________ accelerates healing in severe burn wounds over extremities.`,
+        options: [`extravasation`, `immobilization`, `induration`, `saponification`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">immobilization</bdi> به معنای «بی‌حرکت‌سازی» است.`
+      },
+      {
+        id: 30, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Coverage of extensive thermal burn defects is typically achieved using ________ harvested with a dermatome.`,
+        options: [`stab wound incisions`, `delayed primary closures`, `fuming nitric acids`, `split-thickness skin grafts`],
+        correct: 3,
+        explanation: `عبارت <bdi dir="ltr">split-thickness skin grafts</bdi> به معنای «پیوندهای پوستی با ضخامت نسبی» است.`
+      },
+      {
+        id: 31, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `The simple appearance of a puncture wound ________ its underlying structural damage, masking the need for active dermal ________.`,
+        options: [`belies / immunosurveillance`, `extravasates / débridement`, `dilutes / immobilization`, `saponifies / induration`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">belies</bdi> به معنای «برخلاف ظاهر نشان دادن / پنهان کردن حقیقت» و <bdi dir="ltr">immunosurveillance</bdi> به معنای «پایش ایمنی» است.`
+      },
+      {
+        id: 32, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `________ speaking, dermal structural differences reflect functional adaptations as distinct ________ across body sites.`,
+        options: [`Percutaneously / induration occurs`, `Teleologically / regional variation develops`, `Iatrogenically / extravasation spreads`, `Liquefactively / saponification sets in`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">Teleologically</bdi> به معنای «از نظر غایت‌شناختی» و <bdi dir="ltr">regional variation develops</bdi> به معنای «تنوع منطقه‌ای شکل می‌گیرد» است.`
+      },
+      {
+        id: 33, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Collagen fibers ________ to tension lines prevent skin tearing when ________ forces are applied across a joint.`,
+        options: [`inoculated iatrogenically / fuming`, `oriented perpendicularly / shear`, `diluted percutaneously / caustic`, `saponified adjacent / innocuous`],
+        correct: 1,
+        explanation: `عبارت <bdi dir="ltr">oriented perpendicularly</bdi> به معنای «به صورت عمود قرارگرفته» و <bdi dir="ltr">shear</bdi> به معنای «نیروی برشی» است.`
+      },
+      {
+        id: 34, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Heavily contaminated lacerations should not be closed immediately; allowing them to ________ or executing ________ minimizes abscess risk.`,
+        options: [`extravasate hypertonic fluids / expected approach`, `undergo saponification / percutaneous incision`, `heal by secondary intention / delayed primary closure`, `violate continuity / copious irrigation`],
+        correct: 2,
+        explanation: `عبارت <bdi dir="ltr">heal by secondary intention</bdi> به معنای «ترمیم با مرحله دوم» و <bdi dir="ltr">delayed primary closure</bdi> به معنای «بستن اولیه با تأخیر» است.`
+      },
+      {
+        id: 35, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Polymicrobial oral flora are routinely ________ into deep soft tissue following ________ bite injuries or "________" punch traumas.`,
+        options: [`extravasated / percutaneous / split-thickness`, `indurated / caustic / devitalized`, `inoculated / canine / clenched fist`, `saponified / fuming / stab wound`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">inoculated</bdi> به معنای «واردشده/تزریق‌شده»، <bdi dir="ltr">canine</bdi> به معنای «دندان نیش سگ» و <bdi dir="ltr">clenched fist</bdi> به معنای «مشت گره‌کرده» است.`
+      },
+      {
+        id: 36, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Subcutaneous tissue damage induced ________ during IV line placement depends on the agent's tissue ________.`,
+        options: [`teleologically / induration`, `innocuously / fragility`, `percutaneously / saponification`, `iatrogenically / penetrability`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">iatrogenically</bdi> به معنای «به طور ایاتروژنیک (ناشی از اقدامات پزشکی)» و <bdi dir="ltr">penetrability</bdi> به معنای «قدرت نفوذپذیری» است.`
+      },
+      {
+        id: 37, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Surgical incision and drainage was ________ by burn specialists despite ________ reports advocating conservative therapy to ________ local toxins.`,
+        options: [`advocated / anecdotal / detoxify`, `saponified / percutaneous / dilute`, `extravasated / iatrogenic / irrigate`, `indurated / fuming / violate`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">advocated</bdi> به معنای «توصیه‌شده»، <bdi dir="ltr">anecdotal</bdi> به معنای «مبتنی بر شواهد متفرق/موردی» و <bdi dir="ltr">detoxify</bdi> به معنای «سم‌زدایی کردن» است.`
+      },
+      {
+        id: 38, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Severe ________ hypertonic fluid into ________ spaces increases microvascular ________, causing tissue edema.`,
+        options: [`saponification of / percutaneous / induration`, `débridement of / adjacent / durability`, `immobilization of / fuming / penetrability`, `leakage of / interstitial / permeability`],
+        correct: 3,
+        explanation: `عبارت <bdi dir="ltr">leakage of</bdi> به معنای «نشتِ»، <bdi dir="ltr">interstitial</bdi> به معنای «میان‌بافتی» و <bdi dir="ltr">permeability</bdi> به معنای «نفوذپذیری» است.`
+      },
+      {
+        id: 39, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Small vascular ________ in neonates makes IV access difficult, especially when infants cannot ________ their pain.`,
+        options: [`induration / saponify`, `caliber / verbalize`, `continuity / extravasate`, `debris / irrigate`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">caliber</bdi> به معنای «کالیبر/قطر عروق» و <bdi dir="ltr">verbalize</bdi> به معنای «بیان شفاهی کردن» است.`
+      },
+      {
+        id: 40, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Extravasation injuries can be ________ if subtle tissue changes are ________ during initial nursing checks.`,
+        options: [`perpetuated / not readily apparent`, `irrigated / healed by secondary intention`, `debrided / taken into account`, `saponified / oriented perpendicularly`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">perpetuated</bdi> به معنای «تداوم‌یافته/استمراریافته» و عبارت <bdi dir="ltr">not readily apparent</bdi> به معنای «نه چندان آشکار در ابتدا» است.`
+      },
+      {
+        id: 41, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Deep tissue fluid accumulation in close ________ to major neurovascular bundles requires prompt surgical incision for fluid ________.`,
+        options: [`induration / saponification`, `proximity / egress`, `fragility / immobilization`, `durability / extravasation`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">proximity</bdi> به معنای «مجاورت و نزدیکی» و <bdi dir="ltr">egress</bdi> به معنای «خروج و تخلیه مایع» است.`
+      },
+      {
+        id: 42, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Recurrent inflammatory ________ in chronic leg ulcers warrant shifting from an ________ to active surgical reconstruction.`,
+        options: [`saponifications / percutaneous incision`, `indurations / iatrogenic closure`, `extravasations / innocuous débridement`, `exacerbations / expectant approach`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">exacerbations</bdi> به معنای «شعله‌وری‌ها و وخامت‌ها» و عبارت <bdi dir="ltr">expectant approach</bdi> به معنای «رویکرد انتظاری و محافظه‌کارانه» است.`
+      },
+      {
+        id: 43, category: `reading`, catLabel: `درک مطلب — متن ۱ (ساده)`, isReading: true, passageId: `r1`,
+        prompt: `What is the primary homeostatic function of the integumentary barrier?`,
+        options: [`To synthesize bile acids`, `To absorb dietary carbohydrates`, `To conserve body water and protect against external noxious agents`, `To generate systemic arterial blood pressure`],
+        correct: 2,
+        explanation: `بر اساس متن، حفظ آب بدن و محافظت در برابر عوامل زیان‌بار بیرونی وظیفه اصلی پوست است.`
+      },
+      {
+        id: 44, category: `reading`, catLabel: `درک مطلب — متن ۱ (متوسط)`, isReading: true, passageId: `r1`,
+        prompt: `Why does structural regional variation develop across different human anatomical skin sites?`,
+        options: [`To eliminate the need for sensory nerve innervation.`, `Because cutaneous immunosurveillance occurs only on the face.`, `To adapt to specific local physical demands such as friction, pressure, or mobility.`, `To prevent systemic lipid saponification.`],
+        correct: 2,
+        explanation: `تنوع منطقه‌ای پوست برای انطباق با فشارهای فیزیکی موضعی مانند اصطکاک یا حرکت شکل می‌گیرد.`
+      },
+      {
+        id: 45, category: `reading`, catLabel: `درک مطلب — متن ۱ (دشوار)`, isReading: true, passageId: `r1`,
+        prompt: `How do dermal collagen fiber orientations along skin tension lines impact surgical wound closure?`,
+        options: [`Incisions parallel to tension lines experience less tension and gape less, optimizing cosmetic healing.`, `They prevent all cutaneous bacterial colonization.`, `They completely eliminate the need for surgical suture materials.`, `They induce immediate liquefactive necrosis of wound margins.`],
+        correct: 0,
+        explanation: `قرارگیری برش موازی با خطوط کشش پوست باعث کشیدگی کمتر، دهان‌بازنکردن زخم و بهبود زیبایی ترمیم می‌شود.`
+      },
+      {
+        id: 46, category: `reading`, catLabel: `درک مطلب — متن ۲ (ساده)`, isReading: true, passageId: `r2`,
+        prompt: `What is the essential initial step in managing open, contaminated traumatic wounds?`,
+        options: [`Immediate primary suture closure of all wound edges`, `Copious saline irrigation and surgical débridement of devitalized debris`, `Injecting concentrated caustic chemicals into the wound`, `Applying tight pressure bandages without cleaning`],
+        correct: 1,
+        explanation: `شستشوی فراوان با سالین و دبریدمان جراحی بافت‌های مرده گام نخست درمان زخم‌های آلوده است.`
+      },
+      {
+        id: 47, category: `reading`, catLabel: `درک مطلب — متن ۲ (متوسط)`, isReading: true, passageId: `r2`,
+        prompt: `Why are "clenched fist" punch injuries considered clinically dangerous high-risk wounds?`,
+        options: [`Because they inoculate oral pathogens deep into joint capsules and tendon sheaths.`, `Because they heal instantly without medical intervention.`, `Because they never cause any pain.`, `Because they involve only superficial epidermal layers.`],
+        correct: 0,
+        explanation: `زیرا این زخم‌ها باکتری‌های دهان را به عمق کپسول مفصلی و نیام‌های تاندونی وارد می‌کنند.`
+      },
+      {
+        id: 48, category: `reading`, catLabel: `درک مطلب — متن ۲ (دشوار)`, isReading: true, passageId: `r2`,
+        prompt: `What justifies choosing "delayed primary closure" over immediate suture closure in heavily contaminated wounds?`,
+        options: [`It allows time for the skin to develop new nerve innervation.`, `It permanently eliminates the need for skin grafting.`, `It permits a period of open drainage and decontaminating irrigation, reducing the risk of closed deep abscess formation.`, `It accelerates lipid saponification of the dermis.`],
+        correct: 2,
+        explanation: `این کار امکان درین آزاد و ضدعفونی را فراهم ساخته و شانس تشکیل آبسه عمیق بسته را کاهش می‌دهد.`
+      },
+      {
+        id: 49, category: `reading`, catLabel: `درک مطلب — متن ۳ (ساده)`, isReading: true, passageId: `r3`,
+        prompt: `What pathological process distinguishes alkaline chemical burns from acid chemical burns?`,
+        options: [`Acids cause immediate saponification of fat.`, `Acids cause complete nerve regeneration within hours.`, `Alkalies form a hard protective skin eschar.`, `Alkalies cause liquefactive necrosis and fat saponification, permitting deeper tissue penetration.`],
+        correct: 3,
+        explanation: `بازها باعث نکروز مایع‌شونده و صابونی‌شدن چربی شده و امکان نفوذ عمیق‌تر شیمیایی را فراهم می‌سازند.`
+      },
+      {
+        id: 50, category: `reading`, catLabel: `درک مطلب — متن ۳ (متوسط)`, isReading: true, passageId: `r3`,
+        prompt: `Why are neonates at particularly high risk for severe intravenous extravasation injuries?`,
+        options: [`Due to small vascular caliber, fragile capillary walls, and an inability to verbalize early pain.`, `Because hypertonic fluids become non-toxic in infants.`, `Because neonates have excessively thick skin layers.`, `Because neonates lack an active immune system.`],
+        correct: 0,
+        explanation: `به دلیل قطر کم عروق، شکنندگی مویرگ‌ها و عدم توانایی نوزاد در بیان شفاهی درد.`
+      },
+      {
+        id: 51, category: `reading`, catLabel: `درک مطلب — متن ۳ (دشوار)`, isReading: true, passageId: `r3`,
+        prompt: `What is the therapeutic rationale for creating small percutaneous puncture incisions following severe IV fluid extravasation?`,
+        options: [`To allow direct visualization of subcutaneous nerve fibers.`, `To induce immediate secondary intention scar formation.`, `To facilitate mechanical egress of extravasated toxic hypertonic fluid and relieve interstitial pressure.`, `To inoculate commensal skin bacteria into the site.`],
+        correct: 2,
+        explanation: `برای تسهیل خروج فیزیکی مایع سمی نشت‌کرده و کاهش فشار شدید میان‌بافتی.`
+      }
+    ];
+
+    const TOTAL_QUESTIONS = 51;
+    const EXAM_DURATION_SEC = 51 * 60;
+    const PERSIAN_LETTERS = [`الف`, `ب`, `ج`, `د`];
+    const ENGLISH_LETTERS = [`A`, `B`, `C`, `D`];
+
+    const state = {
+      mode: `practice`,         // 'practice' | 'exam'
+      answers: {},              // { [id]: optionIndex }
+      starred: {},              // { [id]: true }
+      submitted: false,
+      quickOpen: false,
+      quickFilter: `all`,       // 'all' | 'easy' | 'medium' | 'hard' | 'reading' | 'starred'
+      timerStarted: false,
+      timerRunning: false,
+      elapsedSec: 0,            // used in practice mode
+      remainingSec: EXAM_DURATION_SEC
+    };
+
+    let timerInterval = null;
+    let resetConfirmTimer = null;
+
+    function formatTime(totalSec) {
+      const safe = Math.max(0, Math.floor(totalSec));
+      const mins = Math.floor(safe / 60);
+      const secs = safe % 60;
+      return `${String(mins).padStart(2, `0`)}:${String(secs).padStart(2, `0`)}`;
+    }
+
+    function toPersianDigits(val) {
+      const map = [`۰`, `۱`, `۲`, `۳`, `۴`, `۵`, `۶`, `۷`, `۸`, `۹`];
+      return String(val).replace(/\d/g, d => map[Number(d)]);
+    }
+
+    function updateStickyOffset() {
+      const shell = document.getElementById(`sticky-shell`);
+      if (!shell) return;
+      const h = shell.getBoundingClientRect().height;
+      document.documentElement.style.setProperty(`--sticky-offset`, `${Math.ceil(h + 14)}px`);
+    }
+
+    function updateTimerDisplay() {
+      const el = document.getElementById(`live-timer`);
+      if (!el) return;
+      if (state.mode === `practice`) {
+        el.textContent = formatTime(state.elapsedSec);
+        el.classList.remove(`timer-warning`);
+      } else {
+        el.textContent = formatTime(state.remainingSec);
+        if (state.remainingSec <= 300 && state.timerStarted && !state.submitted) {
+          el.classList.add(`timer-warning`);
+        } else {
+          el.classList.remove(`timer-warning`);
+        }
+      }
+    }
+
+    function stopTimer() {
+      if (timerInterval !== null) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      state.timerRunning = false;
+    }
+
+    function startTimerIfNeeded() {
+      if (state.submitted || state.timerRunning) return;
+      state.timerStarted = true;
+      state.timerRunning = true;
+      if (timerInterval !== null) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (state.submitted) {
+          stopTimer();
+          return;
+        }
+        if (state.mode === `practice`) {
+          state.elapsedSec += 1;
+          updateTimerDisplay();
+          if (state.elapsedSec % 5 === 0) persistState();
+        } else {
+          if (state.remainingSec > 0) {
+            state.remainingSec -= 1;
+            updateTimerDisplay();
+            if (state.remainingSec % 5 === 0) persistState();
+          }
+          if (state.remainingSec <= 0) {
+            stopTimer();
+            submitAssessment(true);
+          }
+        }
+      }, 1000);
+    }
+
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState({
+            mode: state.mode,
+            answers: state.answers,
+            starred: state.starred,
+            submitted: state.submitted,
+            quickOpen: state.quickOpen,
+            quickFilter: state.quickFilter,
+            timerStarted: state.timerStarted,
+            elapsedSec: state.elapsedSec,
+            remainingSec: state.remainingSec
+          });
+        } catch (err) {
+          // Non-fatal persistence error
+        }
+      }
+    }
+
+    function showNotice(text, tone) {
+      const box = document.getElementById(`inline-notice`);
+      if (!box) return;
+      if (!text) {
+        box.className = `inline-notice`;
+        box.textContent = ``;
+        return;
+      }
+      box.className = `inline-notice is-visible`;
+      box.setAttribute(`data-tone`, tone || `info`);
+      box.textContent = text;
+    }
+
+    function renderAllQuestions() {
+      const root = document.getElementById(`questions-root`);
+      if (!root) return;
+
+      const sections = [
+        { title: `بخش اول: واژگان — سطح ساده`, count: `۱۲ سوال (۱ تا ۱۲)`, items: QUESTIONS.filter(q => q.category === `easy`) },
+        { title: `بخش دوم: واژگان — سطح متوسط`, count: `۱۸ سوال (۱۳ تا ۳۰)`, items: QUESTIONS.filter(q => q.category === `medium`) },
+        { title: `بخش سوم: واژگان — سطح دشوار`, count: `۱۲ سوال (۳۱ تا ۴۲)`, items: QUESTIONS.filter(q => q.category === `hard`) },
+        { title: `بخش چهارم: درک مطلب متون درس پنجم`, count: `۹ سوال (۴۳ تا ۵۱)`, items: QUESTIONS.filter(q => q.category === `reading`), isReadingSection: true }
+      ];
+
+      let html = ``;
+      for (const sec of sections) {
+        html += `<section class="section-group">`;
+        html += `<div class="section-banner"><h2>${sec.title}</h2><span class="section-count">${sec.count}</span></div>`;
+
+        if (!sec.isReadingSection) {
+          for (const q of sec.items) {
+            html += buildQuestionCardHTML(q);
+          }
+        } else {
+          const passageGroups = [`r1`, `r2`, `r3`];
+          for (const pid of passageGroups) {
+            const p = PASSAGES[pid];
+            html += `
+              <article class="passage-card">
+                <div class="passage-header">
+                  <h3 class="passage-title">${p.title}</h3>
+                  <span class="passage-tag">${p.tag}</span>
+                </div>
+                <p class="passage-text">${p.text}</p>
+              </article>
+            `;
+            const groupQs = sec.items.filter(q => q.passageId === pid);
+            for (const q of groupQs) {
+              html += buildQuestionCardHTML(q);
+            }
+          }
+        }
+        html += `</section>`;
+      }
+
+      root.innerHTML = html;
+      refreshAllQuestionCards();
+    }
+
+    function buildQuestionCardHTML(q) {
+      const letters = ENGLISH_LETTERS;
+      const optionsHTML = q.options.map((opt, idx) => `
+        <button type="button" class="option-btn is-ltr" id="q-${q.id}-opt-${idx}" onclick="selectOption(${q.id}, ${idx})">
+          <span class="option-key">${letters[idx]}</span>
+          <span class="option-text">${opt}</span>
+        </button>
+      `).join(``);
+
+      return `
+        <article class="question-card" id="q-card-${q.id}">
+          <div class="q-top-row">
+            <div class="q-meta">
+              <span class="q-number-badge">سوال ${toPersianDigits(q.id)}</span>
+              <span class="q-level-badge" data-cat="${q.category}">${q.catLabel}</span>
+            </div>
+            <button type="button" class="star-btn" id="star-btn-${q.id}" aria-label="نشان‌دار کردن سوال ${q.id}" aria-pressed="false" onclick="toggleStar(${q.id})">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </button>
+          </div>
+          <p class="q-prompt is-ltr">${q.prompt}</p>
+          ${q.context ? `<p class="q-context-quote">شاهد متنی: <bdi dir="ltr">${q.context}</bdi></p>` : ``}
+          <div class="options-list" role="group" aria-label="گزینه‌های سوال ${q.id}">
+            ${optionsHTML}
+          </div>
+          <div class="explanation-box" id="exp-box-${q.id}"></div>
+        </article>
+      `;
+    }
+
+    function refreshQuestionCard(q) {
+      const chosen = state.answers[q.id];
+      const hasAnswer = chosen !== undefined;
+      const revealFeedback = (state.mode === `practice` && hasAnswer) || state.submitted;
+
+      for (let i = 0; i < q.options.length; i++) {
+        const btn = document.getElementById(`q-${q.id}-opt-${i}`);
+        if (!btn) continue;
+        btn.classList.remove(`is-selected`, `is-correct`, `is-wrong`);
+        btn.disabled = state.submitted || (state.mode === `practice` && hasAnswer);
+
+        if (revealFeedback) {
+          if (i === q.correct) {
+            btn.classList.add(`is-correct`);
+          } else if (hasAnswer && i === chosen && chosen !== q.correct) {
+            btn.classList.add(`is-wrong`);
+          }
+        } else if (hasAnswer && i === chosen) {
+          btn.classList.add(`is-selected`);
+        }
+      }
+
+      const expBox = document.getElementById(`exp-box-${q.id}`);
+      if (expBox) {
+        if (revealFeedback) {
+          let tone = `tone-neutral`;
+          let statusLabel = `پاسخ‌نداده (نزده)`;
+          if (hasAnswer) {
+            if (chosen === q.correct) {
+              tone = `tone-correct`;
+              statusLabel = `پاسخ صحیح`;
+            } else {
+              tone = `tone-wrong`;
+              statusLabel = `پاسخ نادرست`;
+            }
+          }
+          const letters = ENGLISH_LETTERS;
+          expBox.className = `explanation-box is-visible ${tone}`;
+          expBox.innerHTML = `
+            <span class="explanation-status">${statusLabel} — گزینه درست: ${letters[q.correct]}</span>
+            <div>${q.explanation}</div>
+          `;
+        } else {
+          expBox.className = `explanation-box`;
+          expBox.innerHTML = ``;
+        }
+      }
+
+      const starBtn = document.getElementById(`star-btn-${q.id}`);
+      if (starBtn) {
+        const isStarred = Boolean(state.starred[q.id]);
+        starBtn.classList.toggle(`is-starred`, isStarred);
+        starBtn.setAttribute(`aria-pressed`, isStarred ? `true` : `false`);
+        const poly = starBtn.querySelector(`polygon`);
+        if (poly) {
+          poly.setAttribute(`fill`, isStarred ? `currentColor` : `none`);
+        }
+      }
+    }
+
+    function refreshAllQuestionCards() {
+      for (const q of QUESTIONS) {
+        refreshQuestionCard(q);
+      }
+    }
+
+    function updateReportCard() {
+      let answeredCount = 0;
+      let correctCount = 0;
+      let wrongCount = 0;
+
+      for (const q of QUESTIONS) {
+        const chosen = state.answers[q.id];
+        if (chosen !== undefined) {
+          answeredCount += 1;
+          if (chosen === q.correct) {
+            correctCount += 1;
+          } else {
+            wrongCount += 1;
+          }
+        }
+      }
+
+      const unansweredCount = TOTAL_QUESTIONS - answeredCount;
+      const showGraded = state.mode === `practice` || state.submitted;
+
+      const elCorrect = document.getElementById(`stat-correct`);
+      const elWrong = document.getElementById(`stat-wrong`);
+      const elUnanswered = document.getElementById(`stat-unanswered`);
+      const elScore = document.getElementById(`stat-score`);
+      const elProgLabel = document.getElementById(`progress-label`);
+      const elProgPct = document.getElementById(`progress-pct`);
+      const segCorrect = document.getElementById(`prog-correct`);
+      const segWrong = document.getElementById(`prog-wrong`);
+      const segAnswered = document.getElementById(`prog-answered`);
+
+      if (elUnanswered) elUnanswered.textContent = toPersianDigits(unansweredCount);
+
+      if (showGraded) {
+        const scoreOutOf20 = ((correctCount / TOTAL_QUESTIONS) * 20).toFixed(2);
+        if (elCorrect) elCorrect.textContent = toPersianDigits(correctCount);
+        if (elWrong) elWrong.textContent = toPersianDigits(wrongCount);
+        if (elScore) elScore.innerHTML = `<bdi dir="ltr">${scoreOutOf20} / 20</bdi>`;
+        if (segCorrect) segCorrect.style.width = `${(correctCount / TOTAL_QUESTIONS) * 100}%`;
+        if (segWrong) segWrong.style.width = `${(wrongCount / TOTAL_QUESTIONS) * 100}%`;
+        if (segAnswered) segAnswered.style.width = `0%`;
+      } else {
+        if (elCorrect) elCorrect.textContent = `—`;
+        if (elWrong) elWrong.textContent = `—`;
+        if (elScore) elScore.textContent = `در انتظار ثبت`;
+        if (segCorrect) segCorrect.style.width = `0%`;
+        if (segWrong) segWrong.style.width = `0%`;
+        if (segAnswered) segAnswered.style.width = `${(answeredCount / TOTAL_QUESTIONS) * 100}%`;
+      }
+
+      const pct = Math.round((answeredCount / TOTAL_QUESTIONS) * 100);
+      if (elProgLabel) elProgLabel.textContent = `پاسخ‌داده‌شده: ${toPersianDigits(answeredCount)} از ${toPersianDigits(TOTAL_QUESTIONS)}`;
+      if (elProgPct) elProgPct.innerHTML = `<bdi dir="ltr">${pct}%</bdi>`;
+    }
+
+    function renderQuickAccessGrid() {
+      const grid = document.getElementById(`qa-grid`);
+      if (!grid) return;
+
+      const tabs = document.querySelectorAll(`.qa-filter-tab`);
+      tabs.forEach(tab => {
+        tab.classList.toggle(`is-active`, tab.dataset.filter === state.quickFilter);
+      });
+
+      const filtered = QUESTIONS.filter(q => {
+        if (state.quickFilter === `all`) return true;
+        if (state.quickFilter === `starred`) return Boolean(state.starred[q.id]);
+        return q.category === state.quickFilter;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<p class="qa-empty-note">هیچ سوالی در این دسته وجود ندارد. برای افزودن به نشان‌دارها، روی آیکون ستاره کنار سوال کلیک کنید.</p>`;
+        updateStickyOffset();
+        return;
+      }
+
+      const showGraded = state.mode === `practice` || state.submitted;
+      grid.innerHTML = filtered.map(q => {
+        const chosen = state.answers[q.id];
+        const hasAns = chosen !== undefined;
+        let statusCls = ``;
+        if (hasAns) {
+          if (showGraded) {
+            statusCls = chosen === q.correct ? `status-correct` : `status-wrong`;
+          } else {
+            statusCls = `status-selected`;
+          }
+        }
+        const starCls = state.starred[q.id] ? `is-starred` : ``;
+        return `<button type="button" class="qa-num-btn ${statusCls} ${starCls}" onclick="jumpToQuestion(${q.id})">${toPersianDigits(q.id)}</button>`;
+      }).join(``);
+
+      updateStickyOffset();
+    }
+
+    function toggleQuickAccess() {
+      state.quickOpen = !state.quickOpen;
+      applyQuickAccessVisibility();
+      persistState();
+    }
+
+    function applyQuickAccessVisibility() {
+      const btn = document.getElementById(`qa-toggle-btn`);
+      const panel = document.getElementById(`qa-panel`);
+      if (btn) btn.setAttribute(`aria-expanded`, state.quickOpen ? `true` : `false`);
+      if (panel) panel.classList.toggle(`is-open`, state.quickOpen);
+      updateStickyOffset();
+    }
+
+    function setQuickFilter(filterKey) {
+      state.quickFilter = filterKey;
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function jumpToQuestion(qId) {
+      updateStickyOffset();
+      const card = document.getElementById(`q-card-${qId}`);
+      if (!card) return;
+      card.scrollIntoView({ behavior: `smooth`, block: `start` });
+      card.classList.add(`is-highlighted`);
+      setTimeout(() => {
+        card.classList.remove(`is-highlighted`);
+      }, 1100);
+    }
+
+    function selectOption(qId, optIdx) {
+      if (state.submitted) return;
+      const q = QUESTIONS.find(item => item.id === qId);
+      if (!q) return;
+
+      if (state.mode === `practice` && state.answers[qId] !== undefined) return;
+
+      if (!state.timerStarted) {
+        startTimerIfNeeded();
+      }
+
+      state.answers[qId] = optIdx;
+      refreshQuestionCard(q);
+      updateReportCard();
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function toggleStar(qId) {
+      if (state.starred[qId]) {
+        delete state.starred[qId];
+      } else {
+        state.starred[qId] = true;
+      }
+      const q = QUESTIONS.find(item => item.id === qId);
+      if (q) refreshQuestionCard(q);
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function applyModeUI() {
+      const pBtn = document.getElementById(`btn-mode-practice`);
+      const eBtn = document.getElementById(`btn-mode-exam`);
+      const isPractice = state.mode === `practice`;
+      if (pBtn) {
+        pBtn.classList.toggle(`is-active`, isPractice);
+        pBtn.setAttribute(`aria-checked`, isPractice ? `true` : `false`);
+      }
+      if (eBtn) {
+        eBtn.classList.toggle(`is-active`, !isPractice);
+        eBtn.setAttribute(`aria-checked`, !isPractice ? `true` : `false`);
+      }
+    }
+
+    function setMode(newMode) {
+      if (state.mode === newMode) return;
+      state.mode = newMode;
+      stopTimer();
+      state.submitted = false;
+      state.timerStarted = false;
+      state.elapsedSec = 0;
+      state.remainingSec = EXAM_DURATION_SEC;
+
+      applyModeUI();
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+
+      if (newMode === `practice`) {
+        showNotice(`حالت تمرین فعال شد. با انتخاب هر گزینه، کرنومتر آغاز و پاسخ تشریحی بلافاصله نمایش داده می‌شود.`, `info`);
+      } else {
+        showNotice(`حالت آزمون فعال شد. با پاسخ به اولین سوال، تایمر معکوس ۵۱ دقیقه‌ای آغاز می‌شود و تصحیح در پایان انجام خواهد شد.`, `info`);
+      }
+
+      const hasAnyAnswers = Object.keys(state.answers).length > 0;
+      if (hasAnyAnswers && !state.submitted) {
+        startTimerIfNeeded();
+      }
+      persistState();
+    }
+
+    function submitAssessment(fromTimeout) {
+      state.submitted = true;
+      stopTimer();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+      updateTimerDisplay();
+
+      if (fromTimeout) {
+        showNotice(`زمان ۵۱ دقیقه‌ای آزمون به پایان رسید و کارنامه نهایی محاسبه شد.`, `warn`);
+      } else {
+        showNotice(`آزمون با موفقیت ثبت و تصحیح شد. نتیجه کامل در بخش کارنامه و پاسخ تشریحی زیر هر سوال قابل مشاهده است.`, `success`);
+      }
+
+      const reportEl = document.getElementById(`report-section`);
+      if (reportEl) {
+        reportEl.scrollIntoView({ behavior: `smooth`, block: `nearest` });
+      }
+      persistState();
+    }
+
+    function handleResetClick(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.classList.add(`is-armed`);
+        btn.textContent = `تأیید بازنشانی؟ دوباره کلیک کنید`;
+        if (resetConfirmTimer !== null) clearTimeout(resetConfirmTimer);
+        resetConfirmTimer = setTimeout(() => {
+          btn.dataset.armed = `false`;
+          btn.classList.remove(`is-armed`);
+          btn.textContent = `بازنشانی پاسخ‌ها`;
+        }, 4000);
+        return;
+      }
+
+      if (resetConfirmTimer !== null) {
+        clearTimeout(resetConfirmTimer);
+        resetConfirmTimer = null;
+      }
+      btn.dataset.armed = `false`;
+      btn.classList.remove(`is-armed`);
+      btn.textContent = `بازنشانی پاسخ‌ها`;
+
+      stopTimer();
+      state.answers = {};
+      state.submitted = false;
+      state.timerStarted = false;
+      state.elapsedSec = 0;
+      state.remainingSec = EXAM_DURATION_SEC;
+
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+      showNotice(`تمامی پاسخ‌ها و زمان‌سنج بازنشانی شدند.`, `info`);
+      persistState();
+    }
+
+    async function initApp() {
+      renderAllQuestions();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (saved.mode === `practice` || saved.mode === `exam`) state.mode = saved.mode;
+            if (saved.answers && typeof saved.answers === `object`) state.answers = saved.answers;
+            if (saved.starred && typeof saved.starred === `object`) state.starred = saved.starred;
+            if (typeof saved.submitted === `boolean`) state.submitted = saved.submitted;
+            if (typeof saved.quickOpen === `boolean`) state.quickOpen = saved.quickOpen;
+            if (typeof saved.quickFilter === `string`) state.quickFilter = saved.quickFilter;
+            if (typeof saved.timerStarted === `boolean`) state.timerStarted = saved.timerStarted;
+            if (typeof saved.elapsedSec === `number`) state.elapsedSec = saved.elapsedSec;
+            if (typeof saved.remainingSec === `number`) state.remainingSec = saved.remainingSec;
+          }
+        } catch (err) {
+          // Proceed with fresh state
+        }
+      }
+
+      applyModeUI();
+      applyQuickAccessVisibility();
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+
+      if (state.timerStarted && !state.submitted) {
+        if (state.mode === `exam` && state.remainingSec <= 0) {
+          submitAssessment(true);
+        } else {
+          startTimerIfNeeded();
+        }
+      }
+
+      window.addEventListener(`resize`, updateStickyOffset);
+      updateStickyOffset();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
