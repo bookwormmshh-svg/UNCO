@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="vitals">
+  <title>آزمون و تمرین تعاملی زبان تخصصی یک — درس پنجم</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Vitals + SBMU Medical Blue Palette) */
+      --background: #ffffff;
+      --page-canvas: #f2f6fa;
+      --surface-container-low: #f1f6fb;
+      --surface-container: #e3eef8;
+      --surface-container-high: #d3e5f5;
+
+      /* Text */
+      --on-surface: #142638;
+      --on-surface-variant: #475b6d;
+
+      /* Rules & borders */
+      --outline: #7c95aa;
+      --outline-variant: #d6e2ec;
+
+      /* Accents — Medical Blue (sbmu404.ir inspired) */
+      --primary: #065a9c;
+      --primary-hover: #04477d;
+      --primary-deep: #033d6b;
+      --on-primary: #ffffff;
+      --primary-container: #e4f0fb;
+      --on-primary-container: #044273;
+      --header-subtitle-ink: #d4ebff;
+      --header-timer-bg: #033d6b;
+      --header-timer-border: #3a85c2;
+
+      /* Semantic */
+      --secondary: #155734;
+      --tertiary: #1e7e48;
+      --positive: #1e7e48;
+      --positive-bg: #eaf7ef;
+      --positive-border: #a6dfc0;
+      --warning: #b36b00;
+      --warning-bg: #fef7e6;
+      --warning-border: #f3d189;
+      --error: #c62828;
+      --on-error: #ffffff;
+      --error-bg: #fdeeee;
+      --error-border: #f5bcbc;
+      --star-active: #d98200;
+      --star-active-bg: #fff5df;
+
+      /* Difficulty & Category Chips */
+      --chip-easy-bg: #e8f6ee;
+      --chip-easy-ink: #166037;
+      --chip-med-bg: #e7f1fb;
+      --chip-med-ink: #064d86;
+      --chip-hard-bg: #f6ebf8;
+      --chip-hard-ink: #6a217a;
+      --chip-read-bg: #fff3e4;
+      --chip-read-ink: #8c4d00;
+
+      /* Fonts */
+      --font-headline: 'Vazirmatn', sans-serif;
+      --font-body: 'Vazirmatn', sans-serif;
+      --font-label: 'Vazirmatn', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+
+      /* Type scale */
+      --display-size: clamp(1.125rem, 0.95rem + 0.8vw, 1.5rem);
+      --headline-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem);
+      --subhead-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.0625rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.8125rem;
+
+      /* Shape & elevation */
+      --rounded: 0.75rem;
+      --rounded-lg: 1rem;
+      --rounded-full: 9999px;
+      --card-border: 1px solid var(--outline-variant);
+      --card-lift: 0 2px 6px rgba(10, 40, 70, 0.05), 0 10px 24px rgba(10, 40, 70, 0.06);
+      --header-shadow: 0 4px 16px rgba(3, 45, 82, 0.14);
+
+      /* Focus ring */
+      --focus: #065a9c;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.25rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 140ms;
+      --dur-short: 240ms;
+      --dur-long: 380ms;
+
+      --sticky-offset: 132px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: clip;
+      background-color: var(--page-canvas);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.7;
+      letter-spacing: 0;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      letter-spacing: 0;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Sticky Top Shell: Medical Blue Header + Quick Access Bar */
+    .sticky-shell {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      box-shadow: var(--header-shadow);
+    }
+
+    .app-header {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--primary-deep);
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .header-titles {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      min-width: 0;
+    }
+
+    .header-titles h1 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--on-primary);
+    }
+
+    .header-subtitle {
+      margin: 0;
+      display: inline-flex;
+      align-self: flex-start;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--header-subtitle-ink);
+      background-color: var(--primary-deep);
+      padding: 0.15rem 0.7rem;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--header-timer-border);
+    }
+
+    .digital-timer {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: clamp(1.125rem, 1rem + 0.5vw, 1.45rem);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--on-primary);
+      background-color: var(--header-timer-bg);
+      border: 1.5px solid var(--header-timer-border);
+      border-radius: var(--rounded);
+      padding: 0.45rem 0.9rem;
+      min-width: 5.5rem;
+      text-align: center;
+      line-height: 1.2;
+      transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+
+    .digital-timer.timer-warning {
+      background-color: var(--error);
+      border-color: var(--on-primary);
+    }
+
+    /* Sticky Quick Access Accordion */
+    .quick-access-bar {
+      background-color: var(--background);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .qa-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-xs) var(--space-lg);
+    }
+
+    .qa-toggle-btn {
+      width: 100%;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      background: transparent;
+      border: 0;
+      color: var(--primary);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      padding: var(--space-xs) var(--space-xs);
+      cursor: pointer;
+      border-radius: var(--rounded);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-toggle-btn:hover {
+      background-color: var(--surface-container-low);
+    }
+
+    .qa-toggle-btn svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform var(--dur-short) var(--ease-in-out);
+    }
+
+    .qa-toggle-btn[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+
+    .qa-panel {
+      display: none;
+      padding-top: var(--space-sm);
+      padding-bottom: var(--space-md);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    .qa-panel.is-open {
+      display: block;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    @keyframes panelFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .qa-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .qa-filter-tab {
+      min-height: 38px;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-filter-tab:hover {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    .qa-filter-tab.is-active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .qa-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      max-height: 150px;
+      overflow-y: auto;
+      padding: 2px;
+    }
+
+    .qa-num-btn {
+      position: relative;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 0.5rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--label-size);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-num-btn:hover {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .qa-num-btn:active {
+      transform: scale(0.96);
+    }
+
+    .qa-num-btn.status-selected {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+    }
+
+    .qa-num-btn.status-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive);
+    }
+
+    .qa-num-btn.status-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .qa-num-btn.is-starred::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 7px;
+      height: 7px;
+      border-radius: var(--rounded-full);
+      background-color: var(--star-active);
+    }
+
+    .qa-empty-note {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      padding: var(--space-sm) 0;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .main-container * {
+      min-width: 0;
+    }
+
+    /* Top Control & Report Dashboard Grid */
+    .top-panels {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: stretch;
+    }
+
+    .panel-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: var(--headline-size);
+      font-weight: 800;
+      color: var(--on-surface);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--surface-container);
+    }
+
+    /* Assessment Mode Selector */
+    .mode-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+
+    .mode-btn {
+      text-align: right;
+      min-height: 44px;
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1.5px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .mode-btn:hover {
+      background-color: var(--surface-container);
+      transform: translateY(-1px);
+    }
+
+    .mode-btn:active {
+      transform: scale(0.99);
+    }
+
+    .mode-btn.is-active {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .mode-btn-title {
+      font-size: var(--subhead-size);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .mode-btn-desc {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: auto;
+    }
+
+    .btn-primary {
+      flex: 1 1 180px;
+      min-height: 46px;
+      padding: 0.65rem 1.2rem;
+      border: 0;
+      border-radius: var(--rounded);
+      background-color: var(--primary);
+      color: var(--on-primary);
+      font-size: var(--body-size);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      flex: 1 1 150px;
+      min-height: 46px;
+      padding: 0.65rem 1.1rem;
+      border: 1.5px solid var(--outline);
+      border-radius: var(--rounded);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+    }
+
+    .btn-secondary.is-armed {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .inline-notice {
+      display: none;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .inline-notice.is-visible {
+      display: block;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    .inline-notice[data-tone="info"] {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      border-right: 4px solid var(--primary);
+    }
+
+    .inline-notice[data-tone="success"] {
+      background-color: var(--positive-bg);
+      color: var(--positive);
+      border-right: 4px solid var(--positive);
+    }
+
+    .inline-notice[data-tone="warn"] {
+      background-color: var(--warning-bg);
+      color: var(--warning);
+      border-right: 4px solid var(--warning);
+    }
+
+    /* Report Card (کارنامه) */
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    .stat-tile {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .stat-tile.stat-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive-border);
+      border-right-color: var(--positive);
+    }
+
+    .stat-tile.stat-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error-border);
+      border-right-color: var(--error);
+    }
+
+    .stat-tile.stat-unanswered {
+      background-color: var(--warning-bg);
+      border-color: var(--warning-border);
+      border-right-color: var(--warning);
+    }
+
+    .stat-tile.stat-score {
+      background-color: var(--primary-container);
+      border-color: var(--surface-container-high);
+      border-right-color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+
+    .stat-value {
+      font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.55rem);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.25;
+      color: var(--on-surface);
+    }
+
+    .stat-correct .stat-value { color: var(--positive); }
+    .stat-wrong .stat-value { color: var(--error); }
+    .stat-unanswered .stat-value { color: var(--warning); }
+    .stat-score .stat-value { color: var(--primary); }
+
+    .report-progress-wrap {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .report-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 600;
+    }
+
+    .progress-track {
+      height: 10px;
+      border-radius: var(--rounded-full);
+      background-color: var(--surface-container);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .progress-seg-correct {
+      background-color: var(--positive);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .progress-seg-wrong {
+      background-color: var(--error);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .progress-seg-answered {
+      background-color: var(--primary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* Section Headings */
+    .section-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .section-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--background);
+      border: var(--card-border);
+      border-right: 5px solid var(--primary);
+      border-radius: var(--rounded);
+    }
+
+    .section-banner h2 {
+      margin: 0;
+      font-size: var(--headline-size);
+      font-weight: 800;
+      color: var(--on-surface);
+    }
+
+    .section-count {
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--on-primary-container);
+      background-color: var(--primary-container);
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--rounded-full);
+    }
+
+    /* Reading Passage Box */
+    .passage-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+    }
+
+    .passage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .passage-title {
+      margin: 0;
+      font-size: var(--subhead-size);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .passage-tag {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--chip-read-ink);
+      background-color: var(--chip-read-bg);
+      padding: 0.15rem 0.7rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .passage-text {
+      direction: ltr;
+      text-align: left;
+      margin: 0;
+      color: var(--on-surface);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      background-color: var(--surface-container-low);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+    }
+
+    /* Question Card */
+    .question-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+      scroll-margin-top: var(--sticky-offset);
+      transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .question-card:hover {
+      border-color: var(--outline);
+    }
+
+    .question-card.is-highlighted {
+      box-shadow: 0 0 0 3px var(--primary);
+    }
+
+    .q-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .q-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .q-number-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 800;
+      color: var(--on-primary);
+      background-color: var(--primary);
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .q-level-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 700;
+      padding: 0.2rem 0.7rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .q-level-badge[data-cat="easy"] { background-color: var(--chip-easy-bg); color: var(--chip-easy-ink); }
+    .q-level-badge[data-cat="medium"] { background-color: var(--chip-med-bg); color: var(--chip-med-ink); }
+    .q-level-badge[data-cat="hard"] { background-color: var(--chip-hard-bg); color: var(--chip-hard-ink); }
+    .q-level-badge[data-cat="reading"] { background-color: var(--chip-read-bg); color: var(--chip-read-ink); }
+
+    /* Star Bookmark Button — strictly icon only, zero text */
+    .star-btn {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--outline);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .star-btn:hover {
+      background-color: var(--star-active-bg);
+      border-color: var(--star-active);
+      color: var(--star-active);
+      transform: scale(1.06);
+    }
+
+    .star-btn:active {
+      transform: scale(0.94);
+    }
+
+    .star-btn.is-starred {
+      background-color: var(--star-active-bg);
+      border-color: var(--star-active);
+      color: var(--star-active);
+    }
+
+    .star-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .q-prompt {
+      margin: 0;
+      font-size: clamp(1rem, 0.95rem + 0.2vw, 1.08rem);
+      font-weight: 700;
+      color: var(--on-surface);
+      line-height: 1.75;
+    }
+
+    .q-prompt.is-ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .q-context-quote {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      background-color: var(--surface-container-low);
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--rounded);
+      border-right: 3px solid var(--outline);
+      margin: 0;
+    }
+
+    .options-list {
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .option-btn {
+      width: 100%;
+      min-height: 48px;
+      padding: 0.7rem 1rem;
+      border-radius: var(--rounded);
+      border: 1.5px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      font-weight: 500;
+      text-align: right;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .option-btn.is-ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .option-btn:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .option-key {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--rounded-full);
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-size: var(--label-size);
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .option-text {
+      flex: 1 1 auto;
+      line-height: 1.55;
+    }
+
+    .option-btn.is-selected {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+      font-weight: 700;
+    }
+
+    .option-btn.is-selected .option-key {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .option-btn.is-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive);
+      font-weight: 700;
+    }
+
+    .option-btn.is-correct .option-key {
+      background-color: var(--positive);
+      color: var(--on-primary);
+    }
+
+    .option-btn.is-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+      font-weight: 700;
+    }
+
+    .option-btn.is-wrong .option-key {
+      background-color: var(--error);
+      color: var(--on-error);
+    }
+
+    /* Explanation Box */
+    .explanation-box {
+      display: none;
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    .explanation-box.is-visible {
+      display: block;
+    }
+
+    .explanation-box.tone-correct {
+      background-color: var(--positive-bg);
+      border: 1px solid var(--positive-border);
+      border-right: 4px solid var(--positive);
+      color: var(--on-surface);
+    }
+
+    .explanation-box.tone-wrong {
+      background-color: var(--error-bg);
+      border: 1px solid var(--error-border);
+      border-right: 4px solid var(--error);
+      color: var(--on-surface);
+    }
+
+    .explanation-box.tone-neutral {
+      background-color: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      border-right: 4px solid var(--warning);
+      color: var(--on-surface);
+    }
+
+    .explanation-status {
+      display: block;
+      font-weight: 800;
+      margin-bottom: var(--space-xs);
+    }
+
+    .explanation-box.tone-correct .explanation-status { color: var(--positive); }
+    .explanation-box.tone-wrong .explanation-status { color: var(--error); }
+    .explanation-box.tone-neutral .explanation-status { color: var(--warning); }
+
+    .source-footer {
+      text-align: center;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      padding: var(--space-md) 0 var(--space-xl);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 760px) {
+      .top-panels {
+        grid-template-columns: 1fr;
+      }
+      .app-header {
+        padding: var(--space-sm) var(--space-md);
+      }
+      .qa-inner {
+        padding: var(--space-xs) var(--space-md);
+      }
+      .main-container {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .mode-options {
+        grid-template-columns: 1fr;
+      }
+      .question-card, .panel-card, .passage-card {
+        padding: var(--space-md);
+      }
+      .header-inner {
+        gap: var(--space-sm);
+      }
+      .digital-timer {
+        padding: 0.35rem 0.65rem;
+        min-width: 4.75rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky Top Shell: Medical Blue Header + Quick Access Bar -->
+  <div class="sticky-shell" id="sticky-shell">
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="header-titles">
+          <h1>آزمون و تمرین تعاملی واژگان و درک مطلب زبان تخصصی یک</h1>
+          <p class="header-subtitle">ورودی مهر 1404</p>
+        </div>
+        <div id="live-timer" class="digital-timer" dir="ltr" aria-live="off">00:00</div>
+      </div>
+    </header>
+
+    <div class="quick-access-bar">
+      <div class="qa-inner">
+        <button type="button" id="qa-toggle-btn" class="qa-toggle-btn" aria-expanded="false" aria-controls="qa-panel" onclick="toggleQuickAccess()">
+          <span>دسترسی سریع به سوالات</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div id="qa-panel" class="qa-panel" role="region" aria-label="پنل دسترسی سریع به سوالات">
+          <div class="qa-filters" role="tablist" aria-label="فیلتر دسته‌بندی سوالات">
+            <button type="button" class="qa-filter-tab is-active" data-filter="all" onclick="setQuickFilter('all')">همه</button>
+            <button type="button" class="qa-filter-tab" data-filter="easy" onclick="setQuickFilter('easy')">ساده</button>
+            <button type="button" class="qa-filter-tab" data-filter="medium" onclick="setQuickFilter('medium')">متوسط</button>
+            <button type="button" class="qa-filter-tab" data-filter="hard" onclick="setQuickFilter('hard')">دشوار</button>
+            <button type="button" class="qa-filter-tab" data-filter="reading" onclick="setQuickFilter('reading')">درک مطلب</button>
+            <button type="button" class="qa-filter-tab" data-filter="starred" onclick="setQuickFilter('starred')">نشان‌دارها</button>
+          </div>
+          <div id="qa-grid" class="qa-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-container">
+    <!-- Top Dashboard: نوع ارزیابی + کارنامه -->
+    <div class="top-panels">
+      <section class="panel-card" aria-labelledby="mode-heading">
+        <h2 id="mode-heading" class="panel-title">نوع ارزیابی</h2>
+        <div class="mode-options" role="radiogroup" aria-labelledby="mode-heading">
+          <button type="button" id="btn-mode-practice" class="mode-btn is-active" role="radio" aria-checked="true" onclick="setMode('practice')">
+            <span class="mode-btn-title">حالت تمرین</span>
+            <span class="mode-btn-desc">بازخورد آنی و پاسخ تشریحی فوری</span>
+          </button>
+          <button type="button" id="btn-mode-exam" class="mode-btn" role="radio" aria-checked="false" onclick="setMode('exam')">
+            <span class="mode-btn-title">حالت آزمون</span>
+            <span class="mode-btn-desc">تصحیح نهایی پس از پایان آزمون</span>
+          </button>
+        </div>
+        <div class="action-row">
+          <button type="button" id="btn-submit-exam" class="btn-primary" onclick="submitAssessment()">ثبت و تصحیح آزمون</button>
+          <button type="button" id="btn-reset-all" class="btn-secondary" onclick="handleResetClick(this)">بازنشانی پاسخ‌ها</button>
+        </div>
+        <div id="inline-notice" class="inline-notice" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="panel-card" id="report-section" aria-labelledby="report-heading">
+        <h2 id="report-heading" class="panel-title">کارنامه</h2>
+        <div class="report-grid">
+          <div class="stat-tile stat-correct">
+            <span class="stat-label">درست</span>
+            <span class="stat-value" id="stat-correct">0</span>
+          </div>
+          <div class="stat-tile stat-wrong">
+            <span class="stat-label">نادرست</span>
+            <span class="stat-value" id="stat-wrong">0</span>
+          </div>
+          <div class="stat-tile stat-unanswered">
+            <span class="stat-label">پاسخ‌نداده / نزده</span>
+            <span class="stat-value" id="stat-unanswered">51</span>
+          </div>
+          <div class="stat-tile stat-score">
+            <span class="stat-label">نمره از ۲۰</span>
+            <span class="stat-value" id="stat-score"><bdi dir="ltr">0.00 / 20</bdi></span>
+          </div>
+        </div>
+        <div class="report-progress-wrap">
+          <div class="report-progress-meta">
+            <span id="progress-label">پاسخ‌داده‌شده: ۰ از ۵۱</span>
+            <span id="progress-pct"><bdi dir="ltr">0%</bdi></span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="prog-correct" class="progress-seg-correct" style="width: 0%;"></div>
+            <div id="prog-wrong" class="progress-seg-wrong" style="width: 0%;"></div>
+            <div id="prog-answered" class="progress-seg-answered" style="width: 0%;"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-root"></div>
+
+    <footer class="source-footer">
+      مبتنی بر درس پنجم جزوه زبان تخصصی یک (Unit 5: Respiratory Disorders & Clinical Evaluation) — دانشکده پزشکی دانشگاه علوم پزشکی شهید بهشتی
+    </footer>
+  </main>
+
+  <api-shim></api-shim>
+  <script>
+    const PASSAGES = {
+      r1: {
+        title: `متن اول (Passage 1): Approach to the Patient with Dyspnea`,
+        tag: `سوالات ۴۳ تا ۴۵`,
+        text: `Dyspnea—the subjective experience of breathing discomfort—is a cardinal symptom of both respiratory and cardiovascular diseases. Etiologies of dyspnea generally fall into two broad categories: conditions that impair ventilation (such as obstructive airway disorders like asthma and COPD, or restrictive parenchymal disorders) and conditions that impair pulmonary vasculature function (such as pulmonary embolism or pulmonary hypertension). A thorough clinical history must delineate the tempo and onset of dyspnea. Acute dyspnea arising spontaneously over minutes to hours warrants urgent evaluation for life-threatening conditions like pulmonary embolism or pneumothorax, whereas dyspnea on exertion progressing gradually over months typically reflects chronic congestive heart failure or interstitial lung disease.`
+      },
+      r2: {
+        title: `متن دوم (Passage 2): Clinical Evaluation of Cough & Hemoptysis`,
+        tag: `سوالات ۴۶ تا ۴۸`,
+        text: `Cough is an essential protective reflex designed to clear airways of excess secretions and foreign material. When evaluating a chronic cough, the clinician must inquire about sputum production. Cough producing purulent phlegm suggests bronchial infection, whereas blood-streaked or frankly bloody sputum (hemoptysis) warrants immediate investigation. Hemoptysis may arise from erosion of bronchial vessels in bronchiectasis, severe pneumonia, or neoplastic lesions such as bronchogenic carcinoma. High-resolution imaging and bronchoscopy are indicated to delineate the precise source of bleeding and rule out diffuse parenchymal hemorrhage.`
+      },
+      r3: {
+        title: `متن سوم (Passage 3): Pathophysiology and Epidemiology of Asthma`,
+        tag: `سوالات ۴۹ تا ۵۱`,
+        text: `Asthma is a chronic inflammatory disorder of the airways characterized by recurrent episodes of wheezing, dyspnea, chest tightness, and cough. Pathologically, it is driven by bronchial hyperresponsiveness, mucosal edema, and mucus hypersecretion. A personal or family history of atopy (such as allergic rhinitis or eczema) confers a strong genetic predisposition to asthma. Interestingly, epidemiologic studies show a higher prevalence of asthma in affluent industrialized societies. While many children grow out of mild asthmatic symptoms as they mature, persistent adult asthma is often punctuated by acute, severe exacerbations requiring continuous inhaled corticosteroid therapy.`
+      }
+    };
+
+    const QUESTIONS = [
+      {
+        id: 1, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Patients with chronic asthma often present with shortness of breath, medically termed as ________.`,
+        options: [`Hemoptysis`, `Atopy`, `Dyspnea`, `Sputum`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">Dyspnea</bdi> به معنای «تنگی نفس» است.`
+      },
+      {
+        id: 2, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `A patient presenting with a ________ onset of shortness of breath over several months was diagnosed with COPD.`,
+        options: [`abrupt`, `acute`, `gradual`, `sudden`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">gradual</bdi> به معنای «تدریجی» است.`
+      },
+      {
+        id: 3, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Coughing up mucus or ________ is a common symptom of lower respiratory tract infections.`,
+        options: [`embolism`, `phlegm`, `atopy`, `vasculature`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">phlegm</bdi> به معنای «خلط» است.`
+      },
+      {
+        id: 4, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Patients with allergic asthma frequently produce thick, purulent ________ during acute infections.`,
+        options: [`embolism`, `sputum`, `predisposition`, `atopy`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">sputum</bdi> به معنای «خلط سینه» است.`
+      },
+      {
+        id: 5, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Coughing up blood, known medically as ________, is an alarming symptom that warrants urgent investigation.`,
+        options: [`Hemoptysis`, `Atopy`, `Dyspnea`, `Embolism`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">Hemoptysis</bdi> به معنای «هموپتیزی / خلط خونی» است.`
+      },
+      {
+        id: 6, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Pulmonary diseases can generally ________ two main physiological categories: obstructive and restrictive defects.`,
+        options: [`grow out of`, `inquire about`, `fall into`, `harbor in`],
+        correct: 2,
+        explanation: `عبارت <bdi dir="ltr">fall into</bdi> به معنای «قرار گرفتن در / دسته‌بندی شدن در» است.`
+      },
+      {
+        id: 7, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `A pulmonary ________ occurs when a blood clot lodges in the pulmonary arterial bed, obstructing blood flow.`,
+        options: [`atopy`, `phlegm`, `sputum`, `embolism`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">embolism</bdi> به معنای «آمبولی» است.`
+      },
+      {
+        id: 8, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Patients experiencing shortness of breath during physical activity suffer from ________.`,
+        options: [`congestive heart failure`, `blood-streaked sputum`, `broad differential`, `dyspnea on exertion`],
+        correct: 3,
+        explanation: `عبارت <bdi dir="ltr">dyspnea on exertion</bdi> به معنای «تنگی نفس هنگام فعالیت» است.`
+      },
+      {
+        id: 9, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `High prevalence of asthma in developed, ________ countries has been linked to the hygiene hypothesis.`,
+        options: [`affluent`, `restrictive`, `asymptomatic`, `occlusive`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">affluent</bdi> به معنای «مرفه و ثروتمند» است.`
+      },
+      {
+        id: 10, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `A genetic ________ to allergic diseases increases the risk of developing childhood asthma.`,
+        options: [`predisposition`, `etiology`, `tempo`, `vasculature`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">predisposition</bdi> به معنای «استعداد ژنتیکی» است.`
+      },
+      {
+        id: 11, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Many young children with mild asthma eventually ________ their symptoms as their airways mature.`,
+        options: [`engage in`, `grow out of`, `inquire about`, `fall into`],
+        correct: 1,
+        explanation: `عبارت <bdi dir="ltr">grow out of</bdi> به معنای «به مرور درمان شدن با رشد» است.`
+      },
+      {
+        id: 12, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Early stage pulmonary lesions may remain completely ________ for months before clinical symptoms emerge.`,
+        options: [`recurrent`, `asymptomatic`, `congestive`, `obstructive`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">asymptomatic</bdi> به معنای «بدون علامت» است.`
+      },
+      {
+        id: 13, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Asthma is an ________ airway disease characterized by bronchospasm and hyperresponsiveness.`,
+        options: [`restrictive`, `affluent`, `obstructive`, `asymptomatic`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">obstructive</bdi> به معنای «انسدادی» است.`
+      },
+      {
+        id: 14, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Idiopathic pulmonary fibrosis is a classic example of a ________ lung disorder restricting lung expansion.`,
+        options: [`restrictive`, `recurrent`, `obstructive`, `congestive`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">restrictive</bdi> به معنای «محدودکننده» است.`
+      },
+      {
+        id: 15, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Pulmonary hypertension involves pathological remodeling of the pulmonary arterial ________.`,
+        options: [`atopy`, `tempo`, `etiology`, `vasculature`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">vasculature</bdi> به معنای «سیستم عروقی» است.`
+      },
+      {
+        id: 16, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Arterial stenosis leads to ________ vascular disease, reducing blood supply to target tissues.`,
+        options: [`asymptomatic`, `diffuse`, `affluent`, `occlusive`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">occlusive</bdi> به معنای «مسدودکننده عروقی» است.`
+      },
+      {
+        id: 17, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Bronchial carcinoma is a ________ lesion that can obstruct major airways and cause hemoptysis.`,
+        options: [`congestive`, `broad`, `neoplastic`, `restrictive`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">neoplastic</bdi> به معنای «توموری / بدخیم» است.`
+      },
+      {
+        id: 18, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Pulmonary tuberculosis can ________ with fever, night sweats, weight loss, and chronic cough.`,
+        options: [`delineate`, `manifest`, `accommodate`, `inquire`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">manifest</bdi> به معنای «تظاهر یافتن» است.`
+      },
+      {
+        id: 19, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `A ________ physical examination of the chest includes inspection, palpation, percussion, and auscultation.`,
+        options: [`thorough`, `diffuse`, `blood-streaked`, `cardinal`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">thorough</bdi> به معنای «دقیق و کامل» است.`
+      },
+      {
+        id: 20, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `The physician executed a ________ diagnostic evaluation starting with basic spirometry before ordering CT imaging.`,
+        options: [`compelling`, `recurrent`, `spontaneous`, `step-wise`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">step-wise</bdi> به معنای «مرحله‌به‌مرحله» است.`
+      },
+      {
+        id: 21, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Shortness of breath is the ________ symptom of underlying left ventricular heart failure or COPD.`,
+        options: [`neoplastic`, `cardinal`, `affluent`, `blood-streaked`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">cardinal</bdi> به معنای «علامت اصلی و اساسی» است.`
+      },
+      {
+        id: 22, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Investigating the underlying ________ of dyspnea requires evaluating both respiratory and cardiovascular systems.`,
+        options: [`atopies`, `vasculatures`, `etiologies`, `embolisms`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">etiologies</bdi> به معنای «سبب‌شناسی‌ها / علل» است.`
+      },
+      {
+        id: 23, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Patients with ________ heart failure often develop pulmonary edema resulting in severe nocturnal dyspnea.`,
+        options: [`restrictive`, `neoplastic`, `congestive`, `obstructive`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">congestive</bdi> به معنای «احتقانی» است.`
+      },
+      {
+        id: 24, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Asthmatic patients frequently suffer from ________ attacks of wheezing triggered by viral infections.`,
+        options: [`cardinal`, `step-wise`, `thorough`, `recurrent`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">recurrent</bdi> به معنای «عودکننده و مکرر» است.`
+      },
+      {
+        id: 25, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Environmental allergens like pollen can ________ acute bronchospasm in sensitized individuals.`,
+        options: [`accommodate`, `incite`, `harbor`, `gauge`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">incite</bdi> به معنای «تحریک کردن» است.`
+      },
+      {
+        id: 26, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Spirometry is used to ________ the severity of airflow limitation in patients with COPD.`,
+        options: [`gauge`, `incite`, `undergo`, `harbor`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">gauge</bdi> به معنای «سنجیدن و ارزیابی کردن» است.`
+      },
+      {
+        id: 27, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Persistent cough accompanied by unexplained weight loss ________ immediate radiological evaluation.`,
+        options: [`harbors`, `manifests`, `warrants`, `accommodates`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">warrants</bdi> به معنای «ایجاب کردن / نیازمند بودن» است.`
+      },
+      {
+        id: 28, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `The doctor should ________ about the patient's occupational exposure to asbestos or silica dust.`,
+        options: [`induce`, `delineate`, `inquire`, `gauge`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">inquire</bdi> به معنای «استفسار نمودن / پرس‌وجو» است.`
+      },
+      {
+        id: 29, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Patients with bronchitis often cough up ________ sputum containing traces of fresh blood.`,
+        options: [`neoplastic`, `congestive`, `affluent`, `blood-streaked`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">blood-streaked</bdi> به معنای «دارای رگه‌های خون» است.`
+      },
+      {
+        id: 30, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Personal or family history of ________ (eczema, allergic rhinitis) is strongly associated with asthma development.`,
+        options: [`embolism`, `etiology`, `atopy`, `dyspnea`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">atopy</bdi> به معنای «آتوپی / استعداد آلرژیک» است.`
+      },
+      {
+        id: 31, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `After initial stabilization, the patient was ________ transferred to the intensive care unit to ________ continuous hemodynamic monitoring.`,
+        options: [`frankly / incite`, `subsequently / undergo`, `predominantly / inquire`, `spontaneously / harbor`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">subsequently</bdi> به معنای «متعاقباً» و <bdi dir="ltr">undergo</bdi> به معنای «تحتِ... قرار گرفتن» است.`
+      },
+      {
+        id: 32, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `The sudden ________ and rapid ________ of dyspnea over a few hours strongly suggests acute pulmonary edema or pneumothorax.`,
+        options: [`embolism / atopy`, `onset / tempo`, `atopy / sputum`, `vasculature / etiology`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">onset</bdi> به معنای «شروع بیماری» و <bdi dir="ltr">tempo</bdi> به معنای «سیر پیشرفت بیماری» است.`
+      },
+      {
+        id: 33, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Chronic obstructive pulmonary disease is frequently ________ by acute ________ triggered by viral upper respiratory infections.`,
+        options: [`complicated / atopies`, `characterized / vasculatures`, `confined / etiologies`, `punctuated / exacerbations`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">punctuated</bdi> به معنای «همراه با توقف و وخامت ناگهانی» و <bdi dir="ltr">exacerbations</bdi> به معنای «شعله‌وری‌ها» است.`
+      },
+      {
+        id: 34, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Healthy lungs can easily ________ increased tidal volume during exercise, whereas damaged lungs fail to adjust.`,
+        options: [`accommodate`, `harbor`, `incite`, `delineate`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">accommodate</bdi> به معنای «گنجایش داشتن / انطباق یافتن» است.`
+      },
+      {
+        id: 35, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `The diagnostic features of pulmonary sarcoidosis were clearly ________ on high-resolution chest radiography.`,
+        options: [`delineated`, `harbored`, `incited`, `swallowed`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">delineated</bdi> به معنای «ترسیم‌شده / مشخص‌شده» است.`
+      },
+      {
+        id: 36, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `High-risk patients undergoing major pelvic surgery require aggressive prophylaxis to prevent pulmonary arterial ________ and ________ tissue infarction.`,
+        options: [`dyspnea / affluent`, `embolism / consequent`, `sputum / diffuse`, `atopy / recurrent`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">embolism</bdi> به معنای «آمبولی» و <bdi dir="ltr">consequent</bdi> به معنای «ثانویه / پیامد بعدی» است.`
+      },
+      {
+        id: 37, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `A persistent nocturnal cough producing ________ purulent sputum ________ immediate bronchoscopy to rule out bronchial malignancy.`,
+        options: [`frankly / warrants`, `spontaneously / incites`, `steadily / harbors`, `modestly / accommodates`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">frankly</bdi> به معنای «به روشنی / کاملاً» و <bdi dir="ltr">warrants</bdi> به معنای «ایجاب کردن» است.`
+      },
+      {
+        id: 38, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `High-resolution CT revealed ________ ground-glass opacities in both lung fields, establishing a ________ for interstitial lung disease.`,
+        options: [`affluent / congestive etiology`, `diffuse / broad differential`, `occlusive / sudden onset`, `cardinal / stepwise vasculature`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">diffuse</bdi> به معنای «انتشاریافته» و <bdi dir="ltr">broad differential</bdi> به معنای «تشخیص تفریقی گسترده» است.`
+      },
+      {
+        id: 39, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Genetic ________ to allergic bronchial hyperresponsiveness is frequently ________ by environmental exposure to tobacco smoke.`,
+        options: [`vasculature / grown out of`, `etiology / characterized by`, `predisposition / complicated by`, `atopy / confined to`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">predisposition</bdi> به معنای «استعداد ژنتیکی» و <bdi dir="ltr">complicated by</bdi> به معنای «پیچیده‌شده با» است.`
+      },
+      {
+        id: 40, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `The clinician executed a ________ diagnostic workup to ________ whether the patient's dyspnea was cardiac or pulmonary in origin.`,
+        options: [`thorough / gauge`, `blood-streaked / harbor`, `cardinal / delineate`, `diffuse / induce`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">thorough</bdi> به معنای «دقیق و کامل» و <bdi dir="ltr">gauge</bdi> به معنای «سنجیدن» است.`
+      },
+      {
+        id: 41, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Asthmatic attacks are ________ chronic inflammatory changes in bronchial walls that can ________ acute respiratory failure if untreated.`,
+        options: [`complicated by / harbor`, `characterized by / induce`, `confined to / delineate`, `grown out of / accommodate`],
+        correct: 1,
+        explanation: `عبارت <bdi dir="ltr">characterized by</bdi> به معنای «مشخص‌شده با» و <bdi dir="ltr">induce</bdi> به معنای «موجب شدن» است.`
+      },
+      {
+        id: 42, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `There is ________ evidence that managing environmental allergic triggers in ________ societies significantly reduces asthma hospitalizations.`,
+        options: [`blood-streaked / restrictive`, `diffuse / neoplastic`, `compelling / affluent`, `asymptomatic / occlusive`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">compelling</bdi> به معنای «متقاعدکننده» و <bdi dir="ltr">affluent</bdi> به معنای «جامعه مرفه» است.`
+      },
+      {
+        id: 43, category: `reading`, catLabel: `درک مطلب — متن ۱ (ساده)`, isReading: true, passageId: `r1`,
+        prompt: `According to the passage, into what two main categories do the etiologies of dyspnea fall?`,
+        options: [`Conditions impairing ventilation and conditions impairing pulmonary vasculature function`, `Dermatological conditions and skeletal fractures`, `Gastrointestinal and neurological disorders`, `Renal failure and hepatic cirrhosis`],
+        correct: 0,
+        explanation: `اختلالات تهویه‌ای (<bdi dir="ltr">impair ventilation</bdi>) و اختلالات عروقی ریه (<bdi dir="ltr">impair pulmonary vasculature function</bdi>).`
+      },
+      {
+        id: 44, category: `reading`, catLabel: `درک مطلب — متن ۱ (متوسط)`, isReading: true, passageId: `r1`,
+        prompt: `What does a sudden, spontaneous onset of dyspnea over minutes to hours clinically indicate?`,
+        options: [`Chronic gradual development of osteoarthritis`, `A normal physiological response to rest`, `Long-term resolution of childhood asthma`, `Urgent suspicion of acute life-threatening conditions such as pulmonary embolism or pneumothorax`],
+        correct: 3,
+        explanation: `بررسی فوری از نظر آمبولی ریه (<bdi dir="ltr">pulmonary embolism</bdi>) یا پنوموتوراکس (<bdi dir="ltr">pneumothorax</bdi>).`
+      },
+      {
+        id: 45, category: `reading`, catLabel: `درک مطلب — متن ۱ (دشوار)`, isReading: true, passageId: `r1`,
+        prompt: `How does the temporal progression of dyspnea differentiate chronic congestive heart failure from acute airway obstruction?`,
+        options: [`Both conditions present with identical non-progressive symptoms.`, `Heart failure manifests spontaneously in seconds, while airway obstruction takes years.`, `Chronic heart failure presents with gradual dyspnea on exertion over months, whereas acute obstruction presents with a rapid tempo over minutes.`, `Heart failure never causes any breathing discomfort.`],
+        correct: 2,
+        explanation: `نارسایی مزمن قلبی سیری تدریجی طی ماه‌ها دارد، در حالی که انسداد حاد سیری بسیار سریع دارد.`
+      },
+      {
+        id: 46, category: `reading`, catLabel: `درک مطلب — متن ۲ (ساده)`, isReading: true, passageId: `r2`,
+        prompt: `What is the primary physiological function of the cough reflex?`,
+        options: [`To increase systemic blood pressure`, `To reduce oxygen uptake in alveoli`, `To induce cardiac arrhythmias`, `To clear airways of excess secretions and foreign material`],
+        correct: 3,
+        explanation: `پاکسازی مجاری هوایی از ترشحات اضافی و مواد بیگانه (<bdi dir="ltr">clear airways of excess secretions and foreign material</bdi>).`
+      },
+      {
+        id: 47, category: `reading`, catLabel: `درک مطلب — متن ۲ (متوسط)`, isReading: true, passageId: `r2`,
+        prompt: `What diagnostic tests are indicated when a patient presents with hemoptysis to identify the bleeding source?`,
+        options: [`High-resolution imaging and bronchoscopy`, `Routine hearing test`, `Dietary history questionnaire`, `Basic abdominal ultrasound only`],
+        correct: 0,
+        explanation: `تصویربرداری دقیق و برونکوسکوپی (<bdi dir="ltr">High-resolution imaging and bronchoscopy</bdi>).`
+      },
+      {
+        id: 48, category: `reading`, catLabel: `درک مطلب — متن ۲ (دشوار)`, isReading: true, passageId: `r2`,
+        prompt: `What underlying pathological etiologies can cause erosion of bronchial vessels resulting in hemoptysis?`,
+        options: [`Bronchiectasis, severe necrotizing pneumonia, or neoplastic bronchial lesions`, `Simple subcutaneous bruising`, `Mild allergic rhinitis confined to the nose`, `Asymptomatic skin moles`],
+        correct: 0,
+        explanation: `برونشکتازی (<bdi dir="ltr">bronchiectasis</bdi>)، پنومونی شدید یا ضایعات نئوپلاستیک (<bdi dir="ltr">neoplastic bronchial lesions</bdi>).`
+      },
+      {
+        id: 49, category: `reading`, catLabel: `درک مطلب — متن ۳ (ساده)`, isReading: true, passageId: `r3`,
+        prompt: `What hallmark pathological features characterize bronchial asthma?`,
+        options: [`Calcification of pulmonary arteries`, `Absence of any inflammatory cells`, `Complete destruction of alveolar walls`, `Bronchial hyperresponsiveness, mucosal edema, and mucus hypersecretion`],
+        correct: 3,
+        explanation: `بیش‌فعالی برونش، ادم مخاطی و افزایش ترشح مخاط (<bdi dir="ltr">bronchial hyperresponsiveness, mucosal edema, and mucus hypersecretion</bdi>).`
+      },
+      {
+        id: 50, category: `reading`, catLabel: `درک مطلب — متن ۳ (متوسط)`, isReading: true, passageId: `r3`,
+        prompt: `What epidemiologic trend has been observed regarding asthma prevalence?`,
+        options: [`It is found exclusively in desert regions.`, `It shows a higher prevalence in affluent industrialized societies.`, `It has been completely eradicated worldwide.`, `It affects only individuals over 80 years old.`],
+        correct: 1,
+        explanation: `شیوع بالاتر در جوامع صنعتی و مرفه (<bdi dir="ltr">affluent industrialized societies</bdi>).`
+      },
+      {
+        id: 51, category: `reading`, catLabel: `درک مطلب — متن ۳ (دشوار)`, isReading: true, passageId: `r3`,
+        prompt: `What is the long-term clinical outcome for childhood asthma versus persistent adult asthma?`,
+        options: [`Adult asthma is completely asymptomatic and requires no medication.`, `Childhood asthma is caused only by bacterial food poisoning.`, `All childhood asthma leads to immediate death.`, `Many children grow out of mild symptoms with maturation, whereas persistent adult asthma features recurrent exacerbations needing ongoing anti-inflammatory therapy.`],
+        correct: 3,
+        explanation: `بسیاری از کودکان با رشد بهبود می‌یابند، اما آسم بزرگسالان با شعله‌وری‌های مکرر و نیاز به درمان مداوم همراه است.`
+      }
+    ];
+
+    const TOTAL_QUESTIONS = 51;
+    const EXAM_DURATION_SEC = 51 * 60;
+    const PERSIAN_LETTERS = [`الف`, `ب`, `ج`, `د`];
+    const ENGLISH_LETTERS = [`A`, `B`, `C`, `D`];
+
+    const state = {
+      mode: `practice`,         // 'practice' | 'exam'
+      answers: {},              // { [id]: optionIndex }
+      starred: {},              // { [id]: true }
+      submitted: false,
+      quickOpen: false,
+      quickFilter: `all`,       // 'all' | 'easy' | 'medium' | 'hard' | 'reading' | 'starred'
+      timerStarted: false,
+      timerRunning: false,
+      elapsedSec: 0,            // used in practice mode
+      remainingSec: EXAM_DURATION_SEC
+    };
+
+    let timerInterval = null;
+    let resetConfirmTimer = null;
+
+    function formatTime(totalSec) {
+      const safe = Math.max(0, Math.floor(totalSec));
+      const mins = Math.floor(safe / 60);
+      const secs = safe % 60;
+      return `${String(mins).padStart(2, `0`)}:${String(secs).padStart(2, `0`)}`;
+    }
+
+    function toPersianDigits(val) {
+      const map = [`۰`, `۱`, `۲`, `۳`, `۴`, `۵`, `۶`, `۷`, `۸`, `۹`];
+      return String(val).replace(/\d/g, d => map[Number(d)]);
+    }
+
+    function updateStickyOffset() {
+      const shell = document.getElementById(`sticky-shell`);
+      if (!shell) return;
+      const h = shell.getBoundingClientRect().height;
+      document.documentElement.style.setProperty(`--sticky-offset`, `${Math.ceil(h + 14)}px`);
+    }
+
+    function updateTimerDisplay() {
+      const el = document.getElementById(`live-timer`);
+      if (!el) return;
+      if (state.mode === `practice`) {
+        el.textContent = formatTime(state.elapsedSec);
+        el.classList.remove(`timer-warning`);
+      } else {
+        el.textContent = formatTime(state.remainingSec);
+        if (state.remainingSec <= 300 && state.timerStarted && !state.submitted) {
+          el.classList.add(`timer-warning`);
+        } else {
+          el.classList.remove(`timer-warning`);
+        }
+      }
+    }
+
+    function stopTimer() {
+      if (timerInterval !== null) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      state.timerRunning = false;
+    }
+
+    function startTimerIfNeeded() {
+      if (state.submitted || state.timerRunning) return;
+      state.timerStarted = true;
+      state.timerRunning = true;
+      if (timerInterval !== null) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (state.submitted) {
+          stopTimer();
+          return;
+        }
+        if (state.mode === `practice`) {
+          state.elapsedSec += 1;
+          updateTimerDisplay();
+          if (state.elapsedSec % 5 === 0) persistState();
+        } else {
+          if (state.remainingSec > 0) {
+            state.remainingSec -= 1;
+            updateTimerDisplay();
+            if (state.remainingSec % 5 === 0) persistState();
+          }
+          if (state.remainingSec <= 0) {
+            stopTimer();
+            submitAssessment(true);
+          }
+        }
+      }, 1000);
+    }
+
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState({
+            mode: state.mode,
+            answers: state.answers,
+            starred: state.starred,
+            submitted: state.submitted,
+            quickOpen: state.quickOpen,
+            quickFilter: state.quickFilter,
+            timerStarted: state.timerStarted,
+            elapsedSec: state.elapsedSec,
+            remainingSec: state.remainingSec
+          });
+        } catch (err) {
+          // Non-fatal persistence error
+        }
+      }
+    }
+
+    function showNotice(text, tone) {
+      const box = document.getElementById(`inline-notice`);
+      if (!box) return;
+      if (!text) {
+        box.className = `inline-notice`;
+        box.textContent = ``;
+        return;
+      }
+      box.className = `inline-notice is-visible`;
+      box.setAttribute(`data-tone`, tone || `info`);
+      box.textContent = text;
+    }
+
+    function renderAllQuestions() {
+      const root = document.getElementById(`questions-root`);
+      if (!root) return;
+
+      const sections = [
+        { title: `بخش اول: واژگان — سطح ساده`, count: `۱۲ سوال (۱ تا ۱۲)`, items: QUESTIONS.filter(q => q.category === `easy`) },
+        { title: `بخش دوم: واژگان — سطح متوسط`, count: `۱۸ سوال (۱۳ تا ۳۰)`, items: QUESTIONS.filter(q => q.category === `medium`) },
+        { title: `بخش سوم: واژگان — سطح دشوار`, count: `۱۲ سوال (۳۱ تا ۴۲)`, items: QUESTIONS.filter(q => q.category === `hard`) },
+        { title: `بخش چهارم: درک مطلب متون درس پنجم`, count: `۹ سوال (۴۳ تا ۵۱)`, items: QUESTIONS.filter(q => q.category === `reading`), isReadingSection: true }
+      ];
+
+      let html = ``;
+      for (const sec of sections) {
+        html += `<section class="section-group">`;
+        html += `<div class="section-banner"><h2>${sec.title}</h2><span class="section-count">${sec.count}</span></div>`;
+
+        if (!sec.isReadingSection) {
+          for (const q of sec.items) {
+            html += buildQuestionCardHTML(q);
+          }
+        } else {
+          const passageGroups = [`r1`, `r2`, `r3`];
+          for (const pid of passageGroups) {
+            const p = PASSAGES[pid];
+            html += `
+              <article class="passage-card">
+                <div class="passage-header">
+                  <h3 class="passage-title">${p.title}</h3>
+                  <span class="passage-tag">${p.tag}</span>
+                </div>
+                <p class="passage-text">${p.text}</p>
+              </article>
+            `;
+            const groupQs = sec.items.filter(q => q.passageId === pid);
+            for (const q of groupQs) {
+              html += buildQuestionCardHTML(q);
+            }
+          }
+        }
+        html += `</section>`;
+      }
+
+      root.innerHTML = html;
+      refreshAllQuestionCards();
+    }
+
+    function buildQuestionCardHTML(q) {
+      const letters = ENGLISH_LETTERS;
+      const optionsHTML = q.options.map((opt, idx) => `
+        <button type="button" class="option-btn is-ltr" id="q-${q.id}-opt-${idx}" onclick="selectOption(${q.id}, ${idx})">
+          <span class="option-key">${letters[idx]}</span>
+          <span class="option-text">${opt}</span>
+        </button>
+      `).join(``);
+
+      return `
+        <article class="question-card" id="q-card-${q.id}">
+          <div class="q-top-row">
+            <div class="q-meta">
+              <span class="q-number-badge">سوال ${toPersianDigits(q.id)}</span>
+              <span class="q-level-badge" data-cat="${q.category}">${q.catLabel}</span>
+            </div>
+            <button type="button" class="star-btn" id="star-btn-${q.id}" aria-label="نشان‌دار کردن سوال ${q.id}" aria-pressed="false" onclick="toggleStar(${q.id})">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </button>
+          </div>
+          <p class="q-prompt is-ltr">${q.prompt}</p>
+          ${q.context ? `<p class="q-context-quote">شاهد متنی: <bdi dir="ltr">${q.context}</bdi></p>` : ``}
+          <div class="options-list" role="group" aria-label="گزینه‌های سوال ${q.id}">
+            ${optionsHTML}
+          </div>
+          <div class="explanation-box" id="exp-box-${q.id}"></div>
+        </article>
+      `;
+    }
+
+    function refreshQuestionCard(q) {
+      const chosen = state.answers[q.id];
+      const hasAnswer = chosen !== undefined;
+      const revealFeedback = (state.mode === `practice` && hasAnswer) || state.submitted;
+
+      for (let i = 0; i < q.options.length; i++) {
+        const btn = document.getElementById(`q-${q.id}-opt-${i}`);
+        if (!btn) continue;
+        btn.classList.remove(`is-selected`, `is-correct`, `is-wrong`);
+        btn.disabled = state.submitted || (state.mode === `practice` && hasAnswer);
+
+        if (revealFeedback) {
+          if (i === q.correct) {
+            btn.classList.add(`is-correct`);
+          } else if (hasAnswer && i === chosen && chosen !== q.correct) {
+            btn.classList.add(`is-wrong`);
+          }
+        } else if (hasAnswer && i === chosen) {
+          btn.classList.add(`is-selected`);
+        }
+      }
+
+      const expBox = document.getElementById(`exp-box-${q.id}`);
+      if (expBox) {
+        if (revealFeedback) {
+          let tone = `tone-neutral`;
+          let statusLabel = `پاسخ‌نداده (نزده)`;
+          if (hasAnswer) {
+            if (chosen === q.correct) {
+              tone = `tone-correct`;
+              statusLabel = `پاسخ صحیح`;
+            } else {
+              tone = `tone-wrong`;
+              statusLabel = `پاسخ نادرست`;
+            }
+          }
+          const letters = ENGLISH_LETTERS;
+          expBox.className = `explanation-box is-visible ${tone}`;
+          expBox.innerHTML = `
+            <span class="explanation-status">${statusLabel} — گزینه درست: ${letters[q.correct]}</span>
+            <div>${q.explanation}</div>
+          `;
+        } else {
+          expBox.className = `explanation-box`;
+          expBox.innerHTML = ``;
+        }
+      }
+
+      const starBtn = document.getElementById(`star-btn-${q.id}`);
+      if (starBtn) {
+        const isStarred = Boolean(state.starred[q.id]);
+        starBtn.classList.toggle(`is-starred`, isStarred);
+        starBtn.setAttribute(`aria-pressed`, isStarred ? `true` : `false`);
+        const poly = starBtn.querySelector(`polygon`);
+        if (poly) {
+          poly.setAttribute(`fill`, isStarred ? `currentColor` : `none`);
+        }
+      }
+    }
+
+    function refreshAllQuestionCards() {
+      for (const q of QUESTIONS) {
+        refreshQuestionCard(q);
+      }
+    }
+
+    function updateReportCard() {
+      let answeredCount = 0;
+      let correctCount = 0;
+      let wrongCount = 0;
+
+      for (const q of QUESTIONS) {
+        const chosen = state.answers[q.id];
+        if (chosen !== undefined) {
+          answeredCount += 1;
+          if (chosen === q.correct) {
+            correctCount += 1;
+          } else {
+            wrongCount += 1;
+          }
+        }
+      }
+
+      const unansweredCount = TOTAL_QUESTIONS - answeredCount;
+      const showGraded = state.mode === `practice` || state.submitted;
+
+      const elCorrect = document.getElementById(`stat-correct`);
+      const elWrong = document.getElementById(`stat-wrong`);
+      const elUnanswered = document.getElementById(`stat-unanswered`);
+      const elScore = document.getElementById(`stat-score`);
+      const elProgLabel = document.getElementById(`progress-label`);
+      const elProgPct = document.getElementById(`progress-pct`);
+      const segCorrect = document.getElementById(`prog-correct`);
+      const segWrong = document.getElementById(`prog-wrong`);
+      const segAnswered = document.getElementById(`prog-answered`);
+
+      if (elUnanswered) elUnanswered.textContent = toPersianDigits(unansweredCount);
+
+      if (showGraded) {
+        const scoreOutOf20 = ((correctCount / TOTAL_QUESTIONS) * 20).toFixed(2);
+        if (elCorrect) elCorrect.textContent = toPersianDigits(correctCount);
+        if (elWrong) elWrong.textContent = toPersianDigits(wrongCount);
+        if (elScore) elScore.innerHTML = `<bdi dir="ltr">${scoreOutOf20} / 20</bdi>`;
+        if (segCorrect) segCorrect.style.width = `${(correctCount / TOTAL_QUESTIONS) * 100}%`;
+        if (segWrong) segWrong.style.width = `${(wrongCount / TOTAL_QUESTIONS) * 100}%`;
+        if (segAnswered) segAnswered.style.width = `0%`;
+      } else {
+        if (elCorrect) elCorrect.textContent = `—`;
+        if (elWrong) elWrong.textContent = `—`;
+        if (elScore) elScore.textContent = `در انتظار ثبت`;
+        if (segCorrect) segCorrect.style.width = `0%`;
+        if (segWrong) segWrong.style.width = `0%`;
+        if (segAnswered) segAnswered.style.width = `${(answeredCount / TOTAL_QUESTIONS) * 100}%`;
+      }
+
+      const pct = Math.round((answeredCount / TOTAL_QUESTIONS) * 100);
+      if (elProgLabel) elProgLabel.textContent = `پاسخ‌داده‌شده: ${toPersianDigits(answeredCount)} از ${toPersianDigits(TOTAL_QUESTIONS)}`;
+      if (elProgPct) elProgPct.innerHTML = `<bdi dir="ltr">${pct}%</bdi>`;
+    }
+
+    function renderQuickAccessGrid() {
+      const grid = document.getElementById(`qa-grid`);
+      if (!grid) return;
+
+      const tabs = document.querySelectorAll(`.qa-filter-tab`);
+      tabs.forEach(tab => {
+        tab.classList.toggle(`is-active`, tab.dataset.filter === state.quickFilter);
+      });
+
+      const filtered = QUESTIONS.filter(q => {
+        if (state.quickFilter === `all`) return true;
+        if (state.quickFilter === `starred`) return Boolean(state.starred[q.id]);
+        return q.category === state.quickFilter;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<p class="qa-empty-note">هیچ سوالی در این دسته وجود ندارد. برای افزودن به نشان‌دارها، روی آیکون ستاره کنار سوال کلیک کنید.</p>`;
+        updateStickyOffset();
+        return;
+      }
+
+      const showGraded = state.mode === `practice` || state.submitted;
+      grid.innerHTML = filtered.map(q => {
+        const chosen = state.answers[q.id];
+        const hasAns = chosen !== undefined;
+        let statusCls = ``;
+        if (hasAns) {
+          if (showGraded) {
+            statusCls = chosen === q.correct ? `status-correct` : `status-wrong`;
+          } else {
+            statusCls = `status-selected`;
+          }
+        }
+        const starCls = state.starred[q.id] ? `is-starred` : ``;
+        return `<button type="button" class="qa-num-btn ${statusCls} ${starCls}" onclick="jumpToQuestion(${q.id})">${toPersianDigits(q.id)}</button>`;
+      }).join(``);
+
+      updateStickyOffset();
+    }
+
+    function toggleQuickAccess() {
+      state.quickOpen = !state.quickOpen;
+      applyQuickAccessVisibility();
+      persistState();
+    }
+
+    function applyQuickAccessVisibility() {
+      const btn = document.getElementById(`qa-toggle-btn`);
+      const panel = document.getElementById(`qa-panel`);
+      if (btn) btn.setAttribute(`aria-expanded`, state.quickOpen ? `true` : `false`);
+      if (panel) panel.classList.toggle(`is-open`, state.quickOpen);
+      updateStickyOffset();
+    }
+
+    function setQuickFilter(filterKey) {
+      state.quickFilter = filterKey;
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function jumpToQuestion(qId) {
+      updateStickyOffset();
+      const card = document.getElementById(`q-card-${qId}`);
+      if (!card) return;
+      card.scrollIntoView({ behavior: `smooth`, block: `start` });
+      card.classList.add(`is-highlighted`);
+      setTimeout(() => {
+        card.classList.remove(`is-highlighted`);
+      }, 1100);
+    }
+
+    function selectOption(qId, optIdx) {
+      if (state.submitted) return;
+      const q = QUESTIONS.find(item => item.id === qId);
+      if (!q) return;
+
+      if (state.mode === `practice` && state.answers[qId] !== undefined) return;
+
+      if (!state.timerStarted) {
+        startTimerIfNeeded();
+      }
+
+      state.answers[qId] = optIdx;
+      refreshQuestionCard(q);
+      updateReportCard();
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function toggleStar(qId) {
+      if (state.starred[qId]) {
+        delete state.starred[qId];
+      } else {
+        state.starred[qId] = true;
+      }
+      const q = QUESTIONS.find(item => item.id === qId);
+      if (q) refreshQuestionCard(q);
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function applyModeUI() {
+      const pBtn = document.getElementById(`btn-mode-practice`);
+      const eBtn = document.getElementById(`btn-mode-exam`);
+      const isPractice = state.mode === `practice`;
+      if (pBtn) {
+        pBtn.classList.toggle(`is-active`, isPractice);
+        pBtn.setAttribute(`aria-checked`, isPractice ? `true` : `false`);
+      }
+      if (eBtn) {
+        eBtn.classList.toggle(`is-active`, !isPractice);
+        eBtn.setAttribute(`aria-checked`, !isPractice ? `true` : `false`);
+      }
+    }
+
+    function setMode(newMode) {
+      if (state.mode === newMode) return;
+      state.mode = newMode;
+      stopTimer();
+      state.submitted = false;
+      state.timerStarted = false;
+      state.elapsedSec = 0;
+      state.remainingSec = EXAM_DURATION_SEC;
+
+      applyModeUI();
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+
+      if (newMode === `practice`) {
+        showNotice(`حالت تمرین فعال شد. با انتخاب هر گزینه، کرنومتر آغاز و پاسخ تشریحی بلافاصله نمایش داده می‌شود.`, `info`);
+      } else {
+        showNotice(`حالت آزمون فعال شد. با پاسخ به اولین سوال، تایمر معکوس ۵۱ دقیقه‌ای آغاز می‌شود و تصحیح در پایان انجام خواهد شد.`, `info`);
+      }
+
+      const hasAnyAnswers = Object.keys(state.answers).length > 0;
+      if (hasAnyAnswers && !state.submitted) {
+        startTimerIfNeeded();
+      }
+      persistState();
+    }
+
+    function submitAssessment(fromTimeout) {
+      state.submitted = true;
+      stopTimer();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+      updateTimerDisplay();
+
+      if (fromTimeout) {
+        showNotice(`زمان ۵۱ دقیقه‌ای آزمون به پایان رسید و کارنامه نهایی محاسبه شد.`, `warn`);
+      } else {
+        showNotice(`آزمون با موفقیت ثبت و تصحیح شد. نتیجه کامل در بخش کارنامه و پاسخ تشریحی زیر هر سوال قابل مشاهده است.`, `success`);
+      }
+
+      const reportEl = document.getElementById(`report-section`);
+      if (reportEl) {
+        reportEl.scrollIntoView({ behavior: `smooth`, block: `nearest` });
+      }
+      persistState();
+    }
+
+    function handleResetClick(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.classList.add(`is-armed`);
+        btn.textContent = `تأیید بازنشانی؟ دوباره کلیک کنید`;
+        if (resetConfirmTimer !== null) clearTimeout(resetConfirmTimer);
+        resetConfirmTimer = setTimeout(() => {
+          btn.dataset.armed = `false`;
+          btn.classList.remove(`is-armed`);
+          btn.textContent = `بازنشانی پاسخ‌ها`;
+        }, 4000);
+        return;
+      }
+
+      if (resetConfirmTimer !== null) {
+        clearTimeout(resetConfirmTimer);
+        resetConfirmTimer = null;
+      }
+      btn.dataset.armed = `false`;
+      btn.classList.remove(`is-armed`);
+      btn.textContent = `بازنشانی پاسخ‌ها`;
+
+      stopTimer();
+      state.answers = {};
+      state.submitted = false;
+      state.timerStarted = false;
+      state.elapsedSec = 0;
+      state.remainingSec = EXAM_DURATION_SEC;
+
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+      showNotice(`تمامی پاسخ‌ها و زمان‌سنج بازنشانی شدند.`, `info`);
+      persistState();
+    }
+
+    async function initApp() {
+      renderAllQuestions();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (saved.mode === `practice` || saved.mode === `exam`) state.mode = saved.mode;
+            if (saved.answers && typeof saved.answers === `object`) state.answers = saved.answers;
+            if (saved.starred && typeof saved.starred === `object`) state.starred = saved.starred;
+            if (typeof saved.submitted === `boolean`) state.submitted = saved.submitted;
+            if (typeof saved.quickOpen === `boolean`) state.quickOpen = saved.quickOpen;
+            if (typeof saved.quickFilter === `string`) state.quickFilter = saved.quickFilter;
+            if (typeof saved.timerStarted === `boolean`) state.timerStarted = saved.timerStarted;
+            if (typeof saved.elapsedSec === `number`) state.elapsedSec = saved.elapsedSec;
+            if (typeof saved.remainingSec === `number`) state.remainingSec = saved.remainingSec;
+          }
+        } catch (err) {
+          // Proceed with fresh state
+        }
+      }
+
+      applyModeUI();
+      applyQuickAccessVisibility();
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+
+      if (state.timerStarted && !state.submitted) {
+        if (state.mode === `exam` && state.remainingSec <= 0) {
+          submitAssessment(true);
+        } else {
+          startTimerIfNeeded();
+        }
+      }
+
+      window.addEventListener(`resize`, updateStickyOffset);
+      updateStickyOffset();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    initApp();
+  </script>
+</body>
+</html>

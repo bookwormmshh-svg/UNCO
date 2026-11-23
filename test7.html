@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="vitals">
+  <title>آزمون و تمرین تعاملی زبان تخصصی یک — درس سوم</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Vitals + SBMU Medical Blue Palette) */
+      --background: #ffffff;
+      --page-canvas: #f2f6fa;
+      --surface-container-low: #f1f6fb;
+      --surface-container: #e3eef8;
+      --surface-container-high: #d3e5f5;
+
+      /* Text */
+      --on-surface: #142638;
+      --on-surface-variant: #475b6d;
+
+      /* Rules & borders */
+      --outline: #7c95aa;
+      --outline-variant: #d6e2ec;
+
+      /* Accents — Medical Blue (sbmu404.ir inspired) */
+      --primary: #065a9c;
+      --primary-hover: #04477d;
+      --primary-deep: #033d6b;
+      --on-primary: #ffffff;
+      --primary-container: #e4f0fb;
+      --on-primary-container: #044273;
+      --header-subtitle-ink: #d4ebff;
+      --header-timer-bg: #033d6b;
+      --header-timer-border: #3a85c2;
+
+      /* Semantic */
+      --secondary: #155734;
+      --tertiary: #1e7e48;
+      --positive: #1e7e48;
+      --positive-bg: #eaf7ef;
+      --positive-border: #a6dfc0;
+      --warning: #b36b00;
+      --warning-bg: #fef7e6;
+      --warning-border: #f3d189;
+      --error: #c62828;
+      --on-error: #ffffff;
+      --error-bg: #fdeeee;
+      --error-border: #f5bcbc;
+      --star-active: #d98200;
+      --star-active-bg: #fff5df;
+
+      /* Difficulty & Category Chips */
+      --chip-easy-bg: #e8f6ee;
+      --chip-easy-ink: #166037;
+      --chip-med-bg: #e7f1fb;
+      --chip-med-ink: #064d86;
+      --chip-hard-bg: #f6ebf8;
+      --chip-hard-ink: #6a217a;
+      --chip-read-bg: #fff3e4;
+      --chip-read-ink: #8c4d00;
+
+      /* Fonts */
+      --font-headline: 'Vazirmatn', sans-serif;
+      --font-body: 'Vazirmatn', sans-serif;
+      --font-label: 'Vazirmatn', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+
+      /* Type scale */
+      --display-size: clamp(1.125rem, 0.95rem + 0.8vw, 1.5rem);
+      --headline-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.25rem);
+      --subhead-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.0625rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.8125rem;
+
+      /* Shape & elevation */
+      --rounded: 0.75rem;
+      --rounded-lg: 1rem;
+      --rounded-full: 9999px;
+      --card-border: 1px solid var(--outline-variant);
+      --card-lift: 0 2px 6px rgba(10, 40, 70, 0.05), 0 10px 24px rgba(10, 40, 70, 0.06);
+      --header-shadow: 0 4px 16px rgba(3, 45, 82, 0.14);
+
+      /* Focus ring */
+      --focus: #065a9c;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.25rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 140ms;
+      --dur-short: 240ms;
+      --dur-long: 380ms;
+
+      --sticky-offset: 132px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: clip;
+      background-color: var(--page-canvas);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.7;
+      letter-spacing: 0;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      letter-spacing: 0;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Sticky Top Shell: Medical Blue Header + Quick Access Bar */
+    .sticky-shell {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      box-shadow: var(--header-shadow);
+    }
+
+    .app-header {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--primary-deep);
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .header-titles {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      min-width: 0;
+    }
+
+    .header-titles h1 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--on-primary);
+    }
+
+    .header-subtitle {
+      margin: 0;
+      display: inline-flex;
+      align-self: flex-start;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--header-subtitle-ink);
+      background-color: var(--primary-deep);
+      padding: 0.15rem 0.7rem;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--header-timer-border);
+    }
+
+    .digital-timer {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: clamp(1.125rem, 1rem + 0.5vw, 1.45rem);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--on-primary);
+      background-color: var(--header-timer-bg);
+      border: 1.5px solid var(--header-timer-border);
+      border-radius: var(--rounded);
+      padding: 0.45rem 0.9rem;
+      min-width: 5.5rem;
+      text-align: center;
+      line-height: 1.2;
+      transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+
+    .digital-timer.timer-warning {
+      background-color: var(--error);
+      border-color: var(--on-primary);
+    }
+
+    /* Sticky Quick Access Accordion */
+    .quick-access-bar {
+      background-color: var(--background);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .qa-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-xs) var(--space-lg);
+    }
+
+    .qa-toggle-btn {
+      width: 100%;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      background: transparent;
+      border: 0;
+      color: var(--primary);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      padding: var(--space-xs) var(--space-xs);
+      cursor: pointer;
+      border-radius: var(--rounded);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-toggle-btn:hover {
+      background-color: var(--surface-container-low);
+    }
+
+    .qa-toggle-btn svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform var(--dur-short) var(--ease-in-out);
+    }
+
+    .qa-toggle-btn[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+
+    .qa-panel {
+      display: none;
+      padding-top: var(--space-sm);
+      padding-bottom: var(--space-md);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    .qa-panel.is-open {
+      display: block;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    @keyframes panelFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .qa-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .qa-filter-tab {
+      min-height: 38px;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-filter-tab:hover {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    .qa-filter-tab.is-active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .qa-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      max-height: 150px;
+      overflow-y: auto;
+      padding: 2px;
+    }
+
+    .qa-num-btn {
+      position: relative;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 0.5rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--label-size);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .qa-num-btn:hover {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .qa-num-btn:active {
+      transform: scale(0.96);
+    }
+
+    .qa-num-btn.status-selected {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+    }
+
+    .qa-num-btn.status-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive);
+    }
+
+    .qa-num-btn.status-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .qa-num-btn.is-starred::after {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 7px;
+      height: 7px;
+      border-radius: var(--rounded-full);
+      background-color: var(--star-active);
+    }
+
+    .qa-empty-note {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      padding: var(--space-sm) 0;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .main-container * {
+      min-width: 0;
+    }
+
+    /* Top Control & Report Dashboard Grid */
+    .top-panels {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: stretch;
+    }
+
+    .panel-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: var(--headline-size);
+      font-weight: 800;
+      color: var(--on-surface);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--surface-container);
+    }
+
+    /* Assessment Mode Selector */
+    .mode-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+
+    .mode-btn {
+      text-align: right;
+      min-height: 44px;
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1.5px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .mode-btn:hover {
+      background-color: var(--surface-container);
+      transform: translateY(-1px);
+    }
+
+    .mode-btn:active {
+      transform: scale(0.99);
+    }
+
+    .mode-btn.is-active {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    .mode-btn-title {
+      font-size: var(--subhead-size);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .mode-btn-desc {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: auto;
+    }
+
+    .btn-primary {
+      flex: 1 1 180px;
+      min-height: 46px;
+      padding: 0.65rem 1.2rem;
+      border: 0;
+      border-radius: var(--rounded);
+      background-color: var(--primary);
+      color: var(--on-primary);
+      font-size: var(--body-size);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      flex: 1 1 150px;
+      min-height: 46px;
+      padding: 0.65rem 1.1rem;
+      border: 1.5px solid var(--outline);
+      border-radius: var(--rounded);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+    }
+
+    .btn-secondary.is-armed {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .inline-notice {
+      display: none;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .inline-notice.is-visible {
+      display: block;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    .inline-notice[data-tone="info"] {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      border-right: 4px solid var(--primary);
+    }
+
+    .inline-notice[data-tone="success"] {
+      background-color: var(--positive-bg);
+      color: var(--positive);
+      border-right: 4px solid var(--positive);
+    }
+
+    .inline-notice[data-tone="warn"] {
+      background-color: var(--warning-bg);
+      color: var(--warning);
+      border-right: 4px solid var(--warning);
+    }
+
+    /* Report Card (کارنامه) */
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    .stat-tile {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .stat-tile.stat-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive-border);
+      border-right-color: var(--positive);
+    }
+
+    .stat-tile.stat-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error-border);
+      border-right-color: var(--error);
+    }
+
+    .stat-tile.stat-unanswered {
+      background-color: var(--warning-bg);
+      border-color: var(--warning-border);
+      border-right-color: var(--warning);
+    }
+
+    .stat-tile.stat-score {
+      background-color: var(--primary-container);
+      border-color: var(--surface-container-high);
+      border-right-color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+
+    .stat-value {
+      font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.55rem);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.25;
+      color: var(--on-surface);
+    }
+
+    .stat-correct .stat-value { color: var(--positive); }
+    .stat-wrong .stat-value { color: var(--error); }
+    .stat-unanswered .stat-value { color: var(--warning); }
+    .stat-score .stat-value { color: var(--primary); }
+
+    .report-progress-wrap {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .report-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 600;
+    }
+
+    .progress-track {
+      height: 10px;
+      border-radius: var(--rounded-full);
+      background-color: var(--surface-container);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .progress-seg-correct {
+      background-color: var(--positive);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .progress-seg-wrong {
+      background-color: var(--error);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .progress-seg-answered {
+      background-color: var(--primary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* Section Headings */
+    .section-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .section-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--background);
+      border: var(--card-border);
+      border-right: 5px solid var(--primary);
+      border-radius: var(--rounded);
+    }
+
+    .section-banner h2 {
+      margin: 0;
+      font-size: var(--headline-size);
+      font-weight: 800;
+      color: var(--on-surface);
+    }
+
+    .section-count {
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--on-primary-container);
+      background-color: var(--primary-container);
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--rounded-full);
+    }
+
+    /* Reading Passage Box */
+    .passage-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+    }
+
+    .passage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .passage-title {
+      margin: 0;
+      font-size: var(--subhead-size);
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .passage-tag {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--chip-read-ink);
+      background-color: var(--chip-read-bg);
+      padding: 0.15rem 0.7rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .passage-text {
+      direction: ltr;
+      text-align: left;
+      margin: 0;
+      color: var(--on-surface);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      background-color: var(--surface-container-low);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+    }
+
+    /* Question Card */
+    .question-card {
+      background-color: var(--background);
+      border: var(--card-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-lift);
+      scroll-margin-top: var(--sticky-offset);
+      transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .question-card:hover {
+      border-color: var(--outline);
+    }
+
+    .question-card.is-highlighted {
+      box-shadow: 0 0 0 3px var(--primary);
+    }
+
+    .q-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .q-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .q-number-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 800;
+      color: var(--on-primary);
+      background-color: var(--primary);
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .q-level-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 700;
+      padding: 0.2rem 0.7rem;
+      border-radius: var(--rounded-full);
+    }
+
+    .q-level-badge[data-cat="easy"] { background-color: var(--chip-easy-bg); color: var(--chip-easy-ink); }
+    .q-level-badge[data-cat="medium"] { background-color: var(--chip-med-bg); color: var(--chip-med-ink); }
+    .q-level-badge[data-cat="hard"] { background-color: var(--chip-hard-bg); color: var(--chip-hard-ink); }
+    .q-level-badge[data-cat="reading"] { background-color: var(--chip-read-bg); color: var(--chip-read-ink); }
+
+    /* Star Bookmark Button — strictly icon only, zero text */
+    .star-btn {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--outline);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .star-btn:hover {
+      background-color: var(--star-active-bg);
+      border-color: var(--star-active);
+      color: var(--star-active);
+      transform: scale(1.06);
+    }
+
+    .star-btn:active {
+      transform: scale(0.94);
+    }
+
+    .star-btn.is-starred {
+      background-color: var(--star-active-bg);
+      border-color: var(--star-active);
+      color: var(--star-active);
+    }
+
+    .star-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .q-prompt {
+      margin: 0;
+      font-size: clamp(1rem, 0.95rem + 0.2vw, 1.08rem);
+      font-weight: 700;
+      color: var(--on-surface);
+      line-height: 1.75;
+    }
+
+    .q-prompt.is-ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .q-context-quote {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      background-color: var(--surface-container-low);
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--rounded);
+      border-right: 3px solid var(--outline);
+      margin: 0;
+    }
+
+    .options-list {
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .option-btn {
+      width: 100%;
+      min-height: 48px;
+      padding: 0.7rem 1rem;
+      border-radius: var(--rounded);
+      border: 1.5px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      font-weight: 500;
+      text-align: right;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .option-btn.is-ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background-color: var(--surface-container-low);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .option-btn:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .option-key {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--rounded-full);
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-size: var(--label-size);
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .option-text {
+      flex: 1 1 auto;
+      line-height: 1.55;
+    }
+
+    .option-btn.is-selected {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+      font-weight: 700;
+    }
+
+    .option-btn.is-selected .option-key {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .option-btn.is-correct {
+      background-color: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive);
+      font-weight: 700;
+    }
+
+    .option-btn.is-correct .option-key {
+      background-color: var(--positive);
+      color: var(--on-primary);
+    }
+
+    .option-btn.is-wrong {
+      background-color: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+      font-weight: 700;
+    }
+
+    .option-btn.is-wrong .option-key {
+      background-color: var(--error);
+      color: var(--on-error);
+    }
+
+    /* Explanation Box */
+    .explanation-box {
+      display: none;
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+
+    .explanation-box.is-visible {
+      display: block;
+    }
+
+    .explanation-box.tone-correct {
+      background-color: var(--positive-bg);
+      border: 1px solid var(--positive-border);
+      border-right: 4px solid var(--positive);
+      color: var(--on-surface);
+    }
+
+    .explanation-box.tone-wrong {
+      background-color: var(--error-bg);
+      border: 1px solid var(--error-border);
+      border-right: 4px solid var(--error);
+      color: var(--on-surface);
+    }
+
+    .explanation-box.tone-neutral {
+      background-color: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      border-right: 4px solid var(--warning);
+      color: var(--on-surface);
+    }
+
+    .explanation-status {
+      display: block;
+      font-weight: 800;
+      margin-bottom: var(--space-xs);
+    }
+
+    .explanation-box.tone-correct .explanation-status { color: var(--positive); }
+    .explanation-box.tone-wrong .explanation-status { color: var(--error); }
+    .explanation-box.tone-neutral .explanation-status { color: var(--warning); }
+
+    .source-footer {
+      text-align: center;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      padding: var(--space-md) 0 var(--space-xl);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 760px) {
+      .top-panels {
+        grid-template-columns: 1fr;
+      }
+      .app-header {
+        padding: var(--space-sm) var(--space-md);
+      }
+      .qa-inner {
+        padding: var(--space-xs) var(--space-md);
+      }
+      .main-container {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .mode-options {
+        grid-template-columns: 1fr;
+      }
+      .question-card, .panel-card, .passage-card {
+        padding: var(--space-md);
+      }
+      .header-inner {
+        gap: var(--space-sm);
+      }
+      .digital-timer {
+        padding: 0.35rem 0.65rem;
+        min-width: 4.75rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sticky Top Shell: Medical Blue Header + Quick Access Bar -->
+  <div class="sticky-shell" id="sticky-shell">
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="header-titles">
+          <h1>آزمون و تمرین تعاملی واژگان و درک مطلب زبان تخصصی یک</h1>
+          <p class="header-subtitle">ورودی مهر 1404</p>
+        </div>
+        <div id="live-timer" class="digital-timer" dir="ltr" aria-live="off">00:00</div>
+      </div>
+    </header>
+
+    <div class="quick-access-bar">
+      <div class="qa-inner">
+        <button type="button" id="qa-toggle-btn" class="qa-toggle-btn" aria-expanded="false" aria-controls="qa-panel" onclick="toggleQuickAccess()">
+          <span>دسترسی سریع به سوالات</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div id="qa-panel" class="qa-panel" role="region" aria-label="پنل دسترسی سریع به سوالات">
+          <div class="qa-filters" role="tablist" aria-label="فیلتر دسته‌بندی سوالات">
+            <button type="button" class="qa-filter-tab is-active" data-filter="all" onclick="setQuickFilter('all')">همه</button>
+            <button type="button" class="qa-filter-tab" data-filter="easy" onclick="setQuickFilter('easy')">ساده</button>
+            <button type="button" class="qa-filter-tab" data-filter="medium" onclick="setQuickFilter('medium')">متوسط</button>
+            <button type="button" class="qa-filter-tab" data-filter="hard" onclick="setQuickFilter('hard')">دشوار</button>
+            <button type="button" class="qa-filter-tab" data-filter="reading" onclick="setQuickFilter('reading')">درک مطلب</button>
+            <button type="button" class="qa-filter-tab" data-filter="starred" onclick="setQuickFilter('starred')">نشان‌دارها</button>
+          </div>
+          <div id="qa-grid" class="qa-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-container">
+    <!-- Top Dashboard: نوع ارزیابی + کارنامه -->
+    <div class="top-panels">
+      <section class="panel-card" aria-labelledby="mode-heading">
+        <h2 id="mode-heading" class="panel-title">نوع ارزیابی</h2>
+        <div class="mode-options" role="radiogroup" aria-labelledby="mode-heading">
+          <button type="button" id="btn-mode-practice" class="mode-btn is-active" role="radio" aria-checked="true" onclick="setMode('practice')">
+            <span class="mode-btn-title">حالت تمرین</span>
+            <span class="mode-btn-desc">بازخورد آنی و پاسخ تشریحی فوری</span>
+          </button>
+          <button type="button" id="btn-mode-exam" class="mode-btn" role="radio" aria-checked="false" onclick="setMode('exam')">
+            <span class="mode-btn-title">حالت آزمون</span>
+            <span class="mode-btn-desc">تصحیح نهایی پس از پایان آزمون</span>
+          </button>
+        </div>
+        <div class="action-row">
+          <button type="button" id="btn-submit-exam" class="btn-primary" onclick="submitAssessment()">ثبت و تصحیح آزمون</button>
+          <button type="button" id="btn-reset-all" class="btn-secondary" onclick="handleResetClick(this)">بازنشانی پاسخ‌ها</button>
+        </div>
+        <div id="inline-notice" class="inline-notice" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="panel-card" id="report-section" aria-labelledby="report-heading">
+        <h2 id="report-heading" class="panel-title">کارنامه</h2>
+        <div class="report-grid">
+          <div class="stat-tile stat-correct">
+            <span class="stat-label">درست</span>
+            <span class="stat-value" id="stat-correct">0</span>
+          </div>
+          <div class="stat-tile stat-wrong">
+            <span class="stat-label">نادرست</span>
+            <span class="stat-value" id="stat-wrong">0</span>
+          </div>
+          <div class="stat-tile stat-unanswered">
+            <span class="stat-label">پاسخ‌نداده / نزده</span>
+            <span class="stat-value" id="stat-unanswered">47</span>
+          </div>
+          <div class="stat-tile stat-score">
+            <span class="stat-label">نمره از ۲۰</span>
+            <span class="stat-value" id="stat-score"><bdi dir="ltr">0.00 / 20</bdi></span>
+          </div>
+        </div>
+        <div class="report-progress-wrap">
+          <div class="report-progress-meta">
+            <span id="progress-label">پاسخ‌داده‌شده: ۰ از ۴۷</span>
+            <span id="progress-pct"><bdi dir="ltr">0%</bdi></span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="prog-correct" class="progress-seg-correct" style="width: 0%;"></div>
+            <div id="prog-wrong" class="progress-seg-wrong" style="width: 0%;"></div>
+            <div id="prog-answered" class="progress-seg-answered" style="width: 0%;"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="questions-root"></div>
+
+    <footer class="source-footer">
+      مبتنی بر درس سوم جزوه زبان تخصصی یک (Unit 3: Communicable Diseases & Global Health) — دانشکده پزشکی دانشگاه علوم پزشکی شهید بهشتی
+    </footer>
+  </main>
+
+  <api-shim></api-shim>
+  <script>
+    const PASSAGES = {
+      r1: {
+        title: `متن اول (Passage 1): Global Health Equity & Tackling Diseases`,
+        tag: `سوالات ۳۹ تا ۴۱`,
+        text: `In the late twentieth century, communicable diseases continued to plague resource-constrained settings, despite dramatic medical advances in wealthy nations. Many global health experts raised arguments to justify inaction, claiming that complex treatment regimens for illnesses like HIV and multidrug-resistant tuberculosis were impossible to administer in impoverished settings. These artificial dichotomies between prevention and care served as major obstacles. Visionary public health pioneers challenged this ambivalence, demonstrating that community-based care models could achieve high adherence rates even in the poorest regions.`
+      },
+      r2: {
+        title: `متن دوم (Passage 2): Clinical Presentation of Infectious Illnesses`,
+        tag: `سوالات ۴۲ تا ۴۴`,
+        text: `When evaluating a patient with a suspected communicable affliction, clinicians must maintain a high index of suspicion. Early symptoms may be innocuous, such as low-grade fatigue, sore throat, or mild chills. However, as the pathogen multiplies, severe manifestations appear, including high fever, night sweats, swollen lymph nodes, nausea, vomiting, and persistent diarrhea. In airborne infections like pulmonary tuberculosis, a persistent cough lasting more than two weeks warrants immediate investigation, blood drawing, and accurate diagnostic testing.`
+      },
+      r3: {
+        title: `متن سوم (Passage 3): Overcoming Barriers to Treatment Adherence`,
+        tag: `سوالات ۴۵ تا ۴۷`,
+        text: `In many developing countries, user fees presented an insurmountable barrier for impoverished patients seeking care. When patients cannot afford medication, adherence falters, leading to the emergence of resurgent drug-resistant strains. To overcome this, innovative global initiatives marshaled international donor funds to provide free, high-quality drugs. Furthermore, recruiting and supervising community health workers to deliver medicines directly to patients' homes ensured sustained treatment completion, successfully tackling neglected diseases worldwide.`
+      }
+    };
+
+    const QUESTIONS = [
+      {
+        id: 1, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Diseases that can be transmitted directly or indirectly from one person to another are classified as ________ diseases.`,
+        options: [`strenuous`, `innocuous`, `communicable`, `latent`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">communicable</bdi> به معنای «واگیردار و قابل انتقال» است.`
+      },
+      {
+        id: 2, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Without prompt medical treatment, rabies is almost inescapably ________ once symptoms appear.`,
+        options: [`fatal`, `innocuous`, `abundant`, `relevant`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">fatal</bdi> به معنای «کشنده و مرگبار» است.`
+      },
+      {
+        id: 3, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Patients presenting with severe malaria often suffer from extreme ________ and muscle weakness.`,
+        options: [`fatigue`, `adherence`, `indignation`, `oversight`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">fatigue</bdi> به معنای «خستگی شدید و بی‌رمقی» است.`
+      },
+      {
+        id: 4, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Avoid performing ________ exercise when recovering from a acute systemic infection.`,
+        options: [`cognitive`, `latent`, `strenuous`, `airborne`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">strenuous</bdi> به معنای «سنگین و پرفشار» است.`
+      },
+      {
+        id: 5, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `High fever accompanied by severe ________ and night ________ is a hallmark symptom of active tuberculosis.`,
+        options: [`transfusion / adherence`, `ulcers / fees`, `dichotomies / pledges`, `chills / sweats`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">chills</bdi> به معنای «لرز» و <bdi dir="ltr">sweats</bdi> به معنای «تعریق» است.`
+      },
+      {
+        id: 6, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `The patient complained of a severe ________ and difficulty swallowing due to viral pharyngitis.`,
+        options: [`commitment`, `litany`, `sore throat`, `obstacle`],
+        correct: 2,
+        explanation: `عبارت <bdi dir="ltr">sore throat</bdi> به معنای «گلودرد» است.`
+      },
+      {
+        id: 7, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Physical examination revealed significantly ________ cervical lymph nodes in the neck.`,
+        options: [`pertinent`, `acute`, `airborne`, `swollen`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">swollen</bdi> به معنای «متورم و بادکرده» است.`
+      },
+      {
+        id: 8, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Food poisoning often manifests with rapid onset of ________, ________, and severe abdominal cramps.`,
+        options: [`nausea / vomiting`, `transfusion / dichotomy`, `donor / pledge`, `fatigue / adherence`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">nausea</bdi> به معنای «تهوع» و <bdi dir="ltr">vomiting</bdi> به معنای «استفراغ» است.`
+      },
+      {
+        id: 9, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Prolonged infectious ________ can lead to dehydration and electrolyte imbalance in young children.`,
+        options: [`ulcers`, `chills`, `fatigue`, `diarrhea`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">diarrhea</bdi> به معنای «اسهال» است.`
+      },
+      {
+        id: 10, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Peptic ________ are open sores that develop on the inside lining of the stomach and duodenum.`,
+        options: [`chills`, `ulcers`, `fees`, `sweets`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">ulcers</bdi> به معنای «زخم‌های گوارشی/پوستی» است.`
+      },
+      {
+        id: 11, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Tuberculosis is primarily an ________ pathogen that spreads through respiratory droplets.`,
+        options: [`latent`, `airborne`, `chipped`, `innocuous`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">airborne</bdi> به معنای «هوابرد و منتقل‌شونده از طریق هوا» است.`
+      },
+      {
+        id: 12, category: `easy`, catLabel: `واژگان — ساده`, isReading: false,
+        prompt: `Blood ________ must undergo rigorous screening to prevent the transmission of HIV and Hepatitis B.`,
+        options: [`transfusion`, `investigation`, `swelling`, `fatigue`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">transfusion</bdi> به معنای «انتقال خون» است.`
+      },
+      {
+        id: 13, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Public health agencies focus heavily on ________ infectious disease outbreaks in poor rural areas.`,
+        options: [`tackling`, `condemning`, `dismissing`, `swelling`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">tackling</bdi> به معنای «مقابله کردن و مواجهه با مشکلات» است.`
+      },
+      {
+        id: 14, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Delivering quality healthcare in ________ settings requires highly efficient distribution of medical supplies.`,
+        options: [`airborne`, `resource-constrained`, `abundant`, `acute`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">resource-constrained</bdi> به معنای «محدود از نظر منابع» است.`
+      },
+      {
+        id: 15, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `The discovery of antiretroviral therapy ________ HIV from a fatal diagnosis into a manageable chronic condition.`,
+        options: [`neglected`, `chipped`, `condemned`, `transformed`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">transformed</bdi> به معنای «متحول‌ساخته و تغییرشکل‌داده» است.`
+      },
+      {
+        id: 16, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Clinicians must gather all ________ diagnostic details before reaching a final clinical conclusion.`,
+        options: [`pertinent`, `airborne`, `latent`, `innocuous`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">pertinent</bdi> به معنای «مرتبط و شایسته توجه» است.`
+      },
+      {
+        id: 17, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Individuals with weakened immune systems are far more ________ to opportunistic fungal infections.`,
+        options: [`abundant`, `adequate`, `strenuous`, `susceptible`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">susceptible</bdi> به معنای «مستعد و آسیب‌پذیر» است.`
+      },
+      {
+        id: 18, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `A ________ infection may remain dormant inside host tissues for years without causing overt clinical symptoms.`,
+        options: [`latent`, `strenuous`, `acute`, `fatal`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">latent</bdi> به معنای «نهفته و خفته» است.`
+      },
+      {
+        id: 19, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `What initially appeared to be an ________ viral illness unexpectedly progressed into severe encephalitis.`,
+        options: [`acute`, `airborne`, `strenuous`, `innocuous`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">innocuous</bdi> به معنای «بی‌خطر و کم‌اهمیت» است.`
+      },
+      {
+        id: 20, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Patients with advanced neurodegenerative ________ often experience severe deficits in ________ functioning.`,
+        options: [`ulcers / chills`, `afflictions / cognitive`, `fatigue / diarrhea`, `donor / pledge`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">afflictions</bdi> به معنای «بیماری‌ها/رنج‌ها» و <bdi dir="ltr">cognitive</bdi> به معنای «شناختی» است.`
+      },
+      {
+        id: 21, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Diagnostic laboratories in rural clinics require ________, ________, and fast rapid testing kits.`,
+        options: [`airborne / strenuous`, `accurate / affordable`, `latent / innocuous`, `chipped / swollen`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">accurate</bdi> به معنای «دقیق» و <bdi dir="ltr">affordable</bdi> به معنای «مقرون‌به‌صرفه/ارزان» است.`
+      },
+      {
+        id: 22, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `International financial ________ pledged billions of dollars to support global tuberculosis eradication programs.`,
+        options: [`afflictions`, `ulcers`, `donors`, `chills`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">donors</bdi> به معنای «اهداکنندگان و حامیان مالی» است.`
+      },
+      {
+        id: 23, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Early success in local ________ demonstrated that community-based HIV treatment could be scaled up nationally.`,
+        options: [`blood drawing`, `sore throat`, `pilot projects`, `acute fatigue`],
+        correct: 2,
+        explanation: `عبارت <bdi dir="ltr">pilot projects</bdi> به معنای «پروژه‌های آزمایشی/پایلوت» است.`
+      },
+      {
+        id: 24, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Strict patient ________ to daily antiretroviral medication is essential to prevent drug-resistant mutations.`,
+        options: [`fatigue`, `indignation`, `adherence`, `ambivalence`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">adherence</bdi> به معنای «پایبندی به درمان» است.`
+      },
+      {
+        id: 25, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Successful disease control requires ________ health infrastructure and unyielding political ________.`,
+        options: [`innocuous / sore throat`, `latent / fatigue`, `airborne / ulcer`, `adequate / commitment`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">adequate</bdi> به معنای «کافی/مناسب» و <bdi dir="ltr">commitment</bdi> به معنای «تعهد» است.`
+      },
+      {
+        id: 26, category: `medium`, catLabel: `واژگان — متوسط`, isReading: false,
+        prompt: `Tropical diseases affecting impoverished populations have been historically ________ by major pharmaceutical companies.`,
+        options: [`pioneered`, `neglected`, `administered`, `transformed`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">neglected</bdi> به معنای «مورد غفلت قرار گرفته» است.`
+      },
+      {
+        id: 27, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Various specious ________ to justify inaction in treating AIDS in developing countries during the 1990s.`,
+        options: [`arguments were raised`, `pilot projects were marshaled`, `conclusions were drawn`, `donations were pledged`],
+        correct: 0,
+        explanation: `عبارت <bdi dir="ltr">arguments were raised to justify</bdi> به معنای «استدلال‌هایی برای توجیه مطرح شد» است.`
+      },
+      {
+        id: 28, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Global health advocates presented a long ________ of excuses that bureaucratic institutions used to delay medical aid.`,
+        options: [`litany`, `transfusion`, `adherence`, `sore throat`],
+        correct: 0,
+        explanation: `واژه <bdi dir="ltr">litany</bdi> به معنای «فهرست طولانی و تکراری از دلایل/شکایات» است.`
+      },
+      {
+        id: 29, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Artificial ________ between prevention and treatment served as an ideological ________ to expanding global care.`,
+        options: [`conclusions / adherence`, `dichotomies / obstacle`, `transfusions / donor`, `afflictions / sore throat`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">dichotomies</bdi> به معنای «دوگانه‌انگاری‌ها» و <bdi dir="ltr">obstacle</bdi> به معنای «مانع» است.`
+      },
+      {
+        id: 30, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `International policy was crippled by bureaucrat ________, leading critics to ________ the systemic neglect of poor patients.`,
+        options: [`acute / draw`, `fatigue / transform`, `ambivalence / condemn`, `adherence / administer`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">ambivalence</bdi> به معنای «تردید و دوگانگی/انفعال» و <bdi dir="ltr">condemn</bdi> به معنای «محکوم کردن» است.`
+      },
+      {
+        id: 31, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Deep-seated health ________ across developing nations generated widespread moral ________ among humanitarian doctors.`,
+        options: [`transfusion / ulcer`, `adherence / fatigue`, `conclusion / donor`, `inequity / indignation`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">inequity</bdi> به معنای «بی‌عدالتی/نابرابری» و <bdi dir="ltr">indignation</bdi> به معنای «خشم و انزجار اخلاقی» است.`
+      },
+      {
+        id: 32, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `A group of ________ clinicians ________ community-based delivery models for chronic infectious disease care.`,
+        options: [`latent / neglected`, `airborne / dismissed`, `strenuous / compromised`, `visionary / pioneered`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">visionary</bdi> به معنای «دوراندیش/صاحب‌نظر» و <bdi dir="ltr">pioneered</bdi> به معنای «پیشگام شد» است.`
+      },
+      {
+        id: 33, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `________ the delivery of affordable essential medicines is the most effective strategy to reduce global child mortality.`,
+        options: [`Dismissing`, `Condemning`, `Accelerating`, `Swelling`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">Accelerating</bdi> به معنای «شتاب بخشیدن» است.`
+      },
+      {
+        id: 34, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Imposing high user ________ created an ________ financial barrier for low-income families seeking emergency healthcare.`,
+        options: [`donor / airborne`, `fatigue / accurate`, `sore throat / latent`, `fees / insurmountable`],
+        correct: 3,
+        explanation: `واژه <bdi dir="ltr">fees</bdi> به معنای «هزینه‌ها/فرانشیزها» و <bdi dir="ltr">insurmountable</bdi> به معنای «غیرقابل عبور/دست‌نیافتنی» است.`
+      },
+      {
+        id: 35, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Health ministries ________ financial resources to combat the threat of ________ drug-resistant tuberculosis strains.`,
+        options: [`chipped / latent`, `neglected / airborne`, `marshaled / resurgent`, `dismissed / innocuous`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">marshaled</bdi> به معنای «بسیج کرد/سازماندهی کرد» و <bdi dir="ltr">resurgent</bdi> به معنای «دوباره اوج‌گرفته/احیاشده» است.`
+      },
+      {
+        id: 36, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Public health laws were ________ to ________ community health workers in remote, medically ________ villages.`,
+        options: [`condemned / dismiss / airborne`, `invoked / recruit / underserved`, `transformed / neglect / strenuous`, `pledged / swallow / acute`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">invoked</bdi> به معنای «استناد شد/به کار گرفته شد»، <bdi dir="ltr">recruit</bdi> به معنای «جذب کردن» و <bdi dir="ltr">underserved</bdi> به معنای «محروم از خدمات» است.`
+      },
+      {
+        id: 37, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `Senior physicians were appointed to ________ field staff to guarantee that patients received ________ clinical care.`,
+        options: [`condemn / fatal`, `supervise / adequate`, `swelling / latent`, `dismiss / airborne`],
+        correct: 1,
+        explanation: `واژه <bdi dir="ltr">supervise</bdi> به معنای «نظارت کردن» و <bdi dir="ltr">adequate</bdi> به معنای «کافی و مناسب» است.`
+      },
+      {
+        id: 38, category: `hard`, catLabel: `واژگان — دشوار`, isReading: false,
+        prompt: `The ________ impact of systemic neglect led to a resurgence of diseases that were previously thought to be under control.`,
+        options: [`chipped`, `innocuous`, `cumulative`, `subtle`],
+        correct: 2,
+        explanation: `واژه <bdi dir="ltr">cumulative</bdi> به معنای «انباشته‌شده و تراکمی» است.`
+      },
+      {
+        id: 39, category: `reading`, catLabel: `درک مطلب — متن ۱ (ساده)`, isReading: true, passageId: `r1`,
+        prompt: `What excuse was frequently raised to justify not providing complex medical treatments in poor nations?`,
+        options: [`That poor nations lacked any infectious diseases`, `That complex treatment regimens were impossible to administer in resource-constrained settings`, `That wealthy nations had no medical supplies left to share`, `That vaccines were completely ineffective against viruses`],
+        correct: 1,
+        explanation: `بهانه مطرح‌شده این بود که اجرای رژیم‌های درمانی پیچیده در مناطق محروم غیرممکن است.`
+      },
+      {
+        id: 40, category: `reading`, catLabel: `درک مطلب — متن ۱ (متوسط)`, isReading: true, passageId: `r1`,
+        prompt: `How did visionary public health pioneers challenge global inaction?`,
+        options: [`By advocating for the complete closure of rural clinics`, `By focusing exclusively on surgical interventions`, `By requiring patients to pay insurmountable medical fees`, `By demonstrating that community-based care models could achieve high treatment adherence rates in poor regions`],
+        correct: 3,
+        explanation: `پیشگامان سلامت نشان دادند که مدل‌های درمانی جامعه‌محور می‌توانند میزان پایبندی بسیار بالایی در مناطق فقیر ایجاد کنند.`
+      },
+      {
+        id: 41, category: `reading`, catLabel: `درک مطلب — متن ۱ (دشوار)`, isReading: true, passageId: `r1`,
+        prompt: `What does the text criticize as "artificial dichotomies"?`,
+        options: [`The difference between viral and bacterial infections`, `The conflict between public and private health insurance`, `The separation of pediatric care from adult medicine`, `The ideological split created between disease prevention and clinical treatment`],
+        correct: 3,
+        explanation: `متن ایجاد دوگانگی مصنوعی بین پیشگیری و درمان بالینی را به عنوان مانع اصلی نقد می‌کند.`
+      },
+      {
+        id: 42, category: `reading`, catLabel: `درک مطلب — متن ۲ (ساده)`, isReading: true, passageId: `r2`,
+        prompt: `Which of the following is listed as an early, seemingly innocuous symptom of infection?`,
+        options: [`Severe cognitive decline`, `Paralytic neuromuscular collapse`, `Sore throat and mild chills`, `Insurmountable user fees`],
+        correct: 2,
+        explanation: `گلودرد (<bdi dir="ltr">sore throat</bdi>) و لرز خفیف (<bdi dir="ltr">mild chills</bdi>) به عنوان علائم اولیه و کم‌اهمیت ذکر شده‌اند.`
+      },
+      {
+        id: 43, category: `reading`, catLabel: `درک مطلب — متن ۲ (متوسط)`, isReading: true, passageId: `r2`,
+        prompt: `What clinical presentation warrants immediate diagnostic investigation for pulmonary tuberculosis?`,
+        options: [`Transient memory loss following strenuous exercise`, `A persistent airborne-related cough lasting more than two weeks`, `Chipped teeth and sore jaw muscles`, `Sudden onset of skin ulcers on the torso`],
+        correct: 1,
+        explanation: `سرفه مداوم مرتبط با عفونت هوابرد بیش از دو هفته، نیازمند پیگیری و آزمایش سریع است.`
+      },
+      {
+        id: 44, category: `reading`, catLabel: `درک مطلب — متن ۲ (دشوار)`, isReading: true, passageId: `r2`,
+        prompt: `Why is it dangerous for a clinician to dismiss early infection symptoms?`,
+        options: [`Because seemingly innocuous early signs can rapidly progress to severe systemic complications as pathogens multiply.`, `Because early symptoms always require immediate major surgery.`, `Because mild symptoms indicate that the patient is fully immune.`, `Because diagnostic testing is accurate only during the first hour of illness.`],
+        correct: 0,
+        explanation: `بی‌توجهی به علائم اولیه خطرساز است چون نادیده گرفتن علائم ظاهراً بی‌خطر با تکثیر میکروب به عوارض شدید سیستمی تبدیل می‌شود.`
+      },
+      {
+        id: 45, category: `reading`, catLabel: `درک مطلب — متن ۳ (ساده)`, isReading: true, passageId: `r3`,
+        prompt: `What major financial obstacle prevented poor patients from accessing necessary medical care?`,
+        options: [`Excessively high taxes on clean water`, `Insurmountable user fees imposed at clinics`, `Lack of international paper currency`, `High costs of hospital transportation only`],
+        correct: 1,
+        explanation: `هزینه‌ها و فرانشیزهای سنگین (<bdi dir="ltr">user fees</bdi>) مانع اصلی بیماران نیازمند بود.`
+      },
+      {
+        id: 46, category: `reading`, catLabel: `درک مطلب — متن ۳ (متوسط)`, isReading: true, passageId: `r3`,
+        prompt: `What dangerous consequence arises when patients cannot adhere to complete medication courses?`,
+        options: [`The emergence of resurgent drug-resistant pathogen strains`, `Immediate eradication of the pathogen`, `Spontaneous healing without clinical intervention`, `Permanent immunity against all communicable diseases`],
+        correct: 0,
+        explanation: `عدم پایبندی به درمان کامل باعث بروز و اوج‌گیری سویه‌های مقاوم به دارو می‌شود.`
+      },
+      {
+        id: 47, category: `reading`, catLabel: `درک مطلب — متن ۳ (دشوار)`, isReading: true, passageId: `r3`,
+        prompt: `How did community health worker programs improve long-term treatment adherence in underserved areas?`,
+        options: [`By enforcing legal penalties on non-compliant patients`, `By replacing doctors with automated computer software`, `By requiring patients to stay hospitalized for years`, `By directly supervising drug delivery at patients' homes, ensuring consistent treatment completion`],
+        correct: 3,
+        explanation: `کارکنان بهداشت جامعه با نظارت مستقیم و تحویل دارو در منزل بیماران، تداوم و تکمیل دوره درمان را تضمین کردند.`
+      }
+    ];
+
+    const TOTAL_QUESTIONS = 47;
+    const EXAM_DURATION_SEC = 47 * 60;
+    const PERSIAN_LETTERS = [`الف`, `ب`, `ج`, `د`];
+    const ENGLISH_LETTERS = [`A`, `B`, `C`, `D`];
+
+    const state = {
+      mode: `practice`,         // 'practice' | 'exam'
+      answers: {},              // { [id]: optionIndex }
+      starred: {},              // { [id]: true }
+      submitted: false,
+      quickOpen: false,
+      quickFilter: `all`,       // 'all' | 'easy' | 'medium' | 'hard' | 'reading' | 'starred'
+      timerStarted: false,
+      timerRunning: false,
+      elapsedSec: 0,            // used in practice mode
+      remainingSec: EXAM_DURATION_SEC
+    };
+
+    let timerInterval = null;
+    let resetConfirmTimer = null;
+
+    function formatTime(totalSec) {
+      const safe = Math.max(0, Math.floor(totalSec));
+      const mins = Math.floor(safe / 60);
+      const secs = safe % 60;
+      return `${String(mins).padStart(2, `0`)}:${String(secs).padStart(2, `0`)}`;
+    }
+
+    function toPersianDigits(val) {
+      const map = [`۰`, `۱`, `۲`, `۳`, `۴`, `۵`, `۶`, `۷`, `۸`, `۹`];
+      return String(val).replace(/\d/g, d => map[Number(d)]);
+    }
+
+    function updateStickyOffset() {
+      const shell = document.getElementById(`sticky-shell`);
+      if (!shell) return;
+      const h = shell.getBoundingClientRect().height;
+      document.documentElement.style.setProperty(`--sticky-offset`, `${Math.ceil(h + 14)}px`);
+    }
+
+    function updateTimerDisplay() {
+      const el = document.getElementById(`live-timer`);
+      if (!el) return;
+      if (state.mode === `practice`) {
+        el.textContent = formatTime(state.elapsedSec);
+        el.classList.remove(`timer-warning`);
+      } else {
+        el.textContent = formatTime(state.remainingSec);
+        if (state.remainingSec <= 300 && state.timerStarted && !state.submitted) {
+          el.classList.add(`timer-warning`);
+        } else {
+          el.classList.remove(`timer-warning`);
+        }
+      }
+    }
+
+    function stopTimer() {
+      if (timerInterval !== null) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      state.timerRunning = false;
+    }
+
+    function startTimerIfNeeded() {
+      if (state.submitted || state.timerRunning) return;
+      state.timerStarted = true;
+      state.timerRunning = true;
+      if (timerInterval !== null) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (state.submitted) {
+          stopTimer();
+          return;
+        }
+        if (state.mode === `practice`) {
+          state.elapsedSec += 1;
+          updateTimerDisplay();
+          if (state.elapsedSec % 5 === 0) persistState();
+        } else {
+          if (state.remainingSec > 0) {
+            state.remainingSec -= 1;
+            updateTimerDisplay();
+            if (state.remainingSec % 5 === 0) persistState();
+          }
+          if (state.remainingSec <= 0) {
+            stopTimer();
+            submitAssessment(true);
+          }
+        }
+      }, 1000);
+    }
+
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState({
+            mode: state.mode,
+            answers: state.answers,
+            starred: state.starred,
+            submitted: state.submitted,
+            quickOpen: state.quickOpen,
+            quickFilter: state.quickFilter,
+            timerStarted: state.timerStarted,
+            elapsedSec: state.elapsedSec,
+            remainingSec: state.remainingSec
+          });
+        } catch (err) {
+          // Non-fatal persistence error
+        }
+      }
+    }
+
+    function showNotice(text, tone) {
+      const box = document.getElementById(`inline-notice`);
+      if (!box) return;
+      if (!text) {
+        box.className = `inline-notice`;
+        box.textContent = ``;
+        return;
+      }
+      box.className = `inline-notice is-visible`;
+      box.setAttribute(`data-tone`, tone || `info`);
+      box.textContent = text;
+    }
+
+    function renderAllQuestions() {
+      const root = document.getElementById(`questions-root`);
+      if (!root) return;
+
+      const sections = [
+        { title: `بخش اول: واژگان — سطح ساده`, count: `۱۲ سوال (۱ تا ۱۲)`, items: QUESTIONS.filter(q => q.category === `easy`) },
+        { title: `بخش دوم: واژگان — سطح متوسط`, count: `۱۴ سوال (۱۳ تا ۲۶)`, items: QUESTIONS.filter(q => q.category === `medium`) },
+        { title: `بخش سوم: واژگان — سطح دشوار`, count: `۱۲ سوال (۲۷ تا ۳۸)`, items: QUESTIONS.filter(q => q.category === `hard`) },
+        { title: `بخش چهارم: درک مطلب متون درس سوم`, count: `۹ سوال (۳۹ تا ۴۷)`, items: QUESTIONS.filter(q => q.category === `reading`), isReadingSection: true }
+      ];
+
+      let html = ``;
+      for (const sec of sections) {
+        html += `<section class="section-group">`;
+        html += `<div class="section-banner"><h2>${sec.title}</h2><span class="section-count">${sec.count}</span></div>`;
+
+        if (!sec.isReadingSection) {
+          for (const q of sec.items) {
+            html += buildQuestionCardHTML(q);
+          }
+        } else {
+          const passageGroups = [`r1`, `r2`, `r3`];
+          for (const pid of passageGroups) {
+            const p = PASSAGES[pid];
+            html += `
+              <article class="passage-card">
+                <div class="passage-header">
+                  <h3 class="passage-title">${p.title}</h3>
+                  <span class="passage-tag">${p.tag}</span>
+                </div>
+                <p class="passage-text">${p.text}</p>
+              </article>
+            `;
+            const groupQs = sec.items.filter(q => q.passageId === pid);
+            for (const q of groupQs) {
+              html += buildQuestionCardHTML(q);
+            }
+          }
+        }
+        html += `</section>`;
+      }
+
+      root.innerHTML = html;
+      refreshAllQuestionCards();
+    }
+
+    function buildQuestionCardHTML(q) {
+      const letters = ENGLISH_LETTERS;
+      const optionsHTML = q.options.map((opt, idx) => `
+        <button type="button" class="option-btn is-ltr" id="q-${q.id}-opt-${idx}" onclick="selectOption(${q.id}, ${idx})">
+          <span class="option-key">${letters[idx]}</span>
+          <span class="option-text">${opt}</span>
+        </button>
+      `).join(``);
+
+      return `
+        <article class="question-card" id="q-card-${q.id}">
+          <div class="q-top-row">
+            <div class="q-meta">
+              <span class="q-number-badge">سوال ${toPersianDigits(q.id)}</span>
+              <span class="q-level-badge" data-cat="${q.category}">${q.catLabel}</span>
+            </div>
+            <button type="button" class="star-btn" id="star-btn-${q.id}" aria-label="نشان‌دار کردن سوال ${q.id}" aria-pressed="false" onclick="toggleStar(${q.id})">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </button>
+          </div>
+          <p class="q-prompt is-ltr">${q.prompt}</p>
+          ${q.context ? `<p class="q-context-quote">شاهد متنی: <bdi dir="ltr">${q.context}</bdi></p>` : ``}
+          <div class="options-list" role="group" aria-label="گزینه‌های سوال ${q.id}">
+            ${optionsHTML}
+          </div>
+          <div class="explanation-box" id="exp-box-${q.id}"></div>
+        </article>
+      `;
+    }
+
+    function refreshQuestionCard(q) {
+      const chosen = state.answers[q.id];
+      const hasAnswer = chosen !== undefined;
+      const revealFeedback = (state.mode === `practice` && hasAnswer) || state.submitted;
+
+      for (let i = 0; i < q.options.length; i++) {
+        const btn = document.getElementById(`q-${q.id}-opt-${i}`);
+        if (!btn) continue;
+        btn.classList.remove(`is-selected`, `is-correct`, `is-wrong`);
+        btn.disabled = state.submitted || (state.mode === `practice` && hasAnswer);
+
+        if (revealFeedback) {
+          if (i === q.correct) {
+            btn.classList.add(`is-correct`);
+          } else if (hasAnswer && i === chosen && chosen !== q.correct) {
+            btn.classList.add(`is-wrong`);
+          }
+        } else if (hasAnswer && i === chosen) {
+          btn.classList.add(`is-selected`);
+        }
+      }
+
+      const expBox = document.getElementById(`exp-box-${q.id}`);
+      if (expBox) {
+        if (revealFeedback) {
+          let tone = `tone-neutral`;
+          let statusLabel = `پاسخ‌نداده (نزده)`;
+          if (hasAnswer) {
+            if (chosen === q.correct) {
+              tone = `tone-correct`;
+              statusLabel = `پاسخ صحیح`;
+            } else {
+              tone = `tone-wrong`;
+              statusLabel = `پاسخ نادرست`;
+            }
+          }
+          const letters = ENGLISH_LETTERS;
+          expBox.className = `explanation-box is-visible ${tone}`;
+          expBox.innerHTML = `
+            <span class="explanation-status">${statusLabel} — گزینه درست: ${letters[q.correct]}</span>
+            <div>${q.explanation}</div>
+          `;
+        } else {
+          expBox.className = `explanation-box`;
+          expBox.innerHTML = ``;
+        }
+      }
+
+      const starBtn = document.getElementById(`star-btn-${q.id}`);
+      if (starBtn) {
+        const isStarred = Boolean(state.starred[q.id]);
+        starBtn.classList.toggle(`is-starred`, isStarred);
+        starBtn.setAttribute(`aria-pressed`, isStarred ? `true` : `false`);
+        const poly = starBtn.querySelector(`polygon`);
+        if (poly) {
+          poly.setAttribute(`fill`, isStarred ? `currentColor` : `none`);
+        }
+      }
+    }
+
+    function refreshAllQuestionCards() {
+      for (const q of QUESTIONS) {
+        refreshQuestionCard(q);
+      }
+    }
+
+    function updateReportCard() {
+      let answeredCount = 0;
+      let correctCount = 0;
+      let wrongCount = 0;
+
+      for (const q of QUESTIONS) {
+        const chosen = state.answers[q.id];
+        if (chosen !== undefined) {
+          answeredCount += 1;
+          if (chosen === q.correct) {
+            correctCount += 1;
+          } else {
+            wrongCount += 1;
+          }
+        }
+      }
+
+      const unansweredCount = TOTAL_QUESTIONS - answeredCount;
+      const showGraded = state.mode === `practice` || state.submitted;
+
+      const elCorrect = document.getElementById(`stat-correct`);
+      const elWrong = document.getElementById(`stat-wrong`);
+      const elUnanswered = document.getElementById(`stat-unanswered`);
+      const elScore = document.getElementById(`stat-score`);
+      const elProgLabel = document.getElementById(`progress-label`);
+      const elProgPct = document.getElementById(`progress-pct`);
+      const segCorrect = document.getElementById(`prog-correct`);
+      const segWrong = document.getElementById(`prog-wrong`);
+      const segAnswered = document.getElementById(`prog-answered`);
+
+      if (elUnanswered) elUnanswered.textContent = toPersianDigits(unansweredCount);
+
+      if (showGraded) {
+        const scoreOutOf20 = ((correctCount / TOTAL_QUESTIONS) * 20).toFixed(2);
+        if (elCorrect) elCorrect.textContent = toPersianDigits(correctCount);
+        if (elWrong) elWrong.textContent = toPersianDigits(wrongCount);
+        if (elScore) elScore.innerHTML = `<bdi dir="ltr">${scoreOutOf20} / 20</bdi>`;
+        if (segCorrect) segCorrect.style.width = `${(correctCount / TOTAL_QUESTIONS) * 100}%`;
+        if (segWrong) segWrong.style.width = `${(wrongCount / TOTAL_QUESTIONS) * 100}%`;
+        if (segAnswered) segAnswered.style.width = `0%`;
+      } else {
+        if (elCorrect) elCorrect.textContent = `—`;
+        if (elWrong) elWrong.textContent = `—`;
+        if (elScore) elScore.textContent = `در انتظار ثبت`;
+        if (segCorrect) segCorrect.style.width = `0%`;
+        if (segWrong) segWrong.style.width = `0%`;
+        if (segAnswered) segAnswered.style.width = `${(answeredCount / TOTAL_QUESTIONS) * 100}%`;
+      }
+
+      const pct = Math.round((answeredCount / TOTAL_QUESTIONS) * 100);
+      if (elProgLabel) elProgLabel.textContent = `پاسخ‌داده‌شده: ${toPersianDigits(answeredCount)} از ${toPersianDigits(TOTAL_QUESTIONS)}`;
+      if (elProgPct) elProgPct.innerHTML = `<bdi dir="ltr">${pct}%</bdi>`;
+    }
+
+    function renderQuickAccessGrid() {
+      const grid = document.getElementById(`qa-grid`);
+      if (!grid) return;
+
+      const tabs = document.querySelectorAll(`.qa-filter-tab`);
+      tabs.forEach(tab => {
+        tab.classList.toggle(`is-active`, tab.dataset.filter === state.quickFilter);
+      });
+
+      const filtered = QUESTIONS.filter(q => {
+        if (state.quickFilter === `all`) return true;
+        if (state.quickFilter === `starred`) return Boolean(state.starred[q.id]);
+        return q.category === state.quickFilter;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<p class="qa-empty-note">هیچ سوالی در این دسته وجود ندارد. برای افزودن به نشان‌دارها، روی آیکون ستاره کنار سوال کلیک کنید.</p>`;
+        updateStickyOffset();
+        return;
+      }
+
+      const showGraded = state.mode === `practice` || state.submitted;
+      grid.innerHTML = filtered.map(q => {
+        const chosen = state.answers[q.id];
+        const hasAns = chosen !== undefined;
+        let statusCls = ``;
+        if (hasAns) {
+          if (showGraded) {
+            statusCls = chosen === q.correct ? `status-correct` : `status-wrong`;
+          } else {
+            statusCls = `status-selected`;
+          }
+        }
+        const starCls = state.starred[q.id] ? `is-starred` : ``;
+        return `<button type="button" class="qa-num-btn ${statusCls} ${starCls}" onclick="jumpToQuestion(${q.id})">${toPersianDigits(q.id)}</button>`;
+      }).join(``);
+
+      updateStickyOffset();
+    }
+
+    function toggleQuickAccess() {
+      state.quickOpen = !state.quickOpen;
+      applyQuickAccessVisibility();
+      persistState();
+    }
+
+    function applyQuickAccessVisibility() {
+      const btn = document.getElementById(`qa-toggle-btn`);
+      const panel = document.getElementById(`qa-panel`);
+      if (btn) btn.setAttribute(`aria-expanded`, state.quickOpen ? `true` : `false`);
+      if (panel) panel.classList.toggle(`is-open`, state.quickOpen);
+      updateStickyOffset();
+    }
+
+    function setQuickFilter(filterKey) {
+      state.quickFilter = filterKey;
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function jumpToQuestion(qId) {
+      updateStickyOffset();
+      const card = document.getElementById(`q-card-${qId}`);
+      if (!card) return;
+      card.scrollIntoView({ behavior: `smooth`, block: `start` });
+      card.classList.add(`is-highlighted`);
+      setTimeout(() => {
+        card.classList.remove(`is-highlighted`);
+      }, 1100);
+    }
+
+    function selectOption(qId, optIdx) {
+      if (state.submitted) return;
+      const q = QUESTIONS.find(item => item.id === qId);
+      if (!q) return;
+
+      if (state.mode === `practice` && state.answers[qId] !== undefined) return;
+
+      if (!state.timerStarted) {
+        startTimerIfNeeded();
+      }
+
+      state.answers[qId] = optIdx;
+      refreshQuestionCard(q);
+      updateReportCard();
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function toggleStar(qId) {
+      if (state.starred[qId]) {
+        delete state.starred[qId];
+      } else {
+        state.starred[qId] = true;
+      }
+      const q = QUESTIONS.find(item => item.id === qId);
+      if (q) refreshQuestionCard(q);
+      renderQuickAccessGrid();
+      persistState();
+    }
+
+    function applyModeUI() {
+      const pBtn = document.getElementById(`btn-mode-practice`);
+      const eBtn = document.getElementById(`btn-mode-exam`);
+      const isPractice = state.mode === `practice`;
+      if (pBtn) {
+        pBtn.classList.toggle(`is-active`, isPractice);
+        pBtn.setAttribute(`aria-checked`, isPractice ? `true` : `false`);
+      }
+      if (eBtn) {
+        eBtn.classList.toggle(`is-active`, !isPractice);
+        eBtn.setAttribute(`aria-checked`, !isPractice ? `true` : `false`);
+      }
+    }
+
+    function setMode(newMode) {
+      if (state.mode === newMode) return;
+      state.mode = newMode;
+      stopTimer();
+      state.submitted = false;
+      state.timerStarted = false;
+      state.elapsedSec = 0;
+      state.remainingSec = EXAM_DURATION_SEC;
+
+      applyModeUI();
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+
+      if (newMode === `practice`) {
+        showNotice(`حالت تمرین فعال شد. با انتخاب هر گزینه، کرنومتر آغاز و پاسخ تشریحی بلافاصله نمایش داده می‌شود.`, `info`);
+      } else {
+        showNotice(`حالت آزمون فعال شد. با پاسخ به اولین سوال، تایمر معکوس ۴۷ دقیقه‌ای آغاز می‌شود و تصحیح در پایان انجام خواهد شد.`, `info`);
+      }
+
+      const hasAnyAnswers = Object.keys(state.answers).length > 0;
+      if (hasAnyAnswers && !state.submitted) {
+        startTimerIfNeeded();
+      }
+      persistState();
+    }
+
+    function submitAssessment(fromTimeout) {
+      state.submitted = true;
+      stopTimer();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+      updateTimerDisplay();
+
+      if (fromTimeout) {
+        showNotice(`زمان ۴۷ دقیقه‌ای آزمون به پایان رسید و کارنامه نهایی محاسبه شد.`, `warn`);
+      } else {
+        showNotice(`آزمون با موفقیت ثبت و تصحیح شد. نتیجه کامل در بخش کارنامه و پاسخ تشریحی زیر هر سوال قابل مشاهده است.`, `success`);
+      }
+
+      const reportEl = document.getElementById(`report-section`);
+      if (reportEl) {
+        reportEl.scrollIntoView({ behavior: `smooth`, block: `nearest` });
+      }
+      persistState();
+    }
+
+    function handleResetClick(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.classList.add(`is-armed`);
+        btn.textContent = `تأیید بازنشانی؟ دوباره کلیک کنید`;
+        if (resetConfirmTimer !== null) clearTimeout(resetConfirmTimer);
+        resetConfirmTimer = setTimeout(() => {
+          btn.dataset.armed = `false`;
+          btn.classList.remove(`is-armed`);
+          btn.textContent = `بازنشانی پاسخ‌ها`;
+        }, 4000);
+        return;
+      }
+
+      if (resetConfirmTimer !== null) {
+        clearTimeout(resetConfirmTimer);
+        resetConfirmTimer = null;
+      }
+      btn.dataset.armed = `false`;
+      btn.classList.remove(`is-armed`);
+      btn.textContent = `بازنشانی پاسخ‌ها`;
+
+      stopTimer();
+      state.answers = {};
+      state.submitted = false;
+      state.timerStarted = false;
+      state.elapsedSec = 0;
+      state.remainingSec = EXAM_DURATION_SEC;
+
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+      showNotice(`تمامی پاسخ‌ها و زمان‌سنج بازنشانی شدند.`, `info`);
+      persistState();
+    }
+
+    async function initApp() {
+      renderAllQuestions();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (saved.mode === `practice` || saved.mode === `exam`) state.mode = saved.mode;
+            if (saved.answers && typeof saved.answers === `object`) state.answers = saved.answers;
+            if (saved.starred && typeof saved.starred === `object`) state.starred = saved.starred;
+            if (typeof saved.submitted === `boolean`) state.submitted = saved.submitted;
+            if (typeof saved.quickOpen === `boolean`) state.quickOpen = saved.quickOpen;
+            if (typeof saved.quickFilter === `string`) state.quickFilter = saved.quickFilter;
+            if (typeof saved.timerStarted === `boolean`) state.timerStarted = saved.timerStarted;
+            if (typeof saved.elapsedSec === `number`) state.elapsedSec = saved.elapsedSec;
+            if (typeof saved.remainingSec === `number`) state.remainingSec = saved.remainingSec;
+          }
+        } catch (err) {
+          // Proceed with fresh state
+        }
+      }
+
+      applyModeUI();
+      applyQuickAccessVisibility();
+      updateTimerDisplay();
+      refreshAllQuestionCards();
+      updateReportCard();
+      renderQuickAccessGrid();
+
+      if (state.timerStarted && !state.submitted) {
+        if (state.mode === `exam` && state.remainingSec <= 0) {
+          submitAssessment(true);
+        } else {
+          startTimerIfNeeded();
+        }
+      }
+
+      window.addEventListener(`resize`, updateStickyOffset);
+      updateStickyOffset();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
